@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:/Users/josh/Desktop/SoundServerTests/SwiftSynthLang/LyrebirdSynthLang.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:/Users/josh/Desktop/SoundServerTests/SwiftSynth/Lyrebird.xcodeproj">
+   </FileRef>
+</Workspace>

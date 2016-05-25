@@ -1,0 +1,428 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		036956311CF56B2900F2CC6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036956261CF56B2900F2CC6B /* AppDelegate.swift */; };
+		036956321CF56B2900F2CC6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 036956271CF56B2900F2CC6B /* Assets.xcassets */; };
+		036956331CF56B2900F2CC6B /* AudioSampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036956281CF56B2900F2CC6B /* AudioSampleApp.swift */; };
+		036956341CF56B2900F2CC6B /* AudioSampleGraphs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036956291CF56B2900F2CC6B /* AudioSampleGraphs.swift */; };
+		036956351CF56B2900F2CC6B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0369562A1CF56B2900F2CC6B /* MainMenu.xib */; };
+		036956361CF56B2900F2CC6B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0369562C1CF56B2900F2CC6B /* Info.plist */; };
+		036956371CF56B2900F2CC6B /* LyrebirdDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0369562D1CF56B2900F2CC6B /* LyrebirdDemo.swift */; };
+		0369563A1CF56C5D00F2CC6B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0369562F1CF56B2900F2CC6B /* Info.plist */; };
+		0369563B1CF56CC600F2CC6B /* LyrebirdLangTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036956301CF56B2900F2CC6B /* LyrebirdLangTests.swift */; };
+		03AE39861CE7F9B3008B2E83 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03AE39851CE7F9B3008B2E83 /* AVFoundation.framework */; };
+		03C77F171CD9AC44003A753B /* Lyrebird.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03C77F151CD9AC23003A753B /* Lyrebird.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		03C77EDA1CD6F50D003A753B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03C77EBD1CD6F50D003A753B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 03C77EC41CD6F50D003A753B;
+			remoteInfo = SwiftSynthLang;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0336EC901CE0E82900279E2B /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		036956261CF56B2900F2CC6B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		036956271CF56B2900F2CC6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		036956281CF56B2900F2CC6B /* AudioSampleApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSampleApp.swift; sourceTree = "<group>"; };
+		036956291CF56B2900F2CC6B /* AudioSampleGraphs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSampleGraphs.swift; sourceTree = "<group>"; };
+		0369562B1CF56B2900F2CC6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		0369562C1CF56B2900F2CC6B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0369562D1CF56B2900F2CC6B /* LyrebirdDemo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyrebirdDemo.swift; sourceTree = "<group>"; };
+		0369562F1CF56B2900F2CC6B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		036956301CF56B2900F2CC6B /* LyrebirdLangTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyrebirdLangTests.swift; sourceTree = "<group>"; };
+		03AE39851CE7F9B3008B2E83 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		03C77EC51CD6F50D003A753B /* LyrebirdSynthLang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyrebirdSynthLang.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03C77ED91CD6F50D003A753B /* LyrebirdSynthLang.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LyrebirdSynthLang.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		03C77F151CD9AC23003A753B /* Lyrebird.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lyrebird.framework; path = "../../../Library/Developer/Xcode/DerivedData/SoundServerTests-dytvjpwcamvyjdalfbnevopalrmo/Build/Products/Debug/Lyrebird.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		03C77EC21CD6F50D003A753B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03AE39861CE7F9B3008B2E83 /* AVFoundation.framework in Frameworks */,
+				03C77F171CD9AC44003A753B /* Lyrebird.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03C77ED61CD6F50D003A753B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		036956241CF56AF000F2CC6B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				03AE39851CE7F9B3008B2E83 /* AVFoundation.framework */,
+				03C77F151CD9AC23003A753B /* Lyrebird.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		036956251CF56B2900F2CC6B /* LyrebirdLang */ = {
+			isa = PBXGroup;
+			children = (
+				036956261CF56B2900F2CC6B /* AppDelegate.swift */,
+				036956271CF56B2900F2CC6B /* Assets.xcassets */,
+				036956281CF56B2900F2CC6B /* AudioSampleApp.swift */,
+				036956291CF56B2900F2CC6B /* AudioSampleGraphs.swift */,
+				0369562A1CF56B2900F2CC6B /* MainMenu.xib */,
+				0369562C1CF56B2900F2CC6B /* Info.plist */,
+				0369562D1CF56B2900F2CC6B /* LyrebirdDemo.swift */,
+			);
+			path = LyrebirdLang;
+			sourceTree = "<group>";
+		};
+		0369562E1CF56B2900F2CC6B /* LyrebirdLangTests */ = {
+			isa = PBXGroup;
+			children = (
+				0369562F1CF56B2900F2CC6B /* Info.plist */,
+				036956301CF56B2900F2CC6B /* LyrebirdLangTests.swift */,
+			);
+			path = LyrebirdLangTests;
+			sourceTree = "<group>";
+		};
+		03C77EBC1CD6F50D003A753B = {
+			isa = PBXGroup;
+			children = (
+				036956241CF56AF000F2CC6B /* Frameworks */,
+				0336EC901CE0E82900279E2B /* MyPlayground.playground */,
+				03C77EC61CD6F50D003A753B /* Products */,
+				036956251CF56B2900F2CC6B /* LyrebirdLang */,
+				0369562E1CF56B2900F2CC6B /* LyrebirdLangTests */,
+			);
+			sourceTree = "<group>";
+		};
+		03C77EC61CD6F50D003A753B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				03C77EC51CD6F50D003A753B /* LyrebirdSynthLang.app */,
+				03C77ED91CD6F50D003A753B /* LyrebirdSynthLang.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		03C77EC41CD6F50D003A753B /* LyrebirdSynthLang */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03C77EE21CD6F50D003A753B /* Build configuration list for PBXNativeTarget "LyrebirdSynthLang" */;
+			buildPhases = (
+				03C77EC11CD6F50D003A753B /* Sources */,
+				03C77EC21CD6F50D003A753B /* Frameworks */,
+				03C77EC31CD6F50D003A753B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LyrebirdSynthLang;
+			productName = SwiftSynthLang;
+			productReference = 03C77EC51CD6F50D003A753B /* LyrebirdSynthLang.app */;
+			productType = "com.apple.product-type.application";
+		};
+		03C77ED81CD6F50D003A753B /* LyrebirdSynthLangTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03C77EE51CD6F50D003A753B /* Build configuration list for PBXNativeTarget "LyrebirdSynthLangTests" */;
+			buildPhases = (
+				03C77ED51CD6F50D003A753B /* Sources */,
+				03C77ED61CD6F50D003A753B /* Frameworks */,
+				03C77ED71CD6F50D003A753B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				03C77EDB1CD6F50D003A753B /* PBXTargetDependency */,
+			);
+			name = LyrebirdSynthLangTests;
+			productName = SwiftSynthLangTests;
+			productReference = 03C77ED91CD6F50D003A753B /* LyrebirdSynthLang.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		03C77EBD1CD6F50D003A753B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Op133Studios;
+				TargetAttributes = {
+					03C77EC41CD6F50D003A753B = {
+						CreatedOnToolsVersion = 7.3;
+					};
+					03C77ED81CD6F50D003A753B = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 03C77EC41CD6F50D003A753B;
+					};
+				};
+			};
+			buildConfigurationList = 03C77EC01CD6F50D003A753B /* Build configuration list for PBXProject "LyrebirdSynthLang" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 03C77EBC1CD6F50D003A753B;
+			productRefGroup = 03C77EC61CD6F50D003A753B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				03C77EC41CD6F50D003A753B /* LyrebirdSynthLang */,
+				03C77ED81CD6F50D003A753B /* LyrebirdSynthLangTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		03C77EC31CD6F50D003A753B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				036956321CF56B2900F2CC6B /* Assets.xcassets in Resources */,
+				036956361CF56B2900F2CC6B /* Info.plist in Resources */,
+				036956351CF56B2900F2CC6B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03C77ED71CD6F50D003A753B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0369563A1CF56C5D00F2CC6B /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		03C77EC11CD6F50D003A753B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				036956331CF56B2900F2CC6B /* AudioSampleApp.swift in Sources */,
+				036956311CF56B2900F2CC6B /* AppDelegate.swift in Sources */,
+				036956341CF56B2900F2CC6B /* AudioSampleGraphs.swift in Sources */,
+				036956371CF56B2900F2CC6B /* LyrebirdDemo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03C77ED51CD6F50D003A753B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0369563B1CF56CC600F2CC6B /* LyrebirdLangTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		03C77EDB1CD6F50D003A753B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 03C77EC41CD6F50D003A753B /* LyrebirdSynthLang */;
+			targetProxy = 03C77EDA1CD6F50D003A753B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0369562A1CF56B2900F2CC6B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0369562B1CF56B2900F2CC6B /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		03C77EE01CD6F50D003A753B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		03C77EE11CD6F50D003A753B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		03C77EE31CD6F50D003A753B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LyrebirdLang/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.op133studios.LyrebirdLang;
+				PRODUCT_NAME = LyrebirdSynthLang;
+			};
+			name = Debug;
+		};
+		03C77EE41CD6F50D003A753B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LyrebirdLang/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.op133studios.LyrebirdLang;
+				PRODUCT_NAME = LyrebirdSynthLang;
+			};
+			name = Release;
+		};
+		03C77EE61CD6F50D003A753B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LyrebirdTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.op133studios.LyrebirdLangTests;
+				PRODUCT_NAME = LyrebirdSynthLang;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LyrebirdSynthLang.app/Contents/MacOS/LyrebirdSynthLang";
+			};
+			name = Debug;
+		};
+		03C77EE71CD6F50D003A753B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = LyrebirdTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.op133studios.LyrebirdLangTests;
+				PRODUCT_NAME = LyrebirdSynthLang;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LyrebirdSynthLang.app/Contents/MacOS/LyrebirdSynthLang";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		03C77EC01CD6F50D003A753B /* Build configuration list for PBXProject "LyrebirdSynthLang" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03C77EE01CD6F50D003A753B /* Debug */,
+				03C77EE11CD6F50D003A753B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03C77EE21CD6F50D003A753B /* Build configuration list for PBXNativeTarget "LyrebirdSynthLang" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03C77EE31CD6F50D003A753B /* Debug */,
+				03C77EE41CD6F50D003A753B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03C77EE51CD6F50D003A753B /* Build configuration list for PBXNativeTarget "LyrebirdSynthLangTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03C77EE61CD6F50D003A753B /* Debug */,
+				03C77EE71CD6F50D003A753B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 03C77EBD1CD6F50D003A753B /* Project object */;
+}

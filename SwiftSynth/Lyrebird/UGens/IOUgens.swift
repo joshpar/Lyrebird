@@ -1,0 +1,60 @@
+//
+//  IOUgens.swift
+//  Lyrebird
+//
+//  Created by Joshua Parmenter on 5/15/16.
+//  Copyright © 2016 Op133Studios. All rights reserved.
+//
+
+import Foundation
+
+
+
+public class Output : LyrebirdUGen {
+    var index: LyrebirdValidUGenInput
+    var output: LyrebirdValidUGenInput
+    private var channel: LyrebirdAudioChannel? = nil
+    
+    public required init(rate: LyrebirdUGenRate, index: LyrebirdValidUGenInput, output: LyrebirdValidUGenInput){
+        self.index = index
+        self.output = output
+        super.init(rate: rate)
+        let channels: [LyrebirdAudioChannel] = LyrebirdEngine.engine.audioBlock
+        if(index.intValue(graph) < channels.count){
+            channel = channels[self.index.intValue(graph)]
+        }
+
+    }
+    
+    public required convenience init(rate: LyrebirdUGenRate){
+        let defaultIndex = 0.0
+        let defaultOuput = 0.0
+        self.init(rate: rate, index: defaultIndex, output: defaultOuput)
+    }
+   
+    
+    override public func next(numSamples: LyrebirdInt) -> Bool {
+        // get the audio wire to output
+        let channels: [LyrebirdAudioChannel] = LyrebirdEngine.engine.audioBlock
+        if(index.intValue(graph) < channels.count){
+            channel = channels[self.index.intValue(graph)]
+        }
+        let sampleChannels: [[LyrebirdFloat]] = output.calculatedSamples(graph)
+        // assume mono for now
+        let outputChannel: [LyrebirdFloat] = sampleChannels[0]
+        
+        // TODO:: wires always write thier output to the first indexes of their array
+        // however, when an offset if needed, Output UGens must account for this when they write
+        // FIGURE OUT HOW TO GET THIS OFFSET MORE CLEANLY
+        
+        let blockSize = LyrebirdEngine.engine.blockSize
+        let offset = blockSize - numSamples
+        if let channel = self.channel {
+            for index in offset ..< LyrebirdEngine.engine.blockSize {
+                channel.currentValues[index] = channel.currentValues[index] + outputChannel[index]
+            }
+        }
+        return true
+    }
+    
+}
