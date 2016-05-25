@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/josh/Desktop/SoundServerTests/SwiftSynthLang/LyrebirdSynthLang.xcodeproj">
+      location = "group:LyrebirdLang/LyrebirdSynthLang.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/josh/Desktop/SoundServerTests/SwiftSynth/Lyrebird.xcodeproj">
+      location = "group:LyrebirdSynth/Lyrebird.xcodeproj">
    </FileRef>
 </Workspace>
