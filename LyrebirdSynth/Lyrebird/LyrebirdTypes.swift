@@ -17,6 +17,7 @@ protocol LyrebirdFloatUGenValue {
     
 }
 
+
 public struct LyrebirdFloatClosure {
     public var closure : LyrebirdFloatClosureBody?
     
@@ -29,7 +30,8 @@ extension LyrebirdFloatClosure : LyrebirdValidUGenInput {
     
     public func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]] {
         let float = closure?(graph: graph) ?? 0.0
-        return [[LyrebirdFloat(float)]]
+        let returnValues = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: LyrebirdFloat(float))
+        return [returnValues]
     }
     
     public func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
@@ -50,8 +52,8 @@ extension LyrebirdFloatClosure : LyrebirdFloatUGenValue {
 extension LyrebirdInt : LyrebirdValidUGenInput {
     
     public func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]] {
-        let float = LyrebirdFloat(self)
-        return [[float]]
+        let returnValues = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: LyrebirdFloat(self))
+        return [returnValues]
     }
     
     public func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat {

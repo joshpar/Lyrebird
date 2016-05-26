@@ -23,26 +23,25 @@ class LyrebirdDemo: NSObject {
         
         /* allow subclasses of LyrebirdGraph, and use properties instead of parameter dicts??? */
         /* instead of a key, pass a closure to evaluate? */
-        
-        graph.build { () in
-            var sin: OscSin = OscSin(rate: .Audio, freq: 3, phase: 0.0)
-            sin = (sin * 0.1) as! OscSin
-            sin = sin + 0.1 as! OscSin
-            var am: OscSin = OscSin(rate: .Audio, freq: "Freq", phase: 0.0)
-            am = ((am * sin) * 0.5) as! OscSin
-            _ = Output(rate: .Audio, index: "Output", output: am)
-            
-        }
         /*
-        // FM
         graph.build { () in
-            var mod: OscSin = OscSin(rate: .Audio, freq: 110, phase: 0.0)
-            mod = 3412.0 * mod + 310.0 as! OscSin
-            let sin: OscSin = OscSin(rate: .Audio, freq: mod, phase: 0.0) * 0.05 as! OscSin
-            _ = Output(rate: .Audio, index: "Output", output: sin)
+            let sin: OscSin = OscSin(rate: .Audio, freq: 4, phase: 0.0)
+            let mul = 0.1 + sin * 0.1
+            let am: OscSin = OscSin(rate: .Audio, freq: "Freq", phase: 0.0)
+            let out = am * mul * 0.5
+            _ = Output(rate: .Audio, index: "Output", output: out)
             
         }
         */
+        // FM
+        graph.build { () in
+            let mod: OscSin = OscSin(rate: .Audio, freq: 110, phase: 0.0)
+            let modMul = 3412.0 * mod - "Freq"
+            let sin: OscSin = OscSin(rate: .Audio, freq: modMul, phase: 0.0)
+            _ = Output(rate: .Audio, index: "Output", output: sin * 0.05)
+            
+        }
+        
         let note = LyrebirdNote(graph: graph)
         note.outputOffsetSamples = 44100
         
@@ -65,13 +64,13 @@ class LyrebirdDemo: NSObject {
         lyrebird.addNodeToHead(note)
         
         let noteTwo = LyrebirdNote(graph: graph)
-        
+        /*
         let randomFreqClosure = LyrebirdFloatClosure {graph in
-            let freq = (drand48() * 40.0) + 440.0
+            let freq = (drand48() * 80.0) + 440.0
             return LyrebirdFloat(freq)
         }
-        
-        noteTwo.updateParameter("Freq", value: randomFreqClosure)
+        */
+        noteTwo.updateParameter("Freq", value: 440.0)
         noteTwo.updateParameter("Output", value: 1)
         
         lyrebird.addNodeToHead(noteTwo)

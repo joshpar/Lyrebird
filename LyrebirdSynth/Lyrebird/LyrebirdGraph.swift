@@ -32,7 +32,6 @@ public class LyrebirdGraph: NSObject {
     func next(numSamples: LyrebirdInt){
         for ugen: LyrebirdUGen in children {
             ugen.next(numSamples)
-            ugen.applyOperators()
         }
         // set up for next run
         prepareChildren()

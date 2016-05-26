@@ -180,14 +180,6 @@ public class LyrebirdUGen: NSObject {
         return nil
     }
     
-    func applyOperators(){
-        for mul in self.muls {
-            mulOp(mul)
-        }
-        for add in self.adds {
-            addOp(add)
-        }
-    }
 }
 
 extension LyrebirdUGen : LyrebirdValidUGenInput {
@@ -223,68 +215,4 @@ extension LyrebirdUGen : LyrebirdValidUGenInput {
         }
         return 0
     }
-}
-
-
-// math support
-// Change this to return a new Instance of a MathOPUgen
-
-public func * (lhs: LyrebirdUGen, rhs: LyrebirdUGen) -> LyrebirdUGen {
-    lhs.mul(rhs)
-    return lhs
-}
-
-public func * (lhs: LyrebirdUGen, rhs: LyrebirdValidUGenInput) -> LyrebirdUGen {
-    lhs.mul(rhs)
-    return lhs
-}
-
-public func * (lhs: LyrebirdValidUGenInput, rhs: LyrebirdUGen) -> LyrebirdUGen {
-    rhs.mul(lhs)
-    return rhs
-}
-
-public func + (lhs: LyrebirdUGen, rhs: LyrebirdUGen) -> LyrebirdUGen {
-    lhs.add(rhs)
-    return lhs
-}
-
-public func + (lhs: LyrebirdUGen, rhs: LyrebirdValidUGenInput) -> LyrebirdUGen {
-    lhs.add(rhs)
-    return lhs
-}
-
-public func + (lhs: LyrebirdValidUGenInput, rhs: LyrebirdUGen) -> LyrebirdUGen {
-    rhs.add(lhs)
-    return rhs
-}
-
-extension LyrebirdUGen {
-    
-    func mul(newMul: LyrebirdValidUGenInput){
-        self.muls.append(newMul)
-    }
-    
-    func mulOp(value: LyrebirdValidUGenInput){
-        let valueSamples: [LyrebirdFloat] = value.calculatedSamples(self.graph)[0]
-        var selfSamples: [LyrebirdFloat] = self.outputWires[0].currentSamples
-        for (index, currentSampleValue) in selfSamples.enumerate() {
-            selfSamples[index] = currentSampleValue * valueSamples[index]
-        }
-        self.outputWires[0].currentSamples = selfSamples
-    }
-    
-    func add(newAdd: LyrebirdValidUGenInput){
-        self.adds.append(newAdd)
-    }
-    
-    func addOp(value: LyrebirdValidUGenInput){
-        let valueSamples: [LyrebirdFloat] = value.calculatedSamples(self.graph)[0]
-        var selfSamples: [LyrebirdFloat] = self.outputWires[0].currentSamples
-        for (index, currentSampleValue) in selfSamples.enumerate() {
-            selfSamples[index] = currentSampleValue + valueSamples[index]
-        }
-        self.outputWires[0].currentSamples = selfSamples
-    }
-
 }
