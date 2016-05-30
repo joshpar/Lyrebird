@@ -23,16 +23,17 @@ class LyrebirdDemo: NSObject {
         
         /* allow subclasses of LyrebirdGraph, and use properties instead of parameter dicts??? */
         /* instead of a key, pass a closure to evaluate? */
-        /*
+        
         graph.build { () in
             let sin: OscSin = OscSin(rate: .Audio, freq: 4, phase: 0.0)
             let mul = 0.1 + sin * 0.1
             let am: OscSin = OscSin(rate: .Audio, freq: "Freq", phase: 0.0)
-            let out = am * mul * 0.5
+            let out = am * mul * db_linamp(-6.0)
             _ = Output(rate: .Audio, index: "Output", output: out)
             
         }
-        */
+        
+        /*
         // FM
         graph.build { () in
             let mod: OscSin = OscSin(rate: .Audio, freq: 110, phase: 0.0)
@@ -41,11 +42,11 @@ class LyrebirdDemo: NSObject {
             _ = Output(rate: .Audio, index: "Output", output: sin * 0.05)
             
         }
-        
+        */
         let note = LyrebirdNote(graph: graph)
         note.outputOffsetSamples = 44100
         
-        note.updateParameter("StartFreq", value: 440.0)
+        note.updateParameter("StartFreq", value: keynum_hz(69.0))
         
         let risingFreqClosure = LyrebirdFloatClosure {graph in
             var freq = 0.0

@@ -962,5 +962,66 @@
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/LyrebirdTypes.swift"
+            timestampString = "486280560.966044"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Lyrebird.LyrebirdFloatClosure.init (closure : (graph : Swift.Optional&lt;Lyrebird.LyrebirdGraph&gt;) -&gt; Swift.Double) -&gt; Lyrebird.LyrebirdFloatClosure"
+                  moduleName = "Lyrebird"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdSynth/Lyrebird/LyrebirdTypes.swift"
+                  timestampString = "486280562.448033"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "40">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Lyrebird.LyrebirdFloatClosure.closure.getter : Swift.Optional&lt;(graph : Swift.Optional&lt;Lyrebird.LyrebirdGraph&gt;) -&gt; Swift.Double&gt;"
+                  moduleName = "Lyrebird"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdSynth/Lyrebird/LyrebirdTypes.swift"
+                  timestampString = "486280562.448233"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "39">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Lyrebird.LyrebirdFloatClosure.closure.setter : Swift.Optional&lt;(graph : Swift.Optional&lt;Lyrebird.LyrebirdGraph&gt;) -&gt; Swift.Double&gt;"
+                  moduleName = "Lyrebird"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdSynth/Lyrebird/LyrebirdTypes.swift"
+                  timestampString = "486280562.448486"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "61"
+                  endingLineNumber = "61"
+                  offsetFromSymbolStart = "92">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
