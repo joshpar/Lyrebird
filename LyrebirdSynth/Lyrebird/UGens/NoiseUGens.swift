@@ -19,8 +19,13 @@ public class NoiseGen : LyrebirdUGen {
 
 public class NoiseWhite: NoiseGen {
     
-    public required init(rate: LyrebirdUGenRate){
+    public required init(rate: LyrebirdUGenRate, seed: LyrebirdInt){
         super.init(rate: rate)
+        self.seed = seed
+    }
+    
+    required public convenience init(rate: LyrebirdUGenRate) {
+        self.init(rate: rate, seed: LyrebirdInt(NSDate.timeIntervalSinceReferenceDate()))
     }
     
     override public func next(numSamples: LyrebirdInt) -> Bool {
