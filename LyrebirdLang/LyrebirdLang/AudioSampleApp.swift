@@ -9,6 +9,7 @@
 import Cocoa
 import Lyrebird
 import AVFoundation
+import AudioToolbox
 
 // The maximum number of audio buffers in flight. Setting to two allows one
 // buffer to be played while the next is being written.
@@ -31,7 +32,7 @@ public class LyrebirdTestSynthesizer {
     private let playerNode: AVAudioPlayerNode = AVAudioPlayerNode()
     
     // Use standard non-interleaved PCM audio.
-    let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)
+    var audioFormat : AVAudioFormat = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)
     
     // A circular queue of audio buffers.
     private var audioBuffers: [AVAudioPCMBuffer] = [AVAudioPCMBuffer]()
@@ -48,10 +49,15 @@ public class LyrebirdTestSynthesizer {
     private let lyrebird: LyrebirdMain = LyrebirdMain()
     
     private var demo: LyrebirdDemo? = nil
+    
+    private var inputChannels: [[LyrebirdFloat]] = [[LyrebirdFloat](count: Int(kSamplesPerBuffer), repeatedValue: 0.0), [LyrebirdFloat](count: Int(kSamplesPerBuffer), repeatedValue: 0.0)]
 
     // inits the CoreAudio engine, sets up LyrebirdMain and references our demo class
     private init() {
         // Create a pool of audio buffers.
+        
+        audioFormat = engine.inputNode!.outputFormatForBus(0)
+        
         for _ in 0 ..< kInFlightAudioBuffers  {
             let audioBuffer = AVAudioPCMBuffer(PCMFormat: audioFormat, frameCapacity: kSamplesPerBuffer)
             audioBuffers.append(audioBuffer)
@@ -59,7 +65,30 @@ public class LyrebirdTestSynthesizer {
         
         // Attach and connect the player node.
         engine.attachNode(playerNode)
+
+        
+      //  engine.connect(engine.inputNode!, to: playerNode, format: audioFormat)
+        
+        
         engine.connect(playerNode, to: engine.outputNode, format: audioFormat)
+        
+        
+        
+        
+        if let inputNode: AVAudioInputNode = engine.inputNode {
+            inputNode.installTapOnBus(0, bufferSize: kSamplesPerBuffer, format: audioFormat, block: { (buffer: AVAudioPCMBuffer, time: AVAudioTime) in
+                
+              //  print("buffer channel \(buffer.format.settings)")
+                let leftChannelData = buffer.floatChannelData[0]
+                let rightChannelData = buffer.floatChannelData[1]
+
+                for idx: Int in 0 ..< Int(kSamplesPerBuffer) {
+                    self.inputChannels[0][idx] = LyrebirdFloat(leftChannelData[idx])
+                    self.inputChannels[1][idx] = LyrebirdFloat(rightChannelData[idx])
+                }
+            })
+        }
+
         
         do {
             try engine.start()
@@ -90,22 +119,33 @@ public class LyrebirdTestSynthesizer {
                 let audioBuffer = self.audioBuffers[self.bufferIndex]
                 let leftChannel = audioBuffer.floatChannelData[0]
                 let rightChannel = audioBuffer.floatChannelData[1]
+                
+                var leftInAudio = self.inputChannels[0]
+                var rightInAudio = self.inputChannels[1]
 
                 for cycle in 0 ..< numCycles {
-                    self.lyrebird.processWithInputChannels([])
+                    let offset = Int(cycle) * blockSize
                     let audioBlocks = self.lyrebird.audioBlocks()
+                    let leftInput = audioBlocks[2]
+                    let rightInput = audioBlocks[3]
+                   for idx: Int in 0 ..< blockSize {
+                        leftInput.currentValues[idx] = LyrebirdFloat(leftInAudio[(blockSize * cycle) + idx])
+                        rightInput.currentValues[idx] = LyrebirdFloat(rightInAudio[(blockSize * cycle) + idx])
+                    }
+                    self.lyrebird.processWithInputChannels([])
                     let left = audioBlocks[0]
                     let right = audioBlocks[1]
                     let outputLeft = left.currentValues.map({Float($0)})
                     let outputRight = right.currentValues.map({Float($0)})
-                    let offset = Int(cycle) * blockSize
                     for idx in 0 ..< blockSize {
                         leftChannel[offset + idx] = outputLeft[idx]
                         rightChannel[offset + idx] = outputRight[idx]
                     }
                 }
                 audioBuffer.frameLength = kSamplesPerBuffer
-                
+
+                self.bufferIndex = (self.bufferIndex + 1) % self.audioBuffers.count
+
                 // Schedule the buffer for playback and release it for reuse after
                 // playback has finished.
                 self.playerNode.scheduleBuffer(audioBuffer) {
@@ -113,7 +153,6 @@ public class LyrebirdTestSynthesizer {
                     return
                 }
                 
-                self.bufferIndex = (self.bufferIndex + 1) % self.audioBuffers.count
             }
         }
         

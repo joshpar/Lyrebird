@@ -50,10 +50,52 @@ public class Output : LyrebirdUGen {
         let blockSize = LyrebirdEngine.engine.blockSize
         let offset = blockSize - numSamples
         if let channel = self.channel {
+            channel.touched = true
             for index in offset ..< LyrebirdEngine.engine.blockSize {
                 channel.currentValues[index] = channel.currentValues[index] + outputChannel[index]
             }
         }
+        return true
+    }
+    
+}
+
+public class Input : LyrebirdUGen {
+    var index: LyrebirdValidUGenInput
+    private var channel: LyrebirdAudioChannel? = nil
+    private var wire: LyrebirdWire? = nil
+    
+    public required init(rate: LyrebirdUGenRate, index: LyrebirdValidUGenInput){
+        self.index = index
+        super.init(rate: rate)
+        let channels: [LyrebirdAudioChannel] = LyrebirdEngine.engine.audioBlock
+        if(index.intValue(graph) < channels.count){
+            channel = channels[self.index.intValue(graph)]
+        }
+        wire = wireForIndex(0)
+    }
+    
+    public required convenience init(rate: LyrebirdUGenRate){
+        let defaultIndex = 0.0
+        let defaultOuput = 0.0
+        self.init(rate: rate, index: defaultIndex)
+    }
+    
+    
+    override public func next(numSamples: LyrebirdInt) -> Bool {
+        // get the audio wire to output
+        guard let wire: LyrebirdWire = self.wire else {
+            return false
+        }
+        
+        guard let channel: LyrebirdAudioChannel = self.channel else {
+            return false
+        }
+        
+        for sampleIdx: LyrebirdInt in 0 ..< numSamples {
+            wire.currentSamples[sampleIdx] = channel.currentValues[sampleIdx]
+        }
+    
         return true
     }
     

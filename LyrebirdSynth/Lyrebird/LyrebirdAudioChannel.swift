@@ -22,6 +22,7 @@ public class LyrebirdAudioChannel: NSObject {
             }
         }
         super.init()
+        touched = true
         self.zeroValues()
     }
     
@@ -30,6 +31,9 @@ public class LyrebirdAudioChannel: NSObject {
     }
     
     public func zeroValues(){
-        currentValues = LyrebirdAudioChannel.zeroedValues
+        if touched {
+            currentValues = LyrebirdAudioChannel.zeroedValues
+            touched = false
+        }
     }
 }

@@ -44,6 +44,7 @@ class LyrebirdEngine: NSObject {
     var iSampleRate                     : LyrebirdFloat = 0.000022676
     var audioBlock                      : [LyrebirdAudioChannel] = []
     var controlBlock                    : [LyrebirdControlChannel] = []
+    var ranGens                         : [LyrebirdRandomNumberGenerator] = []
     
     private var realtimeMemoryPool      : [LyrebirdFloat] = []
     var tree                            : LyrebirdNodeTree = LyrebirdNodeTree()

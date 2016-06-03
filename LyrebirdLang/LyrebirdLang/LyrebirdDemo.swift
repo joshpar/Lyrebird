@@ -25,11 +25,16 @@ class LyrebirdDemo: NSObject {
         /* instead of a key, pass a closure to evaluate? */
         
         graph.build { () in
-            let sin: OscSin = OscSin(rate: .Audio, freq: 4, phase: 0.0)
-            let mul = 0.1 + sin * 0.1
-            let am: OscSin = OscSin(rate: .Audio, freq: "Freq", phase: 0.0)
-            let out = am * mul * db_linamp(-6.0)
+            let sin: OscSin = OscSin(rate: .Audio, freq: 400, phase: 0.0)
+            let noise: NoiseWhite = NoiseWhite(rate:  .Audio);
+            let out = noise * 0.2 + sin;
+//            let mul = 0.1 + sin * 0.1
+//            let am: OscSin = OscSin(rate: .Audio, freq: "Freq", phase: 0.0)
+//            let out = am * mul * db_linamp(-6.0)
+           // _ = Output(rate: .Audio, index: 4, output: sin)
+//            let input = Input(rate: .Audio, index: 2)
             _ = Output(rate: .Audio, index: "Output", output: out)
+            _ = Output(rate: .Audio, index: 1, output: sin)
             
         }
         
@@ -74,6 +79,6 @@ class LyrebirdDemo: NSObject {
         noteTwo.updateParameter("Freq", value: 440.0)
         noteTwo.updateParameter("Output", value: 1)
         
-        lyrebird.addNodeToHead(noteTwo)
+        //lyrebird.addNodeToHead(noteTwo)
     }
 }
