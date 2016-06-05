@@ -70,7 +70,7 @@ public class Control: LyrebirdUGen {
         guard run else {
             return run
         }
-        var valueIn: LyrebirdFloat = currentValue.floatValue(graph)
+        let valueIn: LyrebirdFloat = currentValue.floatValue(graph)
         
         let success: Bool = self.next(numSamples, currentValueIn: valueIn)
         return success

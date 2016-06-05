@@ -106,11 +106,10 @@ public class OscSin: LyrebirdUGen {
         var f_phase: LyrebirdFloat = 0.0
         let incrementScaler = LyrebirdFloat(table.count) * LyrebirdEngine.engine.iSampleRate
         let tableCountTimesTwoPI = M_1_TWOPI * tableCount
-        var phaseOffsetDiff = 0.0 
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             f_freq = freqSamples[sampleIdx]
             f_phase = phaseSamples[sampleIdx]
-            var phaseOffsetDiff = (f_phase - lastPhase) * tableCountTimesTwoPI
+            let phaseOffsetDiff = (f_phase - lastPhase) * tableCountTimesTwoPI
             samplingIncrement = (f_freq * incrementScaler) + phaseOffsetDiff
             wire.currentSamples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
             internalPhase = internalPhase + samplingIncrement
@@ -131,7 +130,8 @@ public class OscSin: LyrebirdUGen {
         let tableCountTimesTwoPI = M_1_TWOPI * tableCount
         var phaseOffsetDiff = 0.0
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-            var phaseOffsetDiff = (f_phase - lastPhase) * tableCountTimesTwoPI
+            f_phase = phaseSamples[sampleIdx]
+            phaseOffsetDiff = (f_phase - lastPhase) * tableCountTimesTwoPI
             samplingIncrement = (freq * incrementScaler) + phaseOffsetDiff
             wire.currentSamples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
             internalPhase = internalPhase + samplingIncrement

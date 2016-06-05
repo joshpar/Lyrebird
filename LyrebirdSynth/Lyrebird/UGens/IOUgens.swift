@@ -75,7 +75,6 @@ public class Input : LyrebirdUGen {
     
     public required convenience init(rate: LyrebirdUGenRate){
         let defaultIndex = 0.0
-        let defaultOuput = 0.0
         self.init(rate: rate, index: defaultIndex)
     }
     

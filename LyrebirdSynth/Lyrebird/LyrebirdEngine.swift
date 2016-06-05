@@ -44,9 +44,6 @@ class LyrebirdEngine: NSObject {
     var iSampleRate                     : LyrebirdFloat = 0.000022676
     var audioBlock                      : [LyrebirdAudioChannel] = []
     var controlBlock                    : [LyrebirdControlChannel] = []
-    var ranGens                         : [LyrebirdRandomNumberGenerator] = []
-    
-    private var realtimeMemoryPool      : [LyrebirdFloat] = []
     var tree                            : LyrebirdNodeTree = LyrebirdNodeTree()
     
     // need to
@@ -61,7 +58,6 @@ class LyrebirdEngine: NSObject {
                 let channel: LyrebirdControlChannel = LyrebirdControlChannel(index: idx, iBlockSize: iBlockSize)
                 self.controlBlock.append(channel)
             }
-            realtimeMemoryPool = [LyrebirdFloat](count: Int(internalMemoryPoolSize), repeatedValue: 0.0)
             LyrebirdWire.numWires = numberOfWires
             LyrebirdWire.blockSize = blockSize
             LyrebirdUGenInterface.initInterface()
@@ -81,7 +77,7 @@ class LyrebirdEngine: NSObject {
         tree = LyrebirdNodeTree()
     }
     
-    public func processWithInputChannels(inputChannels: [LyrebirdAudioChannel]){
+    func processWithInputChannels(inputChannels: [LyrebirdAudioChannel]){
         for audioChannel: LyrebirdAudioChannel in self.audioBlock {
             audioChannel.zeroValues()
         }
