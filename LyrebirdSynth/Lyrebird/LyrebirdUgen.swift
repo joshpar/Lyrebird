@@ -233,7 +233,7 @@ extension LyrebirdUGen : LyrebirdValidUGenInput {
         return false
     }
     
-    public func sampleBlock(graph: LyrebirdGraph?, lastValue: LyrebirdFloat?) -> [LyrebirdFloat] {
+    public func sampleBlock(graph: LyrebirdGraph?, lastValue: LyrebirdFloat) -> [LyrebirdFloat] {
         return self.calculatedSamples(graph)[0]
     }
 }

@@ -23,7 +23,6 @@ public class Output : LyrebirdUGen {
         if(index.intValue(graph) < channels.count){
             channel = channels[self.index.intValue(graph)]
         }
-
     }
     
     public required convenience init(rate: LyrebirdUGenRate){
@@ -43,9 +42,8 @@ public class Output : LyrebirdUGen {
         // assume mono for now
         let outputChannel: [LyrebirdFloat] = sampleChannels[0]
         
-        // TODO:: wires always write thier output to the first indexes of their array
+        // Wires always write their output to the first indexes of their array
         // however, when an offset if needed, Output UGens must account for this when they write
-        // FIGURE OUT HOW TO GET THIS OFFSET MORE CLEANLY
         
         let blockSize = LyrebirdEngine.engine.blockSize
         let offset = blockSize - numSamples
@@ -80,7 +78,6 @@ public class Input : LyrebirdUGen {
         let defaultOuput = 0.0
         self.init(rate: rate, index: defaultIndex)
     }
-    
     
     override public func next(numSamples: LyrebirdInt) -> Bool {
         // get the audio wire to output

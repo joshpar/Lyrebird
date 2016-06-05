@@ -29,13 +29,22 @@ class LyrebirdDemo: NSObject {
             let noise: NoiseWhite = NoiseWhite(rate: .Audio)
             let out = noise * 0.2  //+ sin;
             let x = sin
-            let fos = FirstOrderSection(rate: .Audio, input: out, a0: 1.0 - Abs(rate: .Audio, input: x), a1: 0.0, b1: x)
-//            let mul = 0.1 + sin * 0.1
+//            let fos = FirstOrderSection(rate: .Audio, input: out, a0: 1.0 - Abs(rate: .Audio, input: x), a1: 0.0, b1: x)
+            
+            let theta = ((OscSin(rate: .Audio, freq: 0.25, phase: 0.0) * 0.4) + 0.6) * M_PI
+            let rho = (OscSin(rate: .Audio, freq: 0.25, phase: 0.0) * 0.199) + 0.8
+            let b1 = 2.0 * rho * Cos(rate: .Audio, input: theta)
+            let srho = Squared(rate: .Audio, input: rho)
+            let b2 = Negative(rate: .Audio, input: srho)
+            
+            let sos = SecondOrderSection(rate: .Audio, input: out, a0: 1.0, a1: 0.0, a2: 0.0, b1: b1, b2: b2)
+
+            //            let mul = 0.1 + sin * 0.1
 //            let am: OscSin = OscSin(rate: .Audio, freq: "Freq", phase: 0.0)
 //            let out = am * mul * db_linamp(-6.0)
            // _ = Output(rate: .Audio, index: 4, output: sin)
 //            let input = Input(rate: .Audio, index: 2)
-            _ = Output(rate: .Audio, index: "Output", output: fos)
+            _ = Output(rate: .Audio, index: "Output", output: sos)
 //            _ = Output(rate: .Audio, index: 1, output: sin)
             
         }
