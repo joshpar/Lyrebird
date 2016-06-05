@@ -17,10 +17,14 @@ func calcSlope(startValue: LyrebirdFloat, endValue: LyrebirdFloat) -> LyrebirdFl
 }
 
 func interpolatedSampleBlock(startValue: LyrebirdFloat, endValue: LyrebirdFloat) -> [LyrebirdFloat] {
-    let slope = calcSlope(startValue, endValue: endValue)
     var start: LyrebirdFloat = startValue
     let blockSize: LyrebirdInt = LyrebirdEngine.engine.blockSize
+    if(startValue == endValue){
+        let block: [LyrebirdFloat] = [LyrebirdFloat](count: blockSize + 1, repeatedValue: startValue )
+        return block
+    }
     var block: [LyrebirdFloat] = [LyrebirdFloat](count: blockSize + 1, repeatedValue: 0.0 )
+    let slope = calcSlope(startValue, endValue: endValue)
     for idx in 0 ..< blockSize {
         block[idx] = start
         start = start + slope
