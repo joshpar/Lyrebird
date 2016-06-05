@@ -25,16 +25,18 @@ class LyrebirdDemo: NSObject {
         /* instead of a key, pass a closure to evaluate? */
         
         graph.build { () in
-            let sin: OscSin = OscSin(rate: .Audio, freq: 400, phase: 0.0)
-            let noise: NoiseWhite = NoiseWhite(rate:  .Audio);
-            let out = noise * 0.2 + sin;
+            let sin = OscSin(rate: .Audio, freq: 0.25, phase: 0.0)
+            let noise: NoiseWhite = NoiseWhite(rate: .Audio)
+            let out = noise * 0.2  //+ sin;
+            let x = sin
+            let fos = FirstOrderSection(rate: .Audio, input: out, a0: 1.0 - Abs(rate: .Audio, input: x), a1: 0.0, b1: x)
 //            let mul = 0.1 + sin * 0.1
 //            let am: OscSin = OscSin(rate: .Audio, freq: "Freq", phase: 0.0)
 //            let out = am * mul * db_linamp(-6.0)
            // _ = Output(rate: .Audio, index: 4, output: sin)
 //            let input = Input(rate: .Audio, index: 2)
-            _ = Output(rate: .Audio, index: "Output", output: out)
-            _ = Output(rate: .Audio, index: 1, output: sin)
+            _ = Output(rate: .Audio, index: "Output", output: fos)
+//            _ = Output(rate: .Audio, index: 1, output: sin)
             
         }
         
@@ -49,7 +51,7 @@ class LyrebirdDemo: NSObject {
         }
         */
         let note = LyrebirdNote(graph: graph)
-        note.outputOffsetSamples = 44100
+        note.outputOffsetSamples = 0
         
         note.updateParameter("StartFreq", value: keynum_hz(69.0))
         

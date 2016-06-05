@@ -21,7 +21,6 @@ public class BinaryOpUGen : LyrebirdUGen {
     public required convenience init(rate: LyrebirdUGenRate){
         self.init(rate: rate, lhs: 0.0, rhs: 0.0)
     }
-    
 }
 
 // math support
@@ -46,7 +45,7 @@ public func + (lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput) -> Bina
 public class MulOpUGen : BinaryOpUGen {
     
     public override func next(numSamples: LyrebirdInt) -> Bool {
-        var success: Bool = super.next(numSamples)
+        let success: Bool = super.next(numSamples)
         if(success){
             if let wire: LyrebirdWire = wireForIndex(0){
                 
@@ -64,7 +63,7 @@ public class MulOpUGen : BinaryOpUGen {
 public class DivOpUGen : BinaryOpUGen {
     
     public override func next(numSamples: LyrebirdInt) -> Bool {
-        var success: Bool = super.next(numSamples)
+        let success: Bool = super.next(numSamples)
         if(success){
             if let wire: LyrebirdWire = wireForIndex(0){
                 
@@ -87,7 +86,7 @@ public class DivOpUGen : BinaryOpUGen {
 public class AddOpUGen : BinaryOpUGen {
     
     public override func next(numSamples: LyrebirdInt) -> Bool {
-        var success: Bool = super.next(numSamples)
+        let success: Bool = super.next(numSamples)
         if(success){
             if let wire: LyrebirdWire = wireForIndex(0){
                 
@@ -105,7 +104,7 @@ public class AddOpUGen : BinaryOpUGen {
 public class SubOpUGen : BinaryOpUGen {
     
     public override func next(numSamples: LyrebirdInt) -> Bool {
-        var success: Bool = super.next(numSamples)
+        let success: Bool = super.next(numSamples)
         if(success){
             if let wire: LyrebirdWire = wireForIndex(0){
                 
@@ -113,6 +112,49 @@ public class SubOpUGen : BinaryOpUGen {
                 let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
                 for (index, currentSampleValue) in lhsSamples.enumerate() {
                     wire.currentSamples[index] = currentSampleValue - rhsSamples[index]
+                }
+            }
+        }
+        return success
+    }
+}
+
+public class UnaryOpUGen : LyrebirdUGen {
+    let input: LyrebirdValidUGenInput
+    
+    public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput){
+        self.input = input
+        super.init(rate: rate)
+    }
+    
+    public required convenience init(rate: LyrebirdUGenRate){
+        self.init(rate: rate, input: 0.0)
+    }
+}
+
+public class Abs : UnaryOpUGen {
+    public override func next(numSamples: LyrebirdInt) -> Bool {
+        let success: Bool = super.next(numSamples)
+        if(success){
+            if let wire: LyrebirdWire = wireForIndex(0){
+                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+                for index in 0 ..< numSamples {
+                    wire.currentSamples[index] = fabs(inputSamples[index])
+                }
+            }
+        }
+        return success
+    }
+}
+
+public class Negative : UnaryOpUGen {
+    public override func next(numSamples: LyrebirdInt) -> Bool {
+        let success: Bool = super.next(numSamples)
+        if(success){
+            if let wire: LyrebirdWire = wireForIndex(0){
+                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+                for index in 0 ..< numSamples {
+                    wire.currentSamples[index] = -inputSamples[index]
                 }
             }
         }

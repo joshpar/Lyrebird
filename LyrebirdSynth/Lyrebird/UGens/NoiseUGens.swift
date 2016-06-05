@@ -15,6 +15,10 @@ public class NoiseGen : LyrebirdUGen {
             ranGen.seed = UInt32(seed)
         }
     }
+    
+    static func dateSeed() -> LyrebirdInt {
+        return LyrebirdInt(NSDate.timeIntervalSinceReferenceDate())
+    }
 }
 
 public class NoiseWhite: NoiseGen {
@@ -25,7 +29,7 @@ public class NoiseWhite: NoiseGen {
     }
     
     required public convenience init(rate: LyrebirdUGenRate) {
-        self.init(rate: rate, seed: LyrebirdInt(NSDate.timeIntervalSinceReferenceDate()))
+        self.init(rate: rate, seed: NoiseGen.dateSeed())
     }
     
     override public func next(numSamples: LyrebirdInt) -> Bool {

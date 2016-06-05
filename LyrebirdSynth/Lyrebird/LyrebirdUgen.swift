@@ -69,7 +69,21 @@ public protocol LyrebirdValidUGenInput {
     func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]]
     func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat
     func intValue(graph: LyrebirdGraph?) -> LyrebirdInt
+    func needsInterpolation() -> Bool
+    func sampleBlock(graph: LyrebirdGraph?, lastValue: LyrebirdFloat) -> [LyrebirdFloat]
 }
+
+extension LyrebirdValidUGenInput {
+    public func needsInterpolation() -> Bool {
+        return true
+    }
+    
+    public  func sampleBlock(graph: LyrebirdGraph?, lastValue: LyrebirdFloat) -> [LyrebirdFloat] {
+        let newValue = self.floatValue(graph)
+        return interpolatedSampleBlock(lastValue, endValue: newValue)
+    }
+}
+
 
 /**
  The base class for all UGens
@@ -198,7 +212,6 @@ extension LyrebirdUGen : LyrebirdValidUGenInput {
     public func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
         if( outputWires.count > 0){
             let output = outputWires[0]
-            let numSamples = output.currentSamples.count
             if let returnValue = output.currentSamples.last {
                 return returnValue
             }
@@ -214,5 +227,13 @@ extension LyrebirdUGen : LyrebirdValidUGenInput {
             }
         }
         return 0
+    }
+    
+    public func needsInterpolation() -> Bool {
+        return false
+    }
+    
+    public func sampleBlock(graph: LyrebirdGraph?, lastValue: LyrebirdFloat?) -> [LyrebirdFloat] {
+        return self.calculatedSamples(graph)[0]
     }
 }

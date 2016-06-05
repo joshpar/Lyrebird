@@ -56,7 +56,6 @@ extension LyrebirdUnaryMathOps {
 */
 
 
-
 public struct LyrebirdFloatClosure {
     public var closure : LyrebirdFloatClosureBody?
     
@@ -82,6 +81,10 @@ extension LyrebirdFloatClosure : LyrebirdValidUGenInput {
         let int = closure?(graph: graph) ?? 0
         return LyrebirdInt(int)
     }
+    
+
+    
+
 }
 
 extension LyrebirdFloatClosure : LyrebirdFloatUGenValue {

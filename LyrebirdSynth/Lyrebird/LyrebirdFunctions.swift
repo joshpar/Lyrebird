@@ -16,6 +16,19 @@ func calcSlope(startValue: LyrebirdFloat, endValue: LyrebirdFloat) -> LyrebirdFl
     return (endValue - startValue) * LyrebirdEngine.engine.iBlockSize
 }
 
+func interpolatedSampleBlock(startValue: LyrebirdFloat, endValue: LyrebirdFloat) -> [LyrebirdFloat] {
+    let slope = calcSlope(startValue, endValue: endValue)
+    var start: LyrebirdFloat = startValue
+    let blockSize: LyrebirdInt = LyrebirdEngine.engine.blockSize
+    var block: [LyrebirdFloat] = [LyrebirdFloat](count: blockSize + 1, repeatedValue: 0.0 )
+    for idx in 0 ..< blockSize {
+        block[idx] = start
+        start = start + slope
+    }
+    block[blockSize] = endValue
+    return block
+}
+
 func sineLookup(sampleIdx: LyrebirdFloat, mask: LyrebirdInt, table: [LyrebirdFloat]) -> LyrebirdFloat {
     let floorIdx: LyrebirdFloat = floor( sampleIdx)
     let iIndexOne: LyrebirdInt = LyrebirdInt( floorIdx ) & mask
