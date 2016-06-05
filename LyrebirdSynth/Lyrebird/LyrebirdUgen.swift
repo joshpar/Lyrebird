@@ -70,7 +70,7 @@ public protocol LyrebirdValidUGenInput {
     func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat
     func intValue(graph: LyrebirdGraph?) -> LyrebirdInt
     func needsInterpolation() -> Bool
-    func sampleBlock(graph: LyrebirdGraph?, lastValue: LyrebirdFloat) -> [LyrebirdFloat]
+    func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat]
 }
 
 extension LyrebirdValidUGenInput {
@@ -78,9 +78,9 @@ extension LyrebirdValidUGenInput {
         return true
     }
     
-    public  func sampleBlock(graph: LyrebirdGraph?, lastValue: LyrebirdFloat) -> [LyrebirdFloat] {
+    public  func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat] {
         let newValue = self.floatValue(graph)
-        return interpolatedSampleBlock(lastValue, endValue: newValue)
+        return interpolatedSampleBlock(previousValue, endValue: newValue)
     }
 }
 
@@ -233,7 +233,7 @@ extension LyrebirdUGen : LyrebirdValidUGenInput {
         return false
     }
     
-    public func sampleBlock(graph: LyrebirdGraph?, lastValue: LyrebirdFloat) -> [LyrebirdFloat] {
+    public func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat] {
         return self.calculatedSamples(graph)[0]
     }
 }
