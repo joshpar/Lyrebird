@@ -10,7 +10,7 @@ import Foundation
 
 // out(i) = (a0 * in(i)) + (a1 * in(i-1)) + (b1 * out(i-1))
 
-public class FirstOrderSection : LyrebirdUGen {
+public final class FirstOrderSection : LyrebirdUGen {
     private var a0: LyrebirdValidUGenInput
     private var a1: LyrebirdValidUGenInput
     private var b1: LyrebirdValidUGenInput
@@ -39,7 +39,7 @@ public class FirstOrderSection : LyrebirdUGen {
         self.init(rate: rate, input: 0.0, a0: 0.0, a1: 0.0, b1: 0.0)
     }
     
-    override public func next(numSamples: LyrebirdInt) -> Bool {
+    override public final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         guard let wire: LyrebirdWire = self.wire else {
             return false
@@ -92,7 +92,7 @@ public class FirstOrderSection : LyrebirdUGen {
 
 // out(i) = (a0 * in(i)) + (a1 * in(i-1)) + (a2 * in(i-2)) + (b1 * out(i-1)) + (b2 * out(i-2))
 
-public class SecondOrderSection : LyrebirdUGen {
+public final class SecondOrderSection : LyrebirdUGen {
     private var a0: LyrebirdValidUGenInput
     private var a1: LyrebirdValidUGenInput
     private var a2: LyrebirdValidUGenInput
@@ -131,7 +131,7 @@ public class SecondOrderSection : LyrebirdUGen {
         self.init(rate: rate, input: 0.0, a0: 0.0, a1: 0.0, a2: 0.0, b1: 0.0, b2: 0.0)
     }
     
-    override public func next(numSamples: LyrebirdInt) -> Bool {
+    override public final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         guard let wire: LyrebirdWire = self.wire else {
             return false
@@ -177,7 +177,6 @@ public class SecondOrderSection : LyrebirdUGen {
             let a2Samps: [LyrebirdFloat] = a2.sampleBlock(graph, previousValue: lastA2)
             let b1Samps: [LyrebirdFloat] = b1.sampleBlock(graph, previousValue: lastB1)
             let b2Samps: [LyrebirdFloat] = b2.sampleBlock(graph, previousValue: lastB2)
-            
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
                 tmpOutput2 = output1
                 currentIn = inputSamples[sampleIdx]

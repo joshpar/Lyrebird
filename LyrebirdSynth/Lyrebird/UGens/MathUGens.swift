@@ -44,16 +44,16 @@ public func + (lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput) -> Bina
 }
 
 
-public class MulOpUGen : BinaryOpUGen {
+public final class MulOpUGen : BinaryOpUGen {
     
-    public override func next(numSamples: LyrebirdInt) -> Bool {
+    public override final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
             if let wire: LyrebirdWire = wire {
                 let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
                 let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
-                for (index, currentSampleValue) in lhsSamples.enumerate() {
-                    wire.currentSamples[index] = currentSampleValue * rhsSamples[index]
+                for index in 0 ..< lhsSamples.count {
+                    wire.currentSamples[index] = lhsSamples[index] * rhsSamples[index]
                 }
             }
         }
@@ -69,10 +69,10 @@ public class DivOpUGen : BinaryOpUGen {
             if let wire: LyrebirdWire = wire {
                 let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
                 let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
-                for (index, currentSampleValue) in lhsSamples.enumerate() {
+                for index in 0 ..< lhsSamples.count {
                     let divisor = rhsSamples[index]
                     if divisor != 0.0 {
-                        wire.currentSamples[index] = currentSampleValue * rhsSamples[index]
+                        wire.currentSamples[index] = lhsSamples[index] / rhsSamples[index]
                     } else {
                         wire.currentSamples[index] = 0.0
                     }
@@ -91,8 +91,8 @@ public class AddOpUGen : BinaryOpUGen {
             if let wire: LyrebirdWire = wire {
                 let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
                 let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
-                for (index, currentSampleValue) in lhsSamples.enumerate() {
-                    wire.currentSamples[index] = currentSampleValue + rhsSamples[index]
+                for index in 0 ..< lhsSamples.count {
+                    wire.currentSamples[index] = lhsSamples[index] + rhsSamples[index]
                 }
             }
         }
@@ -108,8 +108,8 @@ public class SubOpUGen : BinaryOpUGen {
             if let wire: LyrebirdWire = wire {
                 let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
                 let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
-                for (index, currentSampleValue) in lhsSamples.enumerate() {
-                    wire.currentSamples[index] = currentSampleValue - rhsSamples[index]
+                for index in 0 ..< lhsSamples.count {
+                    wire.currentSamples[index] = lhsSamples[index] - rhsSamples[index]
                 }
             }
         }

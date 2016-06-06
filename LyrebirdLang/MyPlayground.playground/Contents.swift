@@ -36,3 +36,13 @@ ratio_midi(0.5)
 sig_sqrt(-4.0)
 
 
+var array = [1, 2, 3]
+var array2 = array
+array2[2] = 300
+
+print("\(array, array2)")
+
+
+
+
+

@@ -10,7 +10,7 @@ import Foundation
 
 
 
-public class Output : LyrebirdUGen {
+public final class Output : LyrebirdUGen {
     var index: LyrebirdValidUGenInput
     var output: LyrebirdValidUGenInput
     private var channel: LyrebirdAudioChannel? = nil
@@ -32,7 +32,7 @@ public class Output : LyrebirdUGen {
     }
    
     
-    override public func next(numSamples: LyrebirdInt) -> Bool {
+    override public final func next(numSamples: LyrebirdInt) -> Bool {
         // get the audio wire to output
         let channels: [LyrebirdAudioChannel] = LyrebirdEngine.engine.audioBlock
         if(index.intValue(graph) < channels.count){
@@ -58,7 +58,7 @@ public class Output : LyrebirdUGen {
     
 }
 
-public class Input : LyrebirdUGen {
+public final class Input : LyrebirdUGen {
     var index: LyrebirdValidUGenInput
     private var channel: LyrebirdAudioChannel? = nil
     private var wire: LyrebirdWire? = nil
@@ -78,7 +78,7 @@ public class Input : LyrebirdUGen {
         self.init(rate: rate, index: defaultIndex)
     }
     
-    override public func next(numSamples: LyrebirdInt) -> Bool {
+    override public final func next(numSamples: LyrebirdInt) -> Bool {
         // get the audio wire to output
         guard let wire: LyrebirdWire = self.wire else {
             return false

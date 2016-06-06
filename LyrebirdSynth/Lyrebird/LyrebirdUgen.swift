@@ -78,7 +78,7 @@ extension LyrebirdValidUGenInput {
         return true
     }
     
-    public  func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat] {
+    public func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat] {
         let newValue = self.floatValue(graph)
         return interpolatedSampleBlock(previousValue, endValue: newValue)
     }
