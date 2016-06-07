@@ -120,7 +120,10 @@ class LyrebirdDemo: NSObject {
                 
             }
             timer.block = block
-            
+            let finalBlock: LyrebirdTimerFinalizerBlock = {(curTime: LyrebirdFloat) in
+                    print("Final \(curTime)")
+            }
+            timer.finalizerBlock = finalBlock
             timer.run()
         }
     }

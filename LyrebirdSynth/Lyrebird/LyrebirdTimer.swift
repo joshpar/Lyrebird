@@ -96,6 +96,9 @@ public final class LyrebirdTimer : NSObject {
     /// Note: The incrementer is zero based
     private var inc: LyrebirdInt = 0
     
+    /// ---
+    /// A time stamp to compare to actual execution time. Differences between this and actual time will be removed during scheduling of the next repeition
+    ///
     private var nextExpectedTime: LyrebirdFloat = 0.0
     
     public convenience override init(){
@@ -105,7 +108,7 @@ public final class LyrebirdTimer : NSObject {
     public required init(delayStartTime: LyrebirdFloat, idString: String){
         self.idString = idString
         self.delayStartTime = delayStartTime
-        queue = dispatch_queue_create(self.idString, DISPATCH_QUEUE_CONCURRENT)
+        queue = dispatch_queue_create(self.idString, DISPATCH_QUEUE_SERIAL)
         let q: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
 
         dispatch_set_target_queue(queue, q)
@@ -131,7 +134,7 @@ public final class LyrebirdTimer : NSObject {
                 self.inc = self.inc + 1
                 self.nextExpectedTime = self.nextExpectedTime + nextTime
                 let now = NSDate.timeIntervalSinceReferenceDate() - self.startTime
-                let delayTime = nextTime - (now - curTime) + error
+                let delayTime = (nextTime - (now - curTime)) + error
                 delay(delayTime, queue: queue, closure: { self.next() })
             } else {
                 finalizerBlock?(curTime: curTime)
