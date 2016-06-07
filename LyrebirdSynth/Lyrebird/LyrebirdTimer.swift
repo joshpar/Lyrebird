@@ -96,6 +96,8 @@ public final class LyrebirdTimer : NSObject {
     /// Note: The incrementer is zero based
     private var inc: LyrebirdInt = 0
     
+    private var nextExpectedTime: LyrebirdFloat = 0.0
+    
     public convenience override init(){
         self.init(delayStartTime: 0.0, idString: "LyrebirdTimer")
     }
@@ -103,7 +105,7 @@ public final class LyrebirdTimer : NSObject {
     public required init(delayStartTime: LyrebirdFloat, idString: String){
         self.idString = idString
         self.delayStartTime = delayStartTime
-        queue = dispatch_queue_create(self.idString, DISPATCH_QUEUE_SERIAL)
+        queue = dispatch_queue_create(self.idString, DISPATCH_QUEUE_CONCURRENT)
         let q: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
 
         dispatch_set_target_queue(queue, q)
@@ -114,6 +116,7 @@ public final class LyrebirdTimer : NSObject {
         delay(self.delayStartTime, queue: queue) { 
             if (self.startTime < 0.0) {
                 self.startTime = NSDate.timeIntervalSinceReferenceDate()
+                self.nextExpectedTime = 0.0
             }
             self.next()
         }
@@ -121,12 +124,14 @@ public final class LyrebirdTimer : NSObject {
     
     private final func next() {
         let curTime = NSDate.timeIntervalSinceReferenceDate() - self.startTime
+        let error = self.nextExpectedTime - curTime
         if let block = block {
             let nextTime: LyrebirdFloat? = block(curTime: curTime, inc: self.inc)
             if let nextTime = nextTime {
                 self.inc = self.inc + 1
+                self.nextExpectedTime = self.nextExpectedTime + nextTime
                 let now = NSDate.timeIntervalSinceReferenceDate() - self.startTime
-                let delayTime = nextTime - (now - curTime)
+                let delayTime = nextTime - (now - curTime) + error
                 delay(delayTime, queue: queue, closure: { self.next() })
             } else {
                 finalizerBlock?(curTime: curTime)
