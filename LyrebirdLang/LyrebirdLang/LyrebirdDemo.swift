@@ -101,9 +101,9 @@ class LyrebirdDemo: NSObject {
             var counter: LyrebirdInt = 0
             self.lyrebird.addNodeToHead(note!)
             
-            let block: LyrebirdTimerBlock = {_ in
+            let block: LyrebirdTimerBlock = {(curTime: LyrebirdFloat, inc: LyrebirdInt) in
                 counter = counter + 1
-                print("Hello")
+                print("Hello \(curTime, inc)")
                 if counter == 10 {
                     note?.finishBlock = { _ in
                         print("Done")
@@ -121,7 +121,7 @@ class LyrebirdDemo: NSObject {
             }
             timer.block = block
             
-            timer.next()
+            timer.run()
         }
     }
 }
