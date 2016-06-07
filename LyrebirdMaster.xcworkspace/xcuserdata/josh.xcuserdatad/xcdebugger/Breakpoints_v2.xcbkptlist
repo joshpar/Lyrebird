@@ -1046,11 +1046,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdLang/LyrebirdLang/LyrebirdDemo.swift"
-            timestampString = "486795384.26189"
+            timestampString = "486917285.217162"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "runDemo()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1515,6 +1515,118 @@
             endingLineNumber = "175"
             landmarkName = "next(_:)"
             landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdLang/LyrebirdLang/LyrebirdDemo.swift"
+            timestampString = "486917285.217162"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "runDemo()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LyrebirdSynthLang.LyrebirdDemo.runDemo () -&gt; ()"
+                  moduleName = "LyrebirdSynthLang"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdLang/LyrebirdLang/LyrebirdDemo.swift"
+                  timestampString = "486885126.480091"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "57">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LyrebirdSynthLang.LyrebirdDemo.(runDemo () -&gt; ()).(closure #1)"
+                  moduleName = "LyrebirdSynthLang"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdLang/LyrebirdLang/LyrebirdDemo.swift"
+                  timestampString = "486885126.480359"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30"
+                  offsetFromSymbolStart = "4">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/LyrebirdTimer.swift"
+            timestampString = "486955141.235084"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "next()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/LyrebirdNode.swift"
+            timestampString = "486918966.181555"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "free()"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Lyrebird.LyrebirdNode.free () -&gt; ()"
+                  moduleName = "Lyrebird"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdSynth/Lyrebird/LyrebirdNode.swift"
+                  timestampString = "486918129.862005"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "180"
+                  endingLineNumber = "180"
+                  offsetFromSymbolStart = "19">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Lyrebird.LyrebirdNode.free () -&gt; ()"
+                  moduleName = "Lyrebird"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdSynth/Lyrebird/LyrebirdNode.swift"
+                  timestampString = "486918129.862225"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "180"
+                  endingLineNumber = "180"
+                  offsetFromSymbolStart = "52">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

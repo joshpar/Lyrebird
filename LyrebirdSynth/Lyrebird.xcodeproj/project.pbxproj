@@ -26,6 +26,7 @@
 		031122CB1CE3868900D657CB /* OscUGens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031122BB1CE3868900D657CB /* OscUGens.swift */; };
 		031122CD1CE386FF00D657CB /* ControlUGens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031122CC1CE386FF00D657CB /* ControlUGens.swift */; };
 		0352B36E1CEE15820014775A /* MathUGens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0352B36D1CEE15820014775A /* MathUGens.swift */; };
+		03A68E051D053A50004ED24F /* LyrebirdTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A68E041D053A50004ED24F /* LyrebirdTimer.swift */; };
 		03AE398A1CE93C0D008B2E83 /* IOUgens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE39891CE93C0D008B2E83 /* IOUgens.swift */; };
 		03C77F121CD9AB0E003A753B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03C77F041CD9A99C003A753B /* Info.plist */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		031122BB1CE3868900D657CB /* OscUGens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OscUGens.swift; sourceTree = "<group>"; };
 		031122CC1CE386FF00D657CB /* ControlUGens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlUGens.swift; sourceTree = "<group>"; };
 		0352B36D1CEE15820014775A /* MathUGens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathUGens.swift; sourceTree = "<group>"; };
+		03A68E041D053A50004ED24F /* LyrebirdTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyrebirdTimer.swift; sourceTree = "<group>"; };
 		03AE39891CE93C0D008B2E83 /* IOUgens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOUgens.swift; sourceTree = "<group>"; };
 		03C77EA01CD6B20B003A753B /* Lyrebird.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lyrebird.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C77F041CD9A99C003A753B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				031122B51CE3868900D657CB /* LyrebirdNode.swift */,
 				0307E5691CFFF219002E5582 /* LyrebirdRandomGenerator.swift */,
 				031122B61CE3868900D657CB /* LyrebirdRawAudioChannel.swift */,
+				03A68E041D053A50004ED24F /* LyrebirdTimer.swift */,
 				031122B71CE3868900D657CB /* LyrebirdTypes.swift */,
 				031122B81CE3868900D657CB /* LyrebirdUgen.swift */,
 				031122B91CE3868900D657CB /* LyrebirdWire.swift */,
@@ -220,6 +223,7 @@
 				0307E5681CFFC347002E5582 /* NoiseUGens.swift in Sources */,
 				031122C11CE3868900D657CB /* LyrebirdControlChannel.swift in Sources */,
 				03AE398A1CE93C0D008B2E83 /* IOUgens.swift in Sources */,
+				03A68E051D053A50004ED24F /* LyrebirdTimer.swift in Sources */,
 				031122C41CE3868900D657CB /* LyrebirdGraph.swift in Sources */,
 				031122C31CE3868900D657CB /* LyrebirdFunctions.swift in Sources */,
 				031122C01CE3868900D657CB /* LyrebirdConsts.swift in Sources */,

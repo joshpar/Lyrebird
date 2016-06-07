@@ -42,3 +42,6 @@ func sineLookup(sampleIdx: LyrebirdFloat, mask: LyrebirdInt, table: [LyrebirdFlo
     let returnVal = linearInterp(valOne, x2: valTwo, pct: pct)
     return returnVal
 }
+
+
+

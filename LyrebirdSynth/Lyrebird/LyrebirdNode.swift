@@ -150,10 +150,14 @@ public class LyrebirdParallelGroup: NSObject {
     }
 }
 
+public typealias LyrebirdNodeFinishBlock = (node: LyrebirdNode) -> Void
+
 public class LyrebirdNode: NSObject {
-    var nextNode                : LyrebirdNode?
-    var previousNode            : LyrebirdNode?
-    
+    var nextNode                        : LyrebirdNode?
+    var previousNode                    : LyrebirdNode?
+    var parent                          : LyrebirdGroup?
+    public var finishBlock              : LyrebirdNodeFinishBlock?
+
     public func addNodeAfter(node: LyrebirdNode){
         if let nextNode: LyrebirdNode = node.nextNode {
             node.nextNode = nextNode
@@ -161,6 +165,7 @@ public class LyrebirdNode: NSObject {
         }
         self.nextNode = node
         node.previousNode = node
+        node.parent = self.parent
     }
     
     public func addNodeBefore(node: LyrebirdNode){
@@ -170,10 +175,20 @@ public class LyrebirdNode: NSObject {
         }
         node.nextNode = self
         self.previousNode = node
+        node.parent = self.parent
     }
     
     public func next(numSamples: LyrebirdInt){
         
+    }
+    
+    public func free(){
+        if let previousNode = previousNode {
+            previousNode.nextNode = nextNode
+        } else {
+            parent?.nextNode = nextNode
+        }
+        finishBlock?(node: self)
     }
 }
 
@@ -183,7 +198,7 @@ public class LyrebirdGroup: LyrebirdNode {
         node.nextNode = nextNode
         nextNode?.previousNode = node
         nextNode = node
-        
+        node.parent = self
     }
     
     public func addNodeToTail(node: LyrebirdNode){
@@ -196,14 +211,17 @@ public class LyrebirdGroup: LyrebirdNode {
             return
         }
         nextNode = node
+        node.parent = self
     }
     
     public func processChildren(){
         var node: LyrebirdNode? = nextNode
         let blockSize = LyrebirdEngine.engine.blockSize
         while node != nil {
+            // get the CURRENT next node
+            let tmp = node?.nextNode
             node?.next(blockSize)
-            node = node?.nextNode
+            node = tmp
         }
     
     }
@@ -234,7 +252,9 @@ public class LyrebirdNote: LyrebirdNode {
     
     private var hasQueuedChanges        : Bool  = false
     
-    public var outputOffsetSamples     : LyrebirdInt = 0
+    public var outputOffsetSamples      : LyrebirdInt = 0
+    
+    public var shouldFree               : Bool = false
     
     public required init(graph: LyrebirdGraph?){
         if let graphCopy: LyrebirdGraph = graph!.copyGraph() {
@@ -281,6 +301,11 @@ public class LyrebirdNote: LyrebirdNode {
                     }
                     hasQueuedChanges = false
                     queuedParameterChanges.removeAll()
+                }
+                // shouldFree can be set by a notes processing function internally
+                // such as after envelopes finish
+                if shouldFree {
+                    self.free()
                 }
             }
         }
