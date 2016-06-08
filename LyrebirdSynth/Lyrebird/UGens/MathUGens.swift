@@ -466,6 +466,10 @@ public class Tanh : UnaryOpUGen {
     }
 }
 
+/**
+ The squaring implementation for UGen math operations
+ */
+
 public class Squared : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
@@ -481,6 +485,31 @@ public class Squared : UnaryOpUGen {
         return success
     }
 }
+
+/**
+ The squaring implementation for UGen math operations where sign is retained
+ */
+
+public class SigSquared : UnaryOpUGen {
+    public override func next(numSamples: LyrebirdInt) -> Bool {
+        let success: Bool = super.next(numSamples)
+        if(success){
+            if let wire: LyrebirdWire = wire {
+                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+                for index in 0 ..< numSamples {
+                    let val = inputSamples[index]
+                    let sign: LyrebirdFloat = val < 0.0 ? -1.0 : 1.0
+                    wire.currentSamples[index] = (val * val) * sign
+                }
+            }
+        }
+        return success
+    }
+}
+
+/**
+ The cubing implementation for UGen math operations where sign is retained
+ */
 
 public class Cubed : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
