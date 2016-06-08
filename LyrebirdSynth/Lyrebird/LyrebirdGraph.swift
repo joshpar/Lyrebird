@@ -14,7 +14,7 @@ public typealias LyrebirdGraphConstructionClosure = () -> Void
  Represents a single model for a synthesis graph. Create LyrebirdNotes to play an instance of a graph
  */
 
-public class LyrebirdGraph: NSObject {
+public class LyrebirdGraph {
     static var currentBuildingGraph: LyrebirdGraph? = nil
     
     /// ---
@@ -28,6 +28,9 @@ public class LyrebirdGraph: NSObject {
 //    public var mappedParameters :
     
     public var buildClosure    : LyrebirdGraphConstructionClosure?
+    
+    public init(){
+    }
     
     func next(numSamples: LyrebirdInt){
         for ugen: LyrebirdUGen in children {

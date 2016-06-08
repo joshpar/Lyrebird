@@ -6,15 +6,13 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
 /**
  Wires are used within Graphs to pass audio data between UGens.
  UGens can accept an array of wires as inputs
  UGens store an array of wires as outputs
  */
 
-public class LyrebirdWire: NSObject {
+public class LyrebirdWire {
     
     /**
      The inverse of the blockSize. For wires that need to interpolate between two control values, this provides a scaler

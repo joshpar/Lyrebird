@@ -43,6 +43,25 @@ array2[2] = 300
 print("\(array, array2)")
 
 
+var list = LyrebirdRepeatableListStream(list: [0.0, 1.1, 2.2, 3.3], repeats: 2)
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+list.next()
+
+
+
 
 
 

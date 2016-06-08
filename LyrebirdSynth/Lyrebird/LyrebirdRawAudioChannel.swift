@@ -6,8 +6,7 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
 
-class LyrebirdRawAudioChannel: NSObject {
+class LyrebirdRawAudioChannel {
 
 }

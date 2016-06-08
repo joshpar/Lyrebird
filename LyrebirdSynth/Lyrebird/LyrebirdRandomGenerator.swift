@@ -6,8 +6,6 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
 public struct LyrebirdRandomNumberGenerator {
     public var seed: UInt32 = 0 {
         didSet {

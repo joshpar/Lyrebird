@@ -6,8 +6,6 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
 public enum LyrebirdTreeError : ErrorType {
     case AlreadyProcessing
 }
@@ -18,7 +16,7 @@ typealias LyrebirdInternalTreeCompletionBlock = () -> Void
 /**
  LyrebirdNodeTree handles the main interaction with order of execution, and signal processing
  */
-public class LyrebirdNodeTree: NSObject {
+public class LyrebirdNodeTree {
 
     /// ---
     /// The single Node in the system which contains any parallel groups of nodes to be processed
@@ -44,9 +42,8 @@ public class LyrebirdNodeTree: NSObject {
     /// prevents the tree from being processed twice at the same time
     private var processing: Bool = false
     
-    override init(){
+    public init(){
         defaultGroup = root.parallelGroups[0].rootGroup
-        super.init()
     }
     
     /**
@@ -99,7 +96,7 @@ public class LyrebirdNodeTree: NSObject {
     
 }
 
-class LyrebirdRootNode: NSObject {
+class LyrebirdRootNode {
     
     private var parallelGroups      : [LyrebirdParallelGroup] = [LyrebirdParallelGroup()]
     
@@ -108,9 +105,10 @@ class LyrebirdRootNode: NSObject {
     }
     
     func removeParallelGroup(parallelGroup: LyrebirdParallelGroup){
-        if let index: Int = parallelGroups.indexOf(parallelGroup) {
-            parallelGroups.removeAtIndex(index)
-        }
+        
+//        if let index: Int = parallelGroups.indexOf(parallelGroup) {
+//            parallelGroups.removeAtIndex(index)
+//        }
     }
     
     func processTree(completion: LyrebirdInternalTreeCompletionBlock ){
@@ -138,7 +136,7 @@ class LyrebirdRootNode: NSObject {
 }
 
 // represents a thread independent node of values to process
-public class LyrebirdParallelGroup: NSObject {
+public class LyrebirdParallelGroup {
     var finished        : Bool = true
     var rootGroup       : LyrebirdGroup = LyrebirdGroup()
     
@@ -152,7 +150,7 @@ public class LyrebirdParallelGroup: NSObject {
 
 public typealias LyrebirdNodeFinishBlock = (node: LyrebirdNode) -> Void
 
-public class LyrebirdNode: NSObject {
+public class LyrebirdNode {
     var nextNode                        : LyrebirdNode?
     var previousNode                    : LyrebirdNode?
     var parent                          : LyrebirdGroup?

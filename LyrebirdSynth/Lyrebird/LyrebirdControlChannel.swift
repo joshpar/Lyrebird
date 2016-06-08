@@ -6,9 +6,7 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
-public class LyrebirdControlChannel: NSObject {
+public class LyrebirdControlChannel {
     private (set) public var index: LyrebirdInt = 0
     private var iBlockSize: LyrebirdFloat = 0.0
     private (set) public var currentValues: LyrebirdFloat = 0.0
@@ -17,12 +15,10 @@ public class LyrebirdControlChannel: NSObject {
     public required init(index: LyrebirdInt, iBlockSize: LyrebirdFloat){
         self.index = index
         self.iBlockSize = iBlockSize
-        super.init()
     }
     
-    public override convenience init() {
+    public convenience init() {
         // default iBlockSize of 1/64
         self.init(index: 0, iBlockSize: 0.015625)
     }
-    
 }

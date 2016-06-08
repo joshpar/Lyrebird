@@ -6,8 +6,6 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
 protocol LyrebirdEngineDelegate {
     func synthEngineHasStarted(engine: LyrebirdEngine)
     func synthEngineHasStopped(engine: LyrebirdEngine)
@@ -15,7 +13,7 @@ protocol LyrebirdEngineDelegate {
 
 typealias LyrebirdResultOutputBlock = (finished: Bool) -> Void
 
-class LyrebirdEngine: NSObject {
+class LyrebirdEngine {
     // initial default engine. This should act as a singleton however! Every init of LyrebirdEngine will overwrite this instance.
     static var engine: LyrebirdEngine = LyrebirdEngine()
     

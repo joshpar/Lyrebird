@@ -6,8 +6,6 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
 /**
  Holds basic preallocated data that all UGens can access.
  */
@@ -89,7 +87,7 @@ extension LyrebirdValidUGenInput {
  The base class for all UGens
  */
 
-public class LyrebirdUGen: NSObject {
+public class LyrebirdUGen {
     
     private (set) public var rate: LyrebirdUGenRate
     private (set) public var outputWires: [LyrebirdWire] = []
@@ -105,7 +103,6 @@ public class LyrebirdUGen: NSObject {
     public required init(rate: LyrebirdUGenRate){
         self.graph = LyrebirdGraph.currentBuildingGraph
         self.rate = rate
-        super.init()
         self.graph?.addChild(self)
         // TOOD: my initial assumption is that once a graph is initialized, the same
         // wires will be used. Make sure this is actually the case!
@@ -126,7 +123,7 @@ public class LyrebirdUGen: NSObject {
         ready = true
     }
     
-    public override convenience init(){
+    public convenience init(){
         self.init(rate: LyrebirdUGenRate.Control)
     }
     

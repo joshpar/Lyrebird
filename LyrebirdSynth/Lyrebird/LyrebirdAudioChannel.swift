@@ -6,9 +6,7 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
-public class LyrebirdAudioChannel: NSObject {
+public class LyrebirdAudioChannel {
     static var zeroedValues: [LyrebirdFloat] = []
     private (set) public var index: LyrebirdInt = 0
     public var currentValues: [LyrebirdFloat] = []
@@ -21,12 +19,11 @@ public class LyrebirdAudioChannel: NSObject {
                 LyrebirdAudioChannel.zeroedValues = [LyrebirdFloat](count: Int(count), repeatedValue: 0.0)
             }
         }
-        super.init()
         touched = true
         self.zeroValues()
     }
     
-    public override convenience init() {
+    public convenience init() {
         self.init(index: 0, blockSize: 1024)
     }
     

@@ -6,9 +6,6 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
-
 /**
  A function wrapper for queued delays
  
@@ -56,7 +53,7 @@ public typealias LyrebirdTimerFinalizerBlock = (curTime: LyrebirdFloat) -> Void
  The base class for handling timed and repeated execution of a block
  */
 
-public final class LyrebirdTimer : NSObject {
+public final class LyrebirdTimer {
     /// ---
     /// the closure the execute every time the timer runs. If the optional return is a float > 0.0, repeition is scheduled for that time in seconds
     ///
@@ -107,7 +104,7 @@ public final class LyrebirdTimer : NSObject {
      - parameter none:
     */
 
-    public convenience override init(){
+    public convenience init(){
         self.init(delayStartTime: 0.0, idString: "LyrebirdTimer")
     }
     
@@ -126,7 +123,6 @@ public final class LyrebirdTimer : NSObject {
         queue = dispatch_queue_create(self.idString, DISPATCH_QUEUE_CONCURRENT)
         let q: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
         dispatch_set_target_queue(queue, q)
-        super.init()
     }
     
     /**

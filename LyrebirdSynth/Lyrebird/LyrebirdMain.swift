@@ -6,9 +6,7 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
-public class LyrebirdMain: NSObject {
+public class LyrebirdMain {
     
     
     /// ---
@@ -120,7 +118,6 @@ Designated initializer for the main synth environment.
         self.sampleRate = sampleRate
         self.iSampleRate = 1.0 / sampleRate
         self.iBlockSize = 1.0 / LyrebirdFloat(self.blockSize)
-        super.init()
         engine.numberOfAudioChannels = self.numberOfAudioChannels
         engine.numberOfControlChannels  = self.numberOfControlChannels
         engine.numberOfWires = self.numberOfWires
@@ -130,7 +127,7 @@ Designated initializer for the main synth environment.
         startEngine()
     }
     
-    public override convenience init() {
+    public convenience init() {
         self.init(numberOfAudioChannels: 128,
                   numberOfInputChannels: 2,
                   numberOfOutputChannels: 2,

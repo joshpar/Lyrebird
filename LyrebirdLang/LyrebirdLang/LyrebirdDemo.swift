@@ -104,7 +104,7 @@ class LyrebirdDemo: NSObject {
             let block: LyrebirdTimerBlock = {(curTime: LyrebirdFloat, inc: LyrebirdInt) in
                 counter = counter + 1
                 print("Hello \(curTime, inc)")
-                if counter == 10 {
+                if counter == 19 {
                     note?.finishBlock = { _ in
                         print("Done")
                     }
@@ -112,7 +112,7 @@ class LyrebirdDemo: NSObject {
                     note = nil
                 }
                 if counter < 20 {
-                    return 0.2
+                    return 0.4
                 }
                 self.timer = nil
                 
