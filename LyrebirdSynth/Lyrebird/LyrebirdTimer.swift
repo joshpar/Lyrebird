@@ -101,19 +101,40 @@ public final class LyrebirdTimer : NSObject {
     ///
     private var nextExpectedTime: LyrebirdFloat = 0.0
     
+    /**
+     Convenience init that uses a 0.0 delay time and a default idString
+     
+     - parameter none:
+    */
+
     public convenience override init(){
         self.init(delayStartTime: 0.0, idString: "LyrebirdTimer")
     }
     
+    /**
+     Custom init that uses a given delay time and a custom idString
+     
+     - parameter delayStartTime: in seconds, the initial amount of time to wait before performing blocks
+     - parameter idString: a custom identifier that helps find a thread in debugging tools or stack traces
+     
+     Note: the delayStartTime is NOT included in the curTime values passed into the blocks that are run. curTime starts at 0.0
+     */
+    
     public required init(delayStartTime: LyrebirdFloat, idString: String){
         self.idString = idString
         self.delayStartTime = delayStartTime
-        queue = dispatch_queue_create(self.idString, DISPATCH_QUEUE_SERIAL)
-        let q: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-
+        queue = dispatch_queue_create(self.idString, DISPATCH_QUEUE_CONCURRENT)
+        let q: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
         dispatch_set_target_queue(queue, q)
         super.init()
     }
+    
+    /**
+     Starts execution of the timer. The first block will be performed after any delayStartTime
+     
+     - parameter none:
+     */
+
     
     public final func run() {
         delay(self.delayStartTime, queue: queue) { 
@@ -125,6 +146,12 @@ public final class LyrebirdTimer : NSObject {
         }
     }
     
+    /**
+     The internal method that the internal thread fires over again. If a block returns a float greater than 0.0, the thread is scheduled for another execution. Because of execution time of the block and other timing considerations, the next function also tries to figure out how much error there is between the expected run time of a block, and compensates for it on the next iteration.
+     
+     - parameter none:
+     */
+
     private final func next() {
         let curTime = NSDate.timeIntervalSinceReferenceDate() - self.startTime
         let error = self.nextExpectedTime - curTime

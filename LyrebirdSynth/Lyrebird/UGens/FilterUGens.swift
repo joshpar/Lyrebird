@@ -142,7 +142,7 @@ public final class SecondOrderSection : LyrebirdUGen {
         var input2: LyrebirdFloat = self.input2
         var output2: LyrebirdFloat = self.output2
         var currentIn: LyrebirdFloat = 0.0
-        var tmpOutput2: LyrebirdFloat = 0.0
+        var tmpOutput2: LyrebirdFloat = output1
         
         let newA0 = a0.floatValue(graph)
         let newA1 = a1.floatValue(graph)

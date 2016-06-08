@@ -8,11 +8,33 @@
 
 import Foundation
 
+/**
+ The basic UGen used for binary math operations on other UGens. Since math on UGens needs to operate on the samples in a wire, special UGens for accessing the samples or interpolating for changing values across control periods is needed
+ */
 public class BinaryOpUGen : LyrebirdUGen {
+    /// ---
+    /// The left hand side of the operation
+    ///
     let lhs: LyrebirdValidUGenInput
+    /// ---
+    /// The right hand side of the operation
+    ///
     let rhs: LyrebirdValidUGenInput
+    /// ---
+    /// TODO:: to be changed later as multi-channel expansion comes into play with wires
+    ///
     var wire: LyrebirdWire?
     
+    /**
+     init for all BinaryOpUGens
+     
+     - parameter rate: LyrebirdUGenRate to run the unit at
+     - parameter lhs: left hand side of the operation
+     - parameter rhs: right hand side of the operation
+     
+     - Returns: An instance of a BinaryOpUGen - the result of the operation is stored in the UGen's wire
+     */
+
     public required init(rate: LyrebirdUGenRate, lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput){
         self.lhs = lhs
         self.rhs = rhs
@@ -25,27 +47,74 @@ public class BinaryOpUGen : LyrebirdUGen {
     }
 }
 
-// math support
+
+/**
+ multiply function that translates the '*' operator into a Binary Op UGen
+ 
+ - parameter lhs: left hand side of the operation
+ - parameter rhs: right hand side of the operation
+ 
+ - Returns: The resulting MulOpUGen
+*/
 
 public func * (lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput) -> BinaryOpUGen {
     return MulOpUGen(rate: LyrebirdUGenRate.Audio, lhs: lhs, rhs: rhs)
 }
 
-public func / (lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput) -> BinaryOpUGen {
-    return DivOpUGen(rate: LyrebirdUGenRate.Audio, lhs: lhs, rhs: rhs)
-}
-
-public func - (lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput) -> BinaryOpUGen {
-    return SubOpUGen(rate: LyrebirdUGenRate.Audio, lhs: lhs, rhs: rhs)
-}
+/**
+ addition function that translates the '+' operator into a Binary Op UGen
+ 
+ - parameter lhs: left hand side of the operation
+ - parameter rhs: right hand side of the operation
+ 
+ - Returns: The resulting MulOpUGen
+ */
 
 public func + (lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput) -> BinaryOpUGen {
     return AddOpUGen(rate: LyrebirdUGenRate.Audio, lhs: lhs, rhs: rhs)
 }
 
+/**
+ division function that translates the '/' operator into a Binary Op UGen
+ 
+ - parameter lhs: left hand side of the operation
+ - parameter rhs: right hand side of the operation
+ 
+ - Returns: The resulting MulOpUGen
+ */
+
+public func / (lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput) -> BinaryOpUGen {
+    return DivOpUGen(rate: LyrebirdUGenRate.Audio, lhs: lhs, rhs: rhs)
+}
+
+/**
+ subtraction function that translates the '-' operator into a Binary Op UGen
+ 
+ - parameter lhs: left hand side of the operation
+ - parameter rhs: right hand side of the operation
+ 
+ - Returns: The resulting MulOpUGen
+ */
+
+public func - (lhs: LyrebirdValidUGenInput, rhs: LyrebirdValidUGenInput) -> BinaryOpUGen {
+    return SubOpUGen(rate: LyrebirdUGenRate.Audio, lhs: lhs, rhs: rhs)
+}
+
+
+/**
+ The multiply implementation for UGen math operations
+ */
 
 public final class MulOpUGen : BinaryOpUGen {
     
+    /**
+     MulOpUGen next that calculates a new wire with the result of the input's wires values for this operation
+     
+     - parameter numSamples: the number of samples to calculate
+     
+     - Returns: boolean with success
+     */
+
     public override final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
@@ -61,8 +130,20 @@ public final class MulOpUGen : BinaryOpUGen {
     }
 }
 
+/**
+ The division implementation for UGen math operations
+ */
+
 public class DivOpUGen : BinaryOpUGen {
-    
+
+    /**
+     DivOpUGen next that calculates a new wire with the result of the input's wires values for this operation
+     
+     - parameter numSamples: the number of samples to calculate
+     
+     - Returns: boolean with success
+     */
+
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
@@ -83,7 +164,19 @@ public class DivOpUGen : BinaryOpUGen {
     }
 }
 
+/**
+ The addition implementation for UGen math operations
+ */
+
 public class AddOpUGen : BinaryOpUGen {
+
+    /**
+     AddOpUGen next that calculates a new wire with the result of the input's wires values for this operation
+     
+     - parameter numSamples: the number of samples to calculate
+     
+     - Returns: boolean with success
+     */
     
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
@@ -100,7 +193,20 @@ public class AddOpUGen : BinaryOpUGen {
     }
 }
 
+
+/**
+ The subtraction implementation for UGen math operations
+ */
+
 public class SubOpUGen : BinaryOpUGen {
+    
+    /**
+     SubOpUGen next that calculates a new wire with the result of the input's wires values for this operation
+     
+     - parameter numSamples: the number of samples to calculate
+     
+     - Returns: boolean with success
+     */
     
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
@@ -117,10 +223,29 @@ public class SubOpUGen : BinaryOpUGen {
     }
 }
 
+/**
+ The basic UGen used for unary math operations on other UGens. Since math on UGens needs to operate on the samples in a wire, special UGens for accessing the samples or interpolating for changing values across control periods is needed
+ */
+
 public class UnaryOpUGen : LyrebirdUGen {
+    /// ---
+    /// The LyrebirdValidUGenInput input to operate on
+    ///
     let input: LyrebirdValidUGenInput
+    
+    /// ---
+    /// TODO:: to be changed later as multi-channel expansion comes into play with wires
+    ///
     var wire: LyrebirdWire?
     
+    /**
+     init for all BinaryOpUGens
+     
+     - parameter rate: LyrebirdUGenRate to run the unit at
+     - parameter input: The UGen to get values from
+     
+     - Returns: An instance of a BinaryOpUGen - the result of the operation is stored in the UGen's wire
+     */
     public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput){
         self.input = input
         super.init(rate: rate)
@@ -131,6 +256,10 @@ public class UnaryOpUGen : LyrebirdUGen {
         self.init(rate: rate, input: 0.0)
     }
 }
+
+/**
+ The absolute value implementation for UGen math operations
+ */
 
 public class Abs : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
@@ -147,6 +276,10 @@ public class Abs : UnaryOpUGen {
     }
 }
 
+/**
+ The negation operation (value * -1) implementation for UGen math operations
+ */
+
 public class Negative : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
@@ -161,6 +294,10 @@ public class Negative : UnaryOpUGen {
         return success
     }
 }
+
+/**
+ The sin(x) implementation for UGen math operations
+ */
 
 public class Sin : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
@@ -177,6 +314,10 @@ public class Sin : UnaryOpUGen {
     }
 }
 
+/**
+ The cos(x) implementation for UGen math operations
+ */
+
 public class Cos : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
@@ -191,6 +332,10 @@ public class Cos : UnaryOpUGen {
         return success
     }
 }
+
+/**
+ The tan(x) implementation for UGen math operations
+ */
 
 public class Tan : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
@@ -207,6 +352,10 @@ public class Tan : UnaryOpUGen {
     }
 }
 
+/**
+ The atan(x) (arc tan) implementation for UGen math operations
+ */
+
 public class Atan : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
@@ -221,6 +370,10 @@ public class Atan : UnaryOpUGen {
         return success
     }
 }
+
+/**
+ The asin(x) (arc sine) implementation for UGen math operations
+ */
 
 public class Asin : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
@@ -237,6 +390,10 @@ public class Asin : UnaryOpUGen {
     }
 }
 
+/**
+ The acos(x) (arc cosine) implementation for UGen math operations
+ */
+
 public class Acos : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
@@ -251,6 +408,10 @@ public class Acos : UnaryOpUGen {
         return success
     }
 }
+
+/**
+ The sinh(x) (hyperbolic sine) implementation for UGen math operations
+ */
 
 public class Sinh : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
@@ -267,6 +428,10 @@ public class Sinh : UnaryOpUGen {
     }
 }
 
+/**
+ The cosh(x) (hyperbolic cosine) implementation for UGen math operations
+ */
+
 public class Cosh : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
@@ -281,6 +446,10 @@ public class Cosh : UnaryOpUGen {
         return success
     }
 }
+
+/**
+ The tanh(x) (hyperbolic tan) implementation for UGen math operations
+ */
 
 public class Tanh : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
