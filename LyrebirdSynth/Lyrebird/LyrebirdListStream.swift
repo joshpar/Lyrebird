@@ -6,25 +6,40 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-public struct LyrebirdListStream {
+
+public class LyrebirdStream {
+    var finished: Bool = false
+    
+    public func reset() {
+        finished = false
+    }
+}
+
+
+public class LyrebirdListStream : LyrebirdStream {
     let list: [LyrebirdNumber]
     private (set) public var offset: LyrebirdInt
     private let listSize: LyrebirdInt
-    private var finished: Bool
+    private let initialOffset: LyrebirdInt
     
+    public override func reset(){
+        super.reset()
+        offset = initialOffset
+    }
     
-    public init(list: [LyrebirdNumber], offset: LyrebirdInt = 0){
+    public init(list: [LyrebirdNumber] = [], offset: LyrebirdInt = 0){
         self.list = list
         self.offset = offset
+        self.initialOffset = offset
         self.listSize = list.count
-        self.finished = false
+        super.init()
     }
-    
-    public init(){
+    /*
+    public override convenience init(){
         self.init(list: [], offset: 0)
     }
-    
-    public mutating func next() -> LyrebirdNumber? {
+    */
+    public func next() -> LyrebirdNumber? {
         if offset >= listSize {
             finished = true
             return nil
@@ -35,29 +50,25 @@ public struct LyrebirdListStream {
     }
 }
 
-public struct LyrebirdRepeatableListStream {
-    let list: [LyrebirdNumber]
+public class Sequence : LyrebirdListStream {
+    
+}
+
+public class LyrebirdRepeatableListStream : LyrebirdListStream {
     let repeats: LyrebirdInt
-    private (set) public var offset: LyrebirdInt
-    private let initialOffset: LyrebirdInt
     private var repetition: LyrebirdInt = 0
-    private let listSize: LyrebirdInt
-    private var finished: Bool
     
-    public init(list: [LyrebirdNumber], repeats: LyrebirdInt = 0, offset: LyrebirdInt = 0){
-        self.list = list
+    public init(list: [LyrebirdNumber] = [], repeats: LyrebirdInt = 0, offset: LyrebirdInt = 0){
         self.repeats = repeats
-        self.offset = offset
-        initialOffset = offset
-        listSize = list.count
-        finished = false
+        super.init(list: list, offset: offset)
     }
     
-    public init(){
-        self.init(list: [], repeats: 0, offset: 0)
+    public override func reset(){
+        super.reset()
+        repetition = 0
     }
     
-    public mutating func next() -> LyrebirdNumber? {
+    public override func next() -> LyrebirdNumber? {
         guard !finished else {
             return nil
         }
@@ -72,4 +83,8 @@ public struct LyrebirdRepeatableListStream {
         }
         return returnValue
     }
+}
+
+public class LoopingSequence : LyrebirdRepeatableListStream {
+    
 }

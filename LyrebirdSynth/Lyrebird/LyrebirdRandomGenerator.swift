@@ -22,8 +22,8 @@ public struct LyrebirdRandomNumberGenerator {
         seedGen = seedArr
     }
     
-    public init(initSeed: UInt32){
-        seed = initSeed
+    public init(initSeed: UInt32? = nil){
+        seed = initSeed ?? UInt32(NSDate.timeIntervalSinceReferenceDate())
         updateSeedGen()
     }
     

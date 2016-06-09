@@ -10,9 +10,14 @@ var test: Int8 = 10
 test = 127
 
 
-var param: [String:Float] = ["test": 1.0]
+var param: [String:Float?] = ["test": 1.0]
 param["missing"]
 param["missing"] = 10
+param["missing"] = nil
+param.count
+param["missing"] = 10
+param["missing"]
+param.count
 
 
 var testFloat: LyrebirdFloat = pow(2, 610)
@@ -43,13 +48,14 @@ array2[2] = 300
 print("\(array, array2)")
 
 
-var list = LyrebirdRepeatableListStream(list: [0.0, 1.1, 2.2, 3.3], repeats: 2)
+var list = LoopingSequence(list: [0.0, 1.1, 2.2, 3.3], repeats: 1)
 list.next()
 list.next()
 list.next()
 list.next()
 list.next()
 list.next()
+list.reset()
 list.next()
 list.next()
 list.next()
@@ -61,7 +67,8 @@ list.next()
 list.next()
 
 
+var arrayToShuffle = [1, 2, 3, 4, 5, 6];
 
-
-
+var z = LyrebirdRandomNumberGenerator(initSeed: 123)
+z.next()
 
