@@ -30,6 +30,7 @@
 		03A68E071D07E29D004ED24F /* LyrebirdListStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A68E061D07E29D004ED24F /* LyrebirdListStream.swift */; };
 		03AE398A1CE93C0D008B2E83 /* IOUgens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE39891CE93C0D008B2E83 /* IOUgens.swift */; };
 		03C77F121CD9AB0E003A753B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03C77F041CD9A99C003A753B /* Info.plist */; };
+		03D248951D0B0D8F009D3D87 /* LyrebirdClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D248941D0B0D8F009D3D87 /* LyrebirdClock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		03AE39891CE93C0D008B2E83 /* IOUgens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOUgens.swift; sourceTree = "<group>"; };
 		03C77EA01CD6B20B003A753B /* Lyrebird.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lyrebird.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C77F041CD9A99C003A753B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03D248941D0B0D8F009D3D87 /* LyrebirdClock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyrebirdClock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				0307E5691CFFF219002E5582 /* LyrebirdRandomGenerator.swift */,
 				031122B61CE3868900D657CB /* LyrebirdRawAudioChannel.swift */,
 				03A68E041D053A50004ED24F /* LyrebirdTimer.swift */,
+				03D248941D0B0D8F009D3D87 /* LyrebirdClock.swift */,
 				031122B71CE3868900D657CB /* LyrebirdTypes.swift */,
 				031122B81CE3868900D657CB /* LyrebirdUgen.swift */,
 				031122B91CE3868900D657CB /* LyrebirdWire.swift */,
@@ -223,6 +226,7 @@
 				031122CA1CE3868900D657CB /* LyrebirdWire.swift in Sources */,
 				0352B36E1CEE15820014775A /* MathUGens.swift in Sources */,
 				031122CD1CE386FF00D657CB /* ControlUGens.swift in Sources */,
+				03D248951D0B0D8F009D3D87 /* LyrebirdClock.swift in Sources */,
 				0307E5681CFFC347002E5582 /* NoiseUGens.swift in Sources */,
 				031122C11CE3868900D657CB /* LyrebirdControlChannel.swift in Sources */,
 				03AE398A1CE93C0D008B2E83 /* IOUgens.swift in Sources */,

@@ -69,6 +69,28 @@ list.next()
 
 var arrayToShuffle = [1, 2, 3, 4, 5, 6];
 
+for (index, value) in arrayToShuffle.enumerate() {
+    print("\(value)")
+}
+
+
 var z = LyrebirdRandomNumberGenerator(initSeed: 123)
 z.next()
+
+
+var scheduler = LyrebirdScheduler()
+let event = LyrebirdScheduledEvent(startTime: 2.0) { (curTime, iteration) -> LyrebirdFloat? in
+    print("\(curTime, iteration)")
+    if iteration < 10 {
+        return 1.0
+    }
+    return nil
+}
+
+scheduler.addEventToQueue(event)
+//scheduler.queue
+
+scheduler.updateCurTime(1.0)
+
+
 

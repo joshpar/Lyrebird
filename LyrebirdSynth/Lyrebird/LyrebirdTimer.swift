@@ -30,7 +30,7 @@ func delay(delay: Double, queue: dispatch_queue_t, closure: ()->()) {
 
 /**
  The block structure used for LyrebirdTimer's repeated function.
- 
+ Well, crap, this needs to be clock independant - so it can be scheduled on RT and NRT fashions. crap crap crap
  - parameter curTime: The current time, in seconds, since execution of the timer began
  - parameter inc: The number of times (0 based) that the timer has executed this block
  
