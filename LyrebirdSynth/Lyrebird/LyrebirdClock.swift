@@ -21,7 +21,7 @@ public struct LyrebirdScheduler {
         curTime = newCurTime
         var indiciesToRemove: [Int] = []
         if queue.count > 0 {
-            for index in 0 ... queue.count {
+            for index in 0 ..< queue.count {
                 var event = queue[index]
                 if curTime > event.startTime {
                     event.run(curTime)
@@ -48,10 +48,10 @@ public struct LyrebirdScheduler {
 public typealias LyrebirdEventBlock = (curTime: LyrebirdFloat, iteration: LyrebirdInt) -> LyrebirdFloat?
 
 public struct LyrebirdScheduledEvent {
-    var startTime: LyrebirdFloat?
+    public var startTime: LyrebirdFloat?
     var nextTime: LyrebirdFloat?
     var eventBlock: LyrebirdEventBlock
-    var iteration: LyrebirdInt
+    public var iteration: LyrebirdInt
     
     public init(startTime: LyrebirdFloat, eventBlock: LyrebirdEventBlock){
         iteration = 0

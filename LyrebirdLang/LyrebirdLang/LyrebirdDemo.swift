@@ -49,7 +49,6 @@ class LyrebirdDemo: NSObject {
             //            _ = Output(rate: .Audio, index: 1, output: sin)
             
             _ = Output(rate: .Audio, index: "Output", output: sos)
-            
         }
         
         /*

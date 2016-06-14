@@ -91,6 +91,9 @@ scheduler.addEventToQueue(event)
 //scheduler.queue
 
 scheduler.updateCurTime(1.0)
+scheduler.updateCurTime(2.001)
+scheduler.updateCurTime(3.001)
+scheduler.updateCurTime(3.001)
+scheduler.updateCurTime(3.001)
 
-
-
+event.iteration
