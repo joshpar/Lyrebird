@@ -2,7 +2,7 @@
 
 import Cocoa
 import Lyrebird
-import LyrebirdSynthLang
+
 
 var str = "Hello, playground"
 
@@ -97,3 +97,41 @@ scheduler.updateCurTime(3.001)
 scheduler.updateCurTime(3.001)
 
 event.iteration
+
+struct TestMe {
+    var array: [Int]
+    init(array: [Int]){
+        self.array = array
+    }
+    
+    mutating func updateArray(){
+        var newArray: [Int] = []
+        for val: Int in array {
+            newArray.append(val + 2)
+            }
+        array = newArray
+    }
+}
+
+var testMe: TestMe = TestMe(array: [0, 1, 2, 3])
+testMe.array
+testMe.updateArray()
+testMe.array
+testMe.updateArray()
+testMe.array
+
+var testMe2: TestMe = TestMe(array: testMe.array)
+testMe.array
+testMe2.array
+testMe2.updateArray()
+
+testMe.array
+testMe2.array
+testMe2.updateArray()
+testMe2.array
+
+var testMe3 = testMe2
+testMe2.updateArray()
+testMe2.array
+
+testMe3.array

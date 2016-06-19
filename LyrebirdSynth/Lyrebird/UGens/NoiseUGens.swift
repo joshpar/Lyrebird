@@ -39,7 +39,7 @@ public final class NoiseWhite: NoiseGen {
         }
         
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-            wire.currentSamples[sampleIdx] = ranGen.next()
+            wire.currentSamples[sampleIdx] = (ranGen.next() * 2.0) - 1.0
         }
         
         return true

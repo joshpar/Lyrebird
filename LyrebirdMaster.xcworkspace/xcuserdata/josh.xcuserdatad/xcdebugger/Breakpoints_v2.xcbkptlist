@@ -1223,7 +1223,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "486862716.481842"
+            timestampString = "487833197.339231"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "next(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
+            timestampString = "487833197.339231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "74"
@@ -1239,11 +1255,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "486862716.481842"
+            timestampString = "487833197.339231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1255,27 +1271,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "487004702.592097"
+            timestampString = "487833197.339231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
-            landmarkName = "next(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "487004702.592097"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1351,11 +1351,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "487003833.272582"
+            timestampString = "487833197.339231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1367,11 +1367,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "486862716.481842"
+            timestampString = "487833197.339231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "150"
+            endingLineNumber = "150"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1415,11 +1415,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "487004702.592097"
+            timestampString = "487833197.339231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1431,11 +1431,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "487004702.592097"
+            timestampString = "487833197.339231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1447,11 +1447,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "486880228.939529"
+            timestampString = "487833197.339231"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1646,6 +1646,54 @@
             endingLineNumber = "17"
             landmarkName = "LyrebirdListStream"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
+            timestampString = "487833255.374533"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "next(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
+            timestampString = "487833447.589861"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "next(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/LyrebirdUgen.swift"
+            timestampString = "487833498.222876"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "calculatedSamples(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

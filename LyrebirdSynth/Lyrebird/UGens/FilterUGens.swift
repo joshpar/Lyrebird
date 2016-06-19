@@ -20,7 +20,6 @@ public final class FirstOrderSection : LyrebirdUGen {
     private var lastA1: LyrebirdFloat = 0.0
     private var lastB1: LyrebirdFloat = 0.0
     private var input1: LyrebirdFloat = 0.0
-    private var output1: LyrebirdFloat = 0.0
     private var wire: LyrebirdWire?
     
     public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput, a0: LyrebirdValidUGenInput, a1: LyrebirdValidUGenInput, b1: LyrebirdValidUGenInput) {
@@ -46,7 +45,6 @@ public final class FirstOrderSection : LyrebirdUGen {
         }
         let inputSamples: [LyrebirdFloat] = input.sampleBlock(graph, previousValue: 0.0)
         var input1: LyrebirdFloat = self.input1
-        var output1: LyrebirdFloat = self.output1
         var currentIn: LyrebirdFloat = 0.0
         
         let newA0 = a0.floatValue(graph)
@@ -59,11 +57,10 @@ public final class FirstOrderSection : LyrebirdUGen {
             newA1 == lastA1 &&
             newB1 == lastB1 {
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-                currentIn = inputSamples[sampleIdx]
-                output1 = (lastA0 * currentIn) +
-                    (lastA1 * input1) +
-                    (lastB1 * output1)
-                wire.currentSamples[sampleIdx] = output1
+                currentIn = inputSamples[sampleIdx]  +
+                    (lastB1 * input1)
+                wire.currentSamples[sampleIdx] = (lastA0 * currentIn) +
+                    (lastA1 * input1)
                 input1 = currentIn
             }
         } else {
@@ -72,11 +69,10 @@ public final class FirstOrderSection : LyrebirdUGen {
             let b1Samps: [LyrebirdFloat] = b1.sampleBlock(graph, previousValue: lastB1)
             
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-                currentIn = inputSamples[sampleIdx]
-                output1 = (a0Samps[sampleIdx] * currentIn) +
-                    (a1Samps[sampleIdx] * input1) +
-                    (b1Samps[sampleIdx] * output1)
-                wire.currentSamples[sampleIdx] = output1
+                currentIn = inputSamples[sampleIdx] +
+                    (b1Samps[sampleIdx] * input1)
+                wire.currentSamples[sampleIdx] = (a0Samps[sampleIdx] * currentIn) +
+                    (a1Samps[sampleIdx] * input1)
                 input1 = currentIn
             }
             lastA0 = a0Samps.last ?? 0.0
@@ -84,7 +80,6 @@ public final class FirstOrderSection : LyrebirdUGen {
             lastB1 = b1Samps.last ?? 0.0
         }
         self.input1 = input1
-        self.output1 = output1
         
         return success
     }
@@ -107,8 +102,6 @@ public final class SecondOrderSection : LyrebirdUGen {
     private var lastB2: LyrebirdFloat = 0.0
     private var input1: LyrebirdFloat = 0.0
     private var input2: LyrebirdFloat = 0.0
-    private var output1: LyrebirdFloat = 0.0
-    private var output2: LyrebirdFloat = 0.0
     private var wire: LyrebirdWire?
     
     public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput, a0: LyrebirdValidUGenInput, a1: LyrebirdValidUGenInput, a2: LyrebirdValidUGenInput, b1: LyrebirdValidUGenInput, b2: LyrebirdValidUGenInput) {
@@ -138,18 +131,14 @@ public final class SecondOrderSection : LyrebirdUGen {
         }
         let inputSamples: [LyrebirdFloat] = input.sampleBlock(graph, previousValue: 0.0)
         var input1: LyrebirdFloat = self.input1
-        var output1: LyrebirdFloat = self.output1
         var input2: LyrebirdFloat = self.input2
-        var output2: LyrebirdFloat = self.output2
         var currentIn: LyrebirdFloat = 0.0
-        var tmpOutput2: LyrebirdFloat = output1
         
         let newA0 = a0.floatValue(graph)
         let newA1 = a1.floatValue(graph)
         let newA2 = a2.floatValue(graph)
         let newB1 = b1.floatValue(graph)
         let newB2 = b2.floatValue(graph)
-        
         // try to avoid the interpolation
         
         if newA0 == lastA0 &&
@@ -159,17 +148,14 @@ public final class SecondOrderSection : LyrebirdUGen {
             newB2 == lastB2 {
             
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-                tmpOutput2 = output1
-                currentIn = inputSamples[sampleIdx]
-                output1 = (newA0 * currentIn) +
+                currentIn = inputSamples[sampleIdx] +
+                    (newB1 * input1) +
+                    (newB2 * input2)
+                wire.currentSamples[sampleIdx] = (newA0 * currentIn) +
                     (newA1 * input1) +
-                    (newA2 * input2) +
-                    (newB1 * output1) +
-                    (newB2 * output2)
-                wire.currentSamples[sampleIdx] = output1
+                    (newA2 * input2)
                 input2 = input1
                 input1 = currentIn
-                output2 = tmpOutput2
             }
         } else {
             let a0Samps: [LyrebirdFloat] = a0.sampleBlock(graph, previousValue: lastA0)
@@ -178,17 +164,14 @@ public final class SecondOrderSection : LyrebirdUGen {
             let b1Samps: [LyrebirdFloat] = b1.sampleBlock(graph, previousValue: lastB1)
             let b2Samps: [LyrebirdFloat] = b2.sampleBlock(graph, previousValue: lastB2)
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-                tmpOutput2 = output1
-                currentIn = inputSamples[sampleIdx]
-                output1 = (a0Samps[sampleIdx] * currentIn) +
+                currentIn = inputSamples[sampleIdx]  +
+                    (b1Samps[sampleIdx] * input1) +
+                    (b2Samps[sampleIdx] * input2)
+                wire.currentSamples[sampleIdx] = (a0Samps[sampleIdx] * currentIn) +
                     (a1Samps[sampleIdx] * input1) +
-                    (a2Samps[sampleIdx] * input2) +
-                    (b1Samps[sampleIdx] * output1) +
-                    (b2Samps[sampleIdx] * output2)
-                wire.currentSamples[sampleIdx] = output1
+                    (a2Samps[sampleIdx] * input2)
                 input2 = input1
                 input1 = currentIn
-                output2 = tmpOutput2
             }
             lastA0 = a0Samps.last ?? 0.0
             lastA1 = a1Samps.last ?? 0.0
@@ -196,12 +179,8 @@ public final class SecondOrderSection : LyrebirdUGen {
             lastB1 = b1Samps.last ?? 0.0
             lastB2 = b2Samps.last ?? 0.0
         }
-        
         self.input1 = input1
-        self.output1 = output1
         self.input2 = input2
-        self.output2 = output2
-        
         return success
     }
 }
