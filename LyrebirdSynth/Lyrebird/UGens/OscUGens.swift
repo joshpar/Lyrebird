@@ -66,31 +66,28 @@ public final class OscSin: LyrebirdUGen {
     
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         var success: Bool = super.next(numSamples)
-        guard let wire: LyrebirdWire = wireForIndex(0) else {
-            return false
-        }
         switch state {
         case .UGenUGen:
             let u_freq: LyrebirdUGen = freq as! LyrebirdUGen
             let u_phase: LyrebirdUGen = phase as! LyrebirdUGen
-            success = next(numSamples, wire: wire, u_freq: u_freq, u_phase: u_phase)
+            success = next(numSamples, u_freq: u_freq, u_phase: u_phase)
             break
         case .UGenFloat:
             let u_freq: LyrebirdUGen = freq as! LyrebirdUGen
             let f_phase: LyrebirdFloat = phase.floatValue(graph)
-            success = next(numSamples, wire: wire, u_freq: u_freq, f_phase: f_phase)
+            success = next(numSamples, u_freq: u_freq, f_phase: f_phase)
             lastPhase = f_phase
             break
         case .FloatUGen:
             let f_freq: LyrebirdFloat = freq.floatValue(graph)
             let u_phase: LyrebirdUGen = phase as! LyrebirdUGen
-            success = next(numSamples, wire: wire, f_freq: f_freq, u_phase: u_phase)
+            success = next(numSamples, f_freq: f_freq, u_phase: u_phase)
             lastFreq = f_freq
             break
         case .FloatFloat:
             let f_freq: LyrebirdFloat = freq.floatValue(graph)
             let f_phase: LyrebirdFloat = phase.floatValue(graph)
-            success = next(numSamples, wire: wire, f_freq: f_freq, f_phase: f_phase)
+            success = next(numSamples, f_freq: f_freq, f_phase: f_phase)
             lastFreq = f_freq
             lastPhase = f_phase
             break
@@ -99,7 +96,7 @@ public final class OscSin: LyrebirdUGen {
         return success
     }
     
-    private final func next(numSamples: LyrebirdInt, wire: LyrebirdWire, u_freq: LyrebirdUGen, u_phase: LyrebirdUGen) -> Bool {
+    private final func next(numSamples: LyrebirdInt, u_freq: LyrebirdUGen, u_phase: LyrebirdUGen) -> Bool {
         let freqSamples: [LyrebirdFloat] = u_freq.sampleBlock(graph, previousValue: 0.0)
         var f_freq: LyrebirdFloat = 0.0
         let phaseSamples: [LyrebirdFloat] = u_phase.sampleBlock(graph, previousValue: 0.0)
@@ -111,14 +108,14 @@ public final class OscSin: LyrebirdUGen {
             f_phase = phaseSamples[sampleIdx]
             let phaseOffsetDiff = (f_phase - lastPhase) * tableCountTimesTwoPI
             samplingIncrement = (f_freq * incrementScaler) + phaseOffsetDiff
-            wire.currentSamples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
+            samples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
             internalPhase = internalPhase + samplingIncrement
             lastPhase = f_phase
         }
         return true
     }
     
-    private final func next(numSamples: LyrebirdInt, wire: LyrebirdWire, f_freq: LyrebirdFloat, u_phase: LyrebirdUGen) -> Bool {
+    private final func next(numSamples: LyrebirdInt, f_freq: LyrebirdFloat, u_phase: LyrebirdUGen) -> Bool {
         var freqSlope: LyrebirdFloat = 0.0
         var freq: LyrebirdFloat = lastFreq
         if lastFreq != f_freq {
@@ -133,7 +130,7 @@ public final class OscSin: LyrebirdUGen {
             f_phase = phaseSamples[sampleIdx]
             phaseOffsetDiff = (f_phase - lastPhase) * tableCountTimesTwoPI
             samplingIncrement = (freq * incrementScaler) + phaseOffsetDiff
-            wire.currentSamples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
+            samples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
             internalPhase = internalPhase + samplingIncrement
             lastPhase = f_phase
             freq = freq + freqSlope
@@ -141,7 +138,7 @@ public final class OscSin: LyrebirdUGen {
         return true
     }
     
-    private final func next(numSamples: LyrebirdInt, wire: LyrebirdWire, u_freq: LyrebirdUGen, f_phase: LyrebirdFloat) -> Bool {
+    private final func next(numSamples: LyrebirdInt, u_freq: LyrebirdUGen, f_phase: LyrebirdFloat) -> Bool {
         let freqSamples: [LyrebirdFloat] = u_freq.sampleBlock(graph, previousValue: 0.0)
         var f_freq: LyrebirdFloat = 0.0
         var phaseSlope: LyrebirdFloat = 0.0
@@ -154,13 +151,13 @@ public final class OscSin: LyrebirdUGen {
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             f_freq = freqSamples[sampleIdx]
             samplingIncrement = (f_freq * incrementScaler) + phaseSlope
-            wire.currentSamples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
+            samples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
             internalPhase = internalPhase + samplingIncrement
         }
         return true
     }
     
-    private final func next(numSamples: LyrebirdInt, wire: LyrebirdWire, f_freq: LyrebirdFloat, f_phase: LyrebirdFloat) -> Bool {
+    private final func next(numSamples: LyrebirdInt, f_freq: LyrebirdFloat, f_phase: LyrebirdFloat) -> Bool {
         var sampleIncSlope: LyrebirdFloat = 0.0
         if lastFreq != f_freq || lastPhase != f_phase {
             samplingIncrement = f_freq * LyrebirdFloat(table.count) * LyrebirdEngine.engine.iSampleRate
@@ -170,7 +167,7 @@ public final class OscSin: LyrebirdUGen {
         }
         let phaseSlope = lastPhase != f_phase ? calcSlope(lastPhase, endValue: f_phase) : 0.0
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-            wire.currentSamples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
+            samples[sampleIdx] = sineLookup(internalPhase, mask: mask, table: table)
             internalPhase = internalPhase + samplingIncrement + sampleIncSlope + phaseSlope
         }
         

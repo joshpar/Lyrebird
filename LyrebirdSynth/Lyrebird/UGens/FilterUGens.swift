@@ -20,7 +20,6 @@ public final class FirstOrderSection : LyrebirdUGen {
     private var lastA1: LyrebirdFloat = 0.0
     private var lastB1: LyrebirdFloat = 0.0
     private var input1: LyrebirdFloat = 0.0
-    private var wire: LyrebirdWire?
     
     public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput, a0: LyrebirdValidUGenInput, a1: LyrebirdValidUGenInput, b1: LyrebirdValidUGenInput) {
         self.a0 = a0
@@ -31,7 +30,6 @@ public final class FirstOrderSection : LyrebirdUGen {
         self.lastA0 = self.a0.floatValue(graph)
         self.lastA1 = self.a1.floatValue(graph)
         self.lastB1 = self.b1.floatValue(graph)
-        wire = wireForIndex(0)
     }
     
     public required convenience init(rate: LyrebirdUGenRate){
@@ -40,9 +38,6 @@ public final class FirstOrderSection : LyrebirdUGen {
     
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
-        guard let wire: LyrebirdWire = self.wire else {
-            return false
-        }
         let inputSamples: [LyrebirdFloat] = input.sampleBlock(graph, previousValue: 0.0)
         var input1: LyrebirdFloat = self.input1
         var currentIn: LyrebirdFloat = 0.0
@@ -59,7 +54,7 @@ public final class FirstOrderSection : LyrebirdUGen {
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
                 currentIn = inputSamples[sampleIdx]  +
                     (lastB1 * input1)
-                wire.currentSamples[sampleIdx] = (lastA0 * currentIn) +
+                samples[sampleIdx] = (lastA0 * currentIn) +
                     (lastA1 * input1)
                 input1 = currentIn
             }
@@ -71,7 +66,7 @@ public final class FirstOrderSection : LyrebirdUGen {
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
                 currentIn = inputSamples[sampleIdx] +
                     (b1Samps[sampleIdx] * input1)
-                wire.currentSamples[sampleIdx] = (a0Samps[sampleIdx] * currentIn) +
+                samples[sampleIdx] = (a0Samps[sampleIdx] * currentIn) +
                     (a1Samps[sampleIdx] * input1)
                 input1 = currentIn
             }
@@ -102,7 +97,6 @@ public final class SecondOrderSection : LyrebirdUGen {
     private var lastB2: LyrebirdFloat = 0.0
     private var input1: LyrebirdFloat = 0.0
     private var input2: LyrebirdFloat = 0.0
-    private var wire: LyrebirdWire?
     
     public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput, a0: LyrebirdValidUGenInput, a1: LyrebirdValidUGenInput, a2: LyrebirdValidUGenInput, b1: LyrebirdValidUGenInput, b2: LyrebirdValidUGenInput) {
         self.a0 = a0
@@ -117,7 +111,6 @@ public final class SecondOrderSection : LyrebirdUGen {
         self.lastA2 = self.a2.floatValue(graph)
         self.lastB1 = self.b1.floatValue(graph)
         self.lastB2 = self.b2.floatValue(graph)
-        wire = wireForIndex(0)
     }
     
     public required convenience init(rate: LyrebirdUGenRate){
@@ -126,9 +119,6 @@ public final class SecondOrderSection : LyrebirdUGen {
     
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
-        guard let wire: LyrebirdWire = self.wire else {
-            return false
-        }
         let inputSamples: [LyrebirdFloat] = input.sampleBlock(graph, previousValue: 0.0)
         var input1: LyrebirdFloat = self.input1
         var input2: LyrebirdFloat = self.input2
@@ -151,7 +141,7 @@ public final class SecondOrderSection : LyrebirdUGen {
                 currentIn = inputSamples[sampleIdx] +
                     (newB1 * input1) +
                     (newB2 * input2)
-                wire.currentSamples[sampleIdx] = (newA0 * currentIn) +
+                samples[sampleIdx] = (newA0 * currentIn) +
                     (newA1 * input1) +
                     (newA2 * input2)
                 input2 = input1
@@ -167,7 +157,7 @@ public final class SecondOrderSection : LyrebirdUGen {
                 currentIn = inputSamples[sampleIdx]  +
                     (b1Samps[sampleIdx] * input1) +
                     (b2Samps[sampleIdx] * input2)
-                wire.currentSamples[sampleIdx] = (a0Samps[sampleIdx] * currentIn) +
+                samples[sampleIdx] = (a0Samps[sampleIdx] * currentIn) +
                     (a1Samps[sampleIdx] * input1) +
                     (a2Samps[sampleIdx] * input2)
                 input2 = input1

@@ -103,7 +103,8 @@ public class LyrebirdWire {
     
     static func newWire() throws -> LyrebirdWire  {
         if currentWireIndex >= numWires {
-            throw LyrebirdError.NotEnoughWires
+            return LyrebirdWire()
+//            throw LyrebirdError.NotEnoughWires
         }
         let wire = allWires[currentWireIndex]
         currentWireIndex = currentWireIndex + 1

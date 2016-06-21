@@ -61,7 +61,6 @@ public final class Output : LyrebirdUGen {
 public final class Input : LyrebirdUGen {
     var index: LyrebirdValidUGenInput
     private var channel: LyrebirdAudioChannel? = nil
-    private var wire: LyrebirdWire? = nil
     
     public required init(rate: LyrebirdUGenRate, index: LyrebirdValidUGenInput){
         self.index = index
@@ -70,7 +69,6 @@ public final class Input : LyrebirdUGen {
         if(index.intValue(graph) < channels.count){
             channel = channels[self.index.intValue(graph)]
         }
-        wire = wireForIndex(0)
     }
     
     public required convenience init(rate: LyrebirdUGenRate){
@@ -80,16 +78,12 @@ public final class Input : LyrebirdUGen {
     
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         // get the audio wire to output
-        guard let wire: LyrebirdWire = self.wire else {
-            return false
-        }
-        
         guard let channel: LyrebirdAudioChannel = self.channel else {
             return false
         }
         
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-            wire.currentSamples[sampleIdx] = channel.currentValues[sampleIdx]
+            samples[sampleIdx] = channel.currentValues[sampleIdx]
         }
     
         return true

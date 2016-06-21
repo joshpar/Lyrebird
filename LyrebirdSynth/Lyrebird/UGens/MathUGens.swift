@@ -39,7 +39,6 @@ public class BinaryOpUGen : LyrebirdUGen {
         self.lhs = lhs
         self.rhs = rhs
         super.init(rate: rate)
-        self.wire = wireForIndex(0)
     }
     
     public required convenience init(rate: LyrebirdUGenRate){
@@ -118,12 +117,10 @@ public final class MulOpUGen : BinaryOpUGen {
     public override final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
-                let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
-                for index in 0 ..< lhsSamples.count {
-                    wire.currentSamples[index] = lhsSamples[index] * rhsSamples[index]
-                }
+            let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
+            let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
+            for index in 0 ..< lhsSamples.count {
+                samples[index] = lhsSamples[index] * rhsSamples[index]
             }
         }
         return success
@@ -147,16 +144,14 @@ public class DivOpUGen : BinaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
-                let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
-                for index in 0 ..< lhsSamples.count {
-                    let divisor = rhsSamples[index]
-                    if divisor != 0.0 {
-                        wire.currentSamples[index] = lhsSamples[index] / rhsSamples[index]
-                    } else {
-                        wire.currentSamples[index] = 0.0
-                    }
+            let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
+            let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
+            for index in 0 ..< lhsSamples.count {
+                let divisor = rhsSamples[index]
+                if divisor != 0.0 {
+                    samples[index] = lhsSamples[index] / rhsSamples[index]
+                } else {
+                    samples[index] = 0.0
                 }
             }
         }
@@ -181,12 +176,10 @@ public class AddOpUGen : BinaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
-                let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
-                for index in 0 ..< lhsSamples.count {
-                    wire.currentSamples[index] = lhsSamples[index] + rhsSamples[index]
-                }
+            let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
+            let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
+            for index in 0 ..< lhsSamples.count {
+                samples[index] = lhsSamples[index] + rhsSamples[index]
             }
         }
         return success
@@ -211,12 +204,10 @@ public class SubOpUGen : BinaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
-                let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
-                for index in 0 ..< lhsSamples.count {
-                    wire.currentSamples[index] = lhsSamples[index] - rhsSamples[index]
-                }
+            let lhsSamples: [LyrebirdFloat] = lhs.calculatedSamples(self.graph)[0]
+            let rhsSamples: [LyrebirdFloat] = rhs.calculatedSamples(self.graph)[0]
+            for index in 0 ..< lhsSamples.count {
+                samples[index] = lhsSamples[index] - rhsSamples[index]
             }
         }
         return success
@@ -233,11 +224,6 @@ public class UnaryOpUGen : LyrebirdUGen {
     ///
     let input: LyrebirdValidUGenInput
     
-    /// ---
-    /// TODO:: to be changed later as multi-channel expansion comes into play with wires
-    ///
-    var wire: LyrebirdWire?
-    
     /**
      init for all BinaryOpUGens
      
@@ -249,7 +235,6 @@ public class UnaryOpUGen : LyrebirdUGen {
     public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput){
         self.input = input
         super.init(rate: rate)
-        self.wire = wireForIndex(0)
     }
     
     public required convenience init(rate: LyrebirdUGenRate){
@@ -265,11 +250,9 @@ public class Abs : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = fabs(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = fabs(inputSamples[index])
             }
         }
         return success
@@ -284,11 +267,9 @@ public class Negative : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = -inputSamples[index]
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = -inputSamples[index]
             }
         }
         return success
@@ -303,11 +284,9 @@ public class Sin : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = sin(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = sin(inputSamples[index])
             }
         }
         return success
@@ -322,11 +301,9 @@ public class Cos : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = cos(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = cos(inputSamples[index])
             }
         }
         return success
@@ -341,11 +318,9 @@ public class Tan : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = tan(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = tan(inputSamples[index])
             }
         }
         return success
@@ -360,11 +335,9 @@ public class Atan : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = atan(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = atan(inputSamples[index])
             }
         }
         return success
@@ -379,11 +352,9 @@ public class Asin : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = asin(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = asin(inputSamples[index])
             }
         }
         return success
@@ -398,11 +369,9 @@ public class Acos : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = acos(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = acos(inputSamples[index])
             }
         }
         return success
@@ -417,11 +386,9 @@ public class Sinh : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = sinh(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = sinh(inputSamples[index])
             }
         }
         return success
@@ -436,11 +403,9 @@ public class Cosh : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = cosh(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = cosh(inputSamples[index])
             }
         }
         return success
@@ -455,11 +420,9 @@ public class Tanh : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    wire.currentSamples[index] = tanh(inputSamples[index])
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                samples[index] = tanh(inputSamples[index])
             }
         }
         return success
@@ -474,12 +437,10 @@ public class Squared : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    let val = inputSamples[index]
-                    wire.currentSamples[index] = val * val
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                let val = inputSamples[index]
+                samples[index] = val * val
             }
         }
         return success
@@ -494,13 +455,11 @@ public class SigSquared : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    let val = inputSamples[index]
-                    let sign: LyrebirdFloat = val < 0.0 ? -1.0 : 1.0
-                    wire.currentSamples[index] = (val * val) * sign
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                let val = inputSamples[index]
+                let sign: LyrebirdFloat = val < 0.0 ? -1.0 : 1.0
+                samples[index] = (val * val) * sign
             }
         }
         return success
@@ -515,12 +474,10 @@ public class Cubed : UnaryOpUGen {
     public override func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         if(success){
-            if let wire: LyrebirdWire = wire {
-                let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
-                for index in 0 ..< numSamples {
-                    let val = inputSamples[index]
-                    wire.currentSamples[index] = val * val * val 
-                }
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            for index in 0 ..< numSamples {
+                let val = inputSamples[index]
+                samples[index] = val * val * val
             }
         }
         return success

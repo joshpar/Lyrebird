@@ -90,6 +90,7 @@ extension LyrebirdValidUGenInput {
 public class LyrebirdUGen {
     
     private (set) public var rate: LyrebirdUGenRate
+    final var samples: [LyrebirdFloat]
     private (set) public var outputWires: [LyrebirdWire] = []
     private (set) public var outputIndexes: [LyrebirdInt] = []
     private var ready: Bool = false
@@ -97,10 +98,10 @@ public class LyrebirdUGen {
     
     var graph: LyrebirdGraph?
     var sampleOffset: LyrebirdInt = 0
-    private var muls: [LyrebirdValidUGenInput] = []
-    private var adds: [LyrebirdValidUGenInput] = []
     
     public required init(rate: LyrebirdUGenRate){
+        // TODO:: make this work with num outputs
+        samples = [LyrebirdFloat](count: LyrebirdWire.blockSize, repeatedValue: 0.0)
         self.graph = LyrebirdGraph.currentBuildingGraph
         self.rate = rate
         self.graph?.addChild(self)
@@ -196,33 +197,29 @@ public class LyrebirdUGen {
 extension LyrebirdUGen : LyrebirdValidUGenInput {
     
     public func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]]{
-        var samples: [[LyrebirdFloat]] = []
-        for wire: LyrebirdWire in outputWires {
-            samples.append(wire.currentSamples)
-        }
-        return samples
+        var sampleArray: [[LyrebirdFloat]] = []
+        sampleArray.append(self.samples)
+        return sampleArray
     }
     
     // TODO:: handle this better - right now this grabs the current samples from the 0th wire.
     // there should be a better way to do this
     
     public func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
-        if( outputWires.count > 0){
-            let output = outputWires[0]
-            if let returnValue = output.currentSamples.last {
+        
+            if let returnValue = samples.last {
                 return returnValue
             }
-        }
+        
         return 0.0
     }
     
     public func intValue(graph: LyrebirdGraph?) -> LyrebirdInt {
-        if( outputWires.count > 0){
-            let output = outputWires[0]
-            if let returnValue = output.currentSamples.last {
+        
+            if let returnValue = samples.last {
                 return LyrebirdInt(round(returnValue))
             }
-        }
+        
         return 0
     }
     
@@ -232,5 +229,23 @@ extension LyrebirdUGen : LyrebirdValidUGenInput {
     
     public func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat] {
         return self.calculatedSamples(graph)[0]
+    }
+}
+
+public protocol UGenStruct {    
+    mutating func next(inout buffer: [LyrebirdFloat])
+}
+
+public struct TestUGenStruct {
+    public var ranGen: LyrebirdRandomNumberGenerator = LyrebirdRandomNumberGenerator()
+    public init(){
+    }
+}
+
+extension TestUGenStruct : UGenStruct {
+    public mutating func next(inout buffer: [LyrebirdFloat]){
+        for idx in 0 ..< buffer.count {
+            buffer[idx] = (ranGen.next() * 2.0) - 1.0
+        }
     }
 }

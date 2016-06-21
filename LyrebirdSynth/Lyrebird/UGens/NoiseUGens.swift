@@ -22,7 +22,7 @@ public class NoiseGen : LyrebirdUGen {
 }
 
 public final class NoiseWhite: NoiseGen {
-    
+
     public required init(rate: LyrebirdUGenRate, seed: LyrebirdInt){
         super.init(rate: rate)
         self.seed = seed
@@ -33,13 +33,9 @@ public final class NoiseWhite: NoiseGen {
     }
     
     override public final func next(numSamples: LyrebirdInt) -> Bool {
-        // get the audio wire to output
-        guard let wire: LyrebirdWire = wireForIndex(0) else {
-            return false
-        }
-        
+
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-            wire.currentSamples[sampleIdx] = (ranGen.next() * 2.0) - 1.0
+            samples[sampleIdx] = (ranGen.next() * 2.0) - 1.0
         }
         
         return true

@@ -135,3 +135,24 @@ testMe2.updateArray()
 testMe2.array
 
 testMe3.array
+
+
+
+
+var testGen = TestUGenStruct()
+var start = NSDate.timeIntervalSinceReferenceDate()
+
+var buffer: [LyrebirdFloat] = [LyrebirdFloat](count: 64, repeatedValue: 0.0)
+for _ in 0 ..< 1000 {
+    testGen.next(&buffer)
+}
+var end = NSDate.timeIntervalSinceReferenceDate()
+end - start
+var testUGen = NoiseWhite(rate: LyrebirdUGenRate.Audio)
+start  = NSDate.timeIntervalSinceReferenceDate()
+for _ in 0 ..< 1000 {
+    testUGen.next(64)
+}
+end = NSDate.timeIntervalSinceReferenceDate()
+
+end-start

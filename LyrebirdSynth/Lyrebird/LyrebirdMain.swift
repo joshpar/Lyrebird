@@ -92,8 +92,6 @@ Designated initializer for the main synth environment.
      - parameter internalMemoryPoolSize: the size of the preallocated internal memory pool for fast allocation
      - parameter controlBlockSize: the internal
 
-
-
 - Returns:
  
 - Throws:
