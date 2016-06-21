@@ -22,7 +22,6 @@ class LyrebirdEngine {
     var isRunning                       : Bool = false
     var numberOfAudioChannels           : LyrebirdInt = 128
     var numberOfControlChannels         : LyrebirdInt = 2048
-    var numberOfWires                   : LyrebirdInt = 256
     var internalMemoryPoolSize          : LyrebirdInt = 32768
     var blockSize                       : LyrebirdInt = 1024 {
         didSet {
@@ -56,8 +55,6 @@ class LyrebirdEngine {
                 let channel: LyrebirdControlChannel = LyrebirdControlChannel(index: idx, iBlockSize: iBlockSize)
                 self.controlBlock.append(channel)
             }
-            LyrebirdWire.numWires = numberOfWires
-            LyrebirdWire.blockSize = blockSize
             LyrebirdUGenInterface.initInterface()
             isRunning = true
             self.delegate?.synthEngineHasStarted(self)

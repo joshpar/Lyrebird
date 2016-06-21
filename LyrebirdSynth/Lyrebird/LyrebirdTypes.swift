@@ -121,7 +121,8 @@ extension LyrebirdKey : LyrebirdValidUGenInput {
                 return parameter.calculatedSamples(graph)
             }
         }
-        return [LyrebirdWire.zeroedSamples]
+        let returnValues = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: LyrebirdFloat(0.0))
+        return [returnValues]
     }
     
     public func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat {

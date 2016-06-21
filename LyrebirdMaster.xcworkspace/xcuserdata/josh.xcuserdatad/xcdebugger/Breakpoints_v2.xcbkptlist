@@ -921,11 +921,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/MathUGens.swift"
-            timestampString = "488164334.809122"
+            timestampString = "488214058.670166"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -937,11 +937,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/MathUGens.swift"
-            timestampString = "488164334.809122"
+            timestampString = "488214058.670166"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "206"
-            endingLineNumber = "206"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -959,22 +959,6 @@
             startingLineNumber = "32"
             endingLineNumber = "32"
             landmarkName = "zeroValues()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LyrebirdLang/LyrebirdLang/LyrebirdDemo.swift"
-            timestampString = "488164894.297119"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "runDemo()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1351,11 +1335,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/LyrebirdEngine.swift"
-            timestampString = "487093893.162627"
+            timestampString = "488214058.670166"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "processWithInputChannels(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1422,54 +1406,6 @@
             endingLineNumber = "151"
             landmarkName = "next(_:)"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LyrebirdLang/LyrebirdLang/LyrebirdDemo.swift"
-            timestampString = "486917285.217162"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "runDemo()"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LyrebirdSynthLang.LyrebirdDemo.runDemo () -&gt; ()"
-                  moduleName = "LyrebirdSynthLang"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdLang/LyrebirdLang/LyrebirdDemo.swift"
-                  timestampString = "486885126.480091"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "57">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LyrebirdSynthLang.LyrebirdDemo.(runDemo () -&gt; ()).(closure #1)"
-                  moduleName = "LyrebirdSynthLang"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/josh/src/Lyrebird/LyrebirdLang/LyrebirdLang/LyrebirdDemo.swift"
-                  timestampString = "486885126.480359"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "30"
-                  endingLineNumber = "30"
-                  offsetFromSymbolStart = "4">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1655,11 +1591,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/LyrebirdUgen.swift"
-            timestampString = "488164604.079016"
+            timestampString = "488213622.902728"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "calculatedSamples(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1675,9 +1611,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "LyrebirdWire"
-            landmarkType = "3">
+            endingLineNumber = "38">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1691,9 +1625,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "prepareAllWires()"
-            landmarkType = "5">
+            endingLineNumber = "79">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1703,11 +1635,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/MathUGens.swift"
-            timestampString = "488164646.292528"
+            timestampString = "488214058.670166"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1724,6 +1656,22 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "48"
             endingLineNumber = "48"
+            landmarkName = "next(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/UGens/MathUGens.swift"
+            timestampString = "488215611.493209"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>

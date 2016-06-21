@@ -77,12 +77,11 @@ public class Control: LyrebirdUGen {
     }
     
     private func next(numSamples: LyrebirdInt, currentValueIn: LyrebirdFloat) -> Bool {
-        if let wire: LyrebirdWire = wireForIndex(0){
             // optimization - avoid addition in the loop, fill in a control
             // period of this value ...
             if previousValue == currentValueIn {
                 for sampleIdx: LyrebirdInt in 0 ..< numSamples {
-                    wire.currentSamples[sampleIdx] = currentValueIn
+                    samples[sampleIdx] = currentValueIn
                 }
             } else {
                 let step: LyrebirdFloat = calcSlope(previousValue, endValue: currentValueIn)
@@ -90,12 +89,10 @@ public class Control: LyrebirdUGen {
                 // end at currentValue - last block lands at lastValue, step on from there
                 for sampleIdx: LyrebirdInt in 0 ..< numSamples {
                     curSample = curSample + step
-                    wire.currentSamples[sampleIdx] = curSample
+                    samples[sampleIdx] = curSample
                 }
             }
             previousValue = currentValueIn
-            
-        }
         return true
     }
 }

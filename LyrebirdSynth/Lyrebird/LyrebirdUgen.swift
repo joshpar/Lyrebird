@@ -91,7 +91,6 @@ public class LyrebirdUGen {
     
     private (set) public var rate: LyrebirdUGenRate
     final var samples: [LyrebirdFloat]
-    private (set) public var outputWires: [LyrebirdWire] = []
     private (set) public var outputIndexes: [LyrebirdInt] = []
     private var ready: Bool = false
     var needsCalc: Bool = true
@@ -101,26 +100,13 @@ public class LyrebirdUGen {
     
     public required init(rate: LyrebirdUGenRate){
         // TODO:: make this work with num outputs
-        samples = [LyrebirdFloat](count: LyrebirdWire.blockSize, repeatedValue: 0.0)
+        samples = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: 0.0)
         self.graph = LyrebirdGraph.currentBuildingGraph
         self.rate = rate
         self.graph?.addChild(self)
         // TOOD: my initial assumption is that once a graph is initialized, the same
         // wires will be used. Make sure this is actually the case!
         let numOutputs = self.numberOfOutputs()
-        for index: LyrebirdInt in 0 ..< numOutputs {
-            do {
-                let wire = try LyrebirdWire.newWire()
-                outputWires.append(wire)
-                outputIndexes.append(index)
-            } catch LyrebirdError.NotEnoughWires {
-                print("Output wire couldn't be allocated - UGen init failed")
-                return
-            } catch _ {
-                print("Output wire couldn't be allocated - UGen init failed")
-                return
-            }
-        }
         ready = true
     }
     
@@ -175,23 +161,6 @@ public class LyrebirdUGen {
         needsCalc = false
         return true
     }
-    
-    /**
-     if available, returns the wire for writing to
-     
-     - parameter index: theh index to return - for most UGens that output 1 channel, this is will be 0
-     
-     - Returns: nil or a valid LyrebirdWire
-     
-     */
-    
-    internal func wireForIndex(index: LyrebirdInt) -> LyrebirdWire? {
-        if index < numberOfOutputs(){
-            return outputWires[index]
-        }
-        return nil
-    }
-    
 }
 
 extension LyrebirdUGen : LyrebirdValidUGenInput {

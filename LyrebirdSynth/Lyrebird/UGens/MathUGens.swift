@@ -20,10 +20,6 @@ public class BinaryOpUGen : LyrebirdUGen {
     /// The right hand side of the operation
     ///
     let rhs: LyrebirdValidUGenInput
-    /// ---
-    /// TODO:: to be changed later as multi-channel expansion comes into play with wires
-    ///
-    var wire: LyrebirdWire?
     
     /**
      init for all BinaryOpUGens

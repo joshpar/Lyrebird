@@ -118,7 +118,6 @@ Designated initializer for the main synth environment.
         self.iBlockSize = 1.0 / LyrebirdFloat(self.blockSize)
         engine.numberOfAudioChannels = self.numberOfAudioChannels
         engine.numberOfControlChannels  = self.numberOfControlChannels
-        engine.numberOfWires = self.numberOfWires
         engine.internalMemoryPoolSize = self.internalMemoryPoolSize
         engine.blockSize = self.blockSize
         engine.iBlockSize = self.iBlockSize
