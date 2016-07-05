@@ -6,7 +6,7 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-public struct LyrebirdRandomNumberGenerator {
+public class LyrebirdRandomNumberGenerator {
     public var seed: UInt32 = 0 {
         didSet {
             updateSeedGen()
@@ -14,7 +14,7 @@ public struct LyrebirdRandomNumberGenerator {
     }
     private var seedGen: [UInt16] = [0, 0, 0]
     
-    mutating private func updateSeedGen(){
+    private func updateSeedGen(){
         var seedArr: [UInt16] = [0, 0, 0]
         for idx in 0...1 {
             seedArr[2 - idx] = UInt16(0x000FFF & seed >> UInt32(idx * 8))
@@ -27,7 +27,25 @@ public struct LyrebirdRandomNumberGenerator {
         updateSeedGen()
     }
     
-    mutating public func next() -> LyrebirdFloat {
+    public func next() -> LyrebirdFloat {
         return erand48(&seedGen)
+    }
+}
+
+public class RandWhite {
+    private var randGen: LyrebirdRandomNumberGenerator
+    var lower: LyrebirdNumber
+    var upper: LyrebirdNumber
+    var difference: LyrebirdFloat
+    
+    public init(initSeed: UInt32? = nil, lower: LyrebirdNumber = 0.0, upper: LyrebirdNumber = 1.0){
+        randGen = LyrebirdRandomNumberGenerator(initSeed: initSeed)
+        self.lower = lower
+        self.upper = upper
+        self.difference = (upper.numberValue() - lower.numberValue())
+    }
+    
+    public func next() -> LyrebirdNumber {
+        return (randGen.next() * difference) + lower.numberValue()
     }
 }

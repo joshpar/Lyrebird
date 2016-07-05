@@ -174,3 +174,60 @@ public final class OscSin: LyrebirdUGen {
         return true
     }
 }
+
+public final class Impulse : LyrebirdUGen {
+    var samplesRemain: LyrebirdInt = 0
+    var freq: LyrebirdValidUGenInput
+    
+    
+    // phase values between 0.0 and 1.0
+    public required init(rate: LyrebirdUGenRate, freq: LyrebirdValidUGenInput = 0.0, initPhase: LyrebirdValidUGenInput = 0.0){
+        self.freq = freq
+        super.init(rate: rate)
+        let phase: LyrebirdFloat = initPhase.floatValue(self.graph) % 1.0
+        if(phase > 0.0){
+            self.calcNextImpulse()
+            samplesRemain = LyrebirdInt(round(LyrebirdFloat(samplesRemain) * (1.0 - phase)))
+        } else {
+            samplesRemain = 0
+        }
+        
+    }
+    
+    public required convenience init(rate: LyrebirdUGenRate){
+        // default to single shot
+        self.init(rate: rate, freq: 0.0, initPhase: 0.0)
+    }
+    
+    private final func calcNextImpulse(){
+        let f_freq = self.freq.floatValue(self.graph)
+        if(f_freq > 0.0){
+            samplesRemain = LyrebirdInt(round(LyrebirdEngine.engine.sampleRate / f_freq))
+            if samplesRemain < 1 {
+                samplesRemain = 1
+            }
+        } else {
+            samplesRemain = -1
+        }
+    }
+    
+    public final override func next(numSamples: LyrebirdInt) -> Bool {
+        let success = super.next(numSamples)
+        if(samplesRemain > numSamples){
+            samplesRemain = samplesRemain - numSamples
+            samples = LyrebirdUGen.zeroedSamples
+            return success
+        }
+        for sampleIdx: LyrebirdInt in 0 ..< numSamples {
+            if samplesRemain != 0 {
+                samples[sampleIdx] = 0.0
+                samplesRemain = samplesRemain - 1
+            } else {
+                samples[sampleIdx] = 1.0
+                calcNextImpulse()
+            }
+            
+        }
+        return success
+    }
+}

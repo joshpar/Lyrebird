@@ -41,6 +41,24 @@ struct LyrebirdTestGraphs {
         fmGraph.parameters["Output"] = 0
         fmGraph.parameters["Amp"] = 0.2
         graphs["fm"] = fmGraph
+        
+        let impulseGraph = LyrebirdGraph()
+        
+        impulseGraph.build {
+            let white = RandWhite()
+            let trigger: Impulse = Impulse(rate: .Audio, freq: "Freq", initPhase: 0.0)
+            let freq: TriggerWithBlock = TriggerWithBlock(rate: .Audio, trigger: trigger, triggerBlock: { (triggerValue, counter) -> LyrebirdFloat in
+                return 440.0 * LyrebirdFloat(counter) * white.next().numberValue()
+            })
+            let sin: OscSin = OscSin(rate: .Audio, freq: freq, phase: 0.0)
+            
+            _ = Output(rate: .Audio, index: 0, output: sin * db_linamp(-24.0))
+            _ = Output(rate: .Audio, index: 1, output: sin * db_linamp(-24.0))
+
+        }
+        impulseGraph.parameters["Output"] = 0
+        impulseGraph.parameters["Freq"] = 4
+        graphs["impulse"] = impulseGraph
     }
 }
 

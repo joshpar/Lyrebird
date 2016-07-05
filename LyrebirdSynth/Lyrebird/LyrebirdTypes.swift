@@ -9,7 +9,39 @@
 public typealias LyrebirdInt =  Int
 public typealias LyrebirdFloat = Double
 public typealias LyrebirdKey = String
-public typealias LyrebirdFloatClosureBody = (graph: LyrebirdGraph?) -> LyrebirdFloat
+public typealias LyrebirdFloatClosureBody = (graph: LyrebirdGraph?, currentPoint: LyrebirdFloat?) -> LyrebirdFloat
+
+/**
+ LyrebirdPollable is a class that keeps track of how values can change over time
+ Timekeeping is internal to its methods and accessible from currentTime(). The first time currentTime() or every time start() is called, its timekeeping begins
+ */
+
+public class LyrebirdPollable {
+    var startTime: LyrebirdFloat = -1.0
+    var currentValue: LyrebirdFloat
+    
+    public required init(currentValue: LyrebirdFloat = 0.0){
+        self.currentValue = currentValue
+        super.init()
+    }
+    
+    public convenience init(){
+        self.init(0.0)
+    }
+    
+    public func currentTime() -> LyrebirdFloat {
+        if startTime < 0.0 {
+            start()
+            return 0.0
+        }
+        let currentTime = NSDate.timeIntervalSinceReferenceDate()
+        return currentTime - startTime
+    }
+    
+    public func start() {
+        startTime = NSDate.timeIntervalSinceReferenceDate()
+    }
+}
 
 
 protocol LyrebirdFloatUGenValue {
@@ -17,9 +49,27 @@ protocol LyrebirdFloatUGenValue {
 }
 
 public protocol LyrebirdNumber {
+    func numberValue(graph: LyrebirdGraph?) -> LyrebirdFloat
     func numberValue() -> LyrebirdFloat
+    func valueAtPoint(graph: LyrebirdGraph?, point: LyrebirdNumber) -> LyrebirdFloat
+    func valueAtPoint(point: LyrebirdNumber) -> LyrebirdFloat
+
 }
 
+extension LyrebirdNumber {
+    public func valueAtPoint(graph: LyrebirdGraph?, point: LyrebirdNumber) -> LyrebirdFloat {
+        var currentPoint = point.numberValue(graph)
+        return self.numberValue(graph)
+    }
+
+    public func valueAtPoint(point: LyrebirdNumber) -> LyrebirdFloat {
+        return self.valueAtPoint(nil, point: point)
+    }
+
+    public func numberValue() -> LyrebirdFloat {
+        return self.numberValue(nil)
+    }
+}
 
 public struct LyrebirdFloatClosure {
     public var closure : LyrebirdFloatClosureBody?
@@ -32,18 +82,18 @@ public struct LyrebirdFloatClosure {
 extension LyrebirdFloatClosure : LyrebirdValidUGenInput {
     
     public func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]] {
-        let float = closure?(graph: graph) ?? 0.0
+        let float = closure?(graph: graph, currentPoint: nil) ?? 0.0
         let returnValues = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: LyrebirdFloat(float))
         return [returnValues]
     }
     
     public func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
-        let float = closure?(graph: graph) ?? 0.0
+        let float = closure?(graph: graph, currentPoint: nil) ?? 0.0
         return LyrebirdFloat(float)
     }
     
     public func intValue(graph: LyrebirdGraph?) -> LyrebirdInt {
-        let int = closure?(graph: graph) ?? 0
+        let int = closure?(graph: graph, currentPoint: nil) ?? 0
         return LyrebirdInt(int)
     }
 }
@@ -53,8 +103,13 @@ extension LyrebirdFloatClosure : LyrebirdFloatUGenValue {
 }
 
 extension LyrebirdFloatClosure : LyrebirdNumber {
-    public func numberValue() -> LyrebirdFloat {
-        return self.floatValue(nil)
+    public func valueAtPoint(graph: LyrebirdGraph?, point: LyrebirdNumber) -> LyrebirdFloat {
+        var currentPoint = point.numberValue()
+        return closure?(graph: graph, currentPoint: currentPoint) ?? 0.0
+    }
+    
+    public func numberValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
+        return self.floatValue(graph)
     }
 }
 
@@ -76,14 +131,15 @@ extension LyrebirdInt : LyrebirdValidUGenInput {
 
 
 extension LyrebirdInt : LyrebirdNumber {
-    public func numberValue() -> LyrebirdFloat {
-        return self.floatValue(nil)
+    public func numberValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
+        return self.floatValue(graph)
     }
 }
 
 extension LyrebirdInt : LyrebirdFloatUGenValue {
     
 }
+
 
 extension LyrebirdFloat : LyrebirdValidUGenInput {
     
@@ -102,16 +158,14 @@ extension LyrebirdFloat : LyrebirdValidUGenInput {
 }
 
 extension LyrebirdFloat : LyrebirdNumber {
-    public func numberValue() -> LyrebirdFloat {
-        return self.floatValue(nil)
+    public func numberValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
+        return self.floatValue(graph)
     }
 }
-
 
 extension LyrebirdFloat : LyrebirdFloatUGenValue {
     
 }
-
 
 // TODO:: right now, accessing a key that doesn't exist returns zeroes. However, once mapped, that key is valid. Do we want this?
 extension LyrebirdKey : LyrebirdValidUGenInput {
@@ -148,7 +202,15 @@ extension LyrebirdKey : LyrebirdFloatUGenValue {
     
 }
 
+extension LyrebirdKey : LyrebirdNumber {
+    public func numberValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
+        return self.floatValue(graph)
+    }
+}
+
 enum LyrebirdError : ErrorType {
     case NotEnoughWires
 }
+
+
 

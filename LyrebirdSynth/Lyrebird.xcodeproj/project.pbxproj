@@ -29,6 +29,7 @@
 		03A68E071D07E29D004ED24F /* LyrebirdListStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A68E061D07E29D004ED24F /* LyrebirdListStream.swift */; };
 		03AE398A1CE93C0D008B2E83 /* IOUgens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AE39891CE93C0D008B2E83 /* IOUgens.swift */; };
 		03C77F121CD9AB0E003A753B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03C77F041CD9A99C003A753B /* Info.plist */; };
+		03CB1BFA1D2420C500B996EB /* TriggerUGens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CB1BF91D2420C500B996EB /* TriggerUGens.swift */; };
 		03D248951D0B0D8F009D3D87 /* LyrebirdClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D248941D0B0D8F009D3D87 /* LyrebirdClock.swift */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,7 @@
 		03AE39891CE93C0D008B2E83 /* IOUgens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IOUgens.swift; sourceTree = "<group>"; };
 		03C77EA01CD6B20B003A753B /* Lyrebird.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lyrebird.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C77F041CD9A99C003A753B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		03CB1BF91D2420C500B996EB /* TriggerUGens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerUGens.swift; sourceTree = "<group>"; };
 		03D248941D0B0D8F009D3D87 /* LyrebirdClock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyrebirdClock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,20 +79,20 @@
 				031122AC1CE3868900D657CB /* Info.plist */,
 				031122AD1CE3868900D657CB /* Lyrebird.h */,
 				031122AE1CE3868900D657CB /* LyrebirdAudioChannel.swift */,
+				03D248941D0B0D8F009D3D87 /* LyrebirdClock.swift */,
 				031122AF1CE3868900D657CB /* LyrebirdConsts.swift */,
 				031122B01CE3868900D657CB /* LyrebirdControlChannel.swift */,
 				031122B11CE3868900D657CB /* LyrebirdEngine.swift */,
 				031122B21CE3868900D657CB /* LyrebirdFunctions.swift */,
 				031122B31CE3868900D657CB /* LyrebirdGraph.swift */,
+				03A68E061D07E29D004ED24F /* LyrebirdListStream.swift */,
 				031122B41CE3868900D657CB /* LyrebirdMain.swift */,
 				031122B51CE3868900D657CB /* LyrebirdNode.swift */,
 				0307E5691CFFF219002E5582 /* LyrebirdRandomGenerator.swift */,
 				031122B61CE3868900D657CB /* LyrebirdRawAudioChannel.swift */,
 				03A68E041D053A50004ED24F /* LyrebirdTimer.swift */,
-				03D248941D0B0D8F009D3D87 /* LyrebirdClock.swift */,
 				031122B71CE3868900D657CB /* LyrebirdTypes.swift */,
 				031122B81CE3868900D657CB /* LyrebirdUgen.swift */,
-				03A68E061D07E29D004ED24F /* LyrebirdListStream.swift */,
 				031122BA1CE3868900D657CB /* UGens */,
 			);
 			path = Lyrebird;
@@ -100,11 +102,12 @@
 			isa = PBXGroup;
 			children = (
 				031122CC1CE386FF00D657CB /* ControlUGens.swift */,
-				031122BB1CE3868900D657CB /* OscUGens.swift */,
-				0307E5671CFFC347002E5582 /* NoiseUGens.swift */,
+				0307E56B1D014C7E002E5582 /* FilterUGens.swift */,
 				03AE39891CE93C0D008B2E83 /* IOUgens.swift */,
 				0352B36D1CEE15820014775A /* MathUGens.swift */,
-				0307E56B1D014C7E002E5582 /* FilterUGens.swift */,
+				0307E5671CFFC347002E5582 /* NoiseUGens.swift */,
+				031122BB1CE3868900D657CB /* OscUGens.swift */,
+				03CB1BF91D2420C500B996EB /* TriggerUGens.swift */,
 			);
 			path = UGens;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				031122C11CE3868900D657CB /* LyrebirdControlChannel.swift in Sources */,
 				03AE398A1CE93C0D008B2E83 /* IOUgens.swift in Sources */,
 				03A68E051D053A50004ED24F /* LyrebirdTimer.swift in Sources */,
+				03CB1BFA1D2420C500B996EB /* TriggerUGens.swift in Sources */,
 				031122C41CE3868900D657CB /* LyrebirdGraph.swift in Sources */,
 				031122C31CE3868900D657CB /* LyrebirdFunctions.swift in Sources */,
 				031122C01CE3868900D657CB /* LyrebirdConsts.swift in Sources */,

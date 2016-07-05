@@ -90,6 +90,7 @@ extension LyrebirdValidUGenInput {
 public class LyrebirdUGen {
     
     private (set) public var rate: LyrebirdUGenRate
+    static let zeroedSamples : [LyrebirdFloat] = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: 0.0)
     final var samples: [LyrebirdFloat]
     private (set) public var outputIndexes: [LyrebirdInt] = []
     private var ready: Bool = false
@@ -100,7 +101,7 @@ public class LyrebirdUGen {
     
     public required init(rate: LyrebirdUGenRate){
         // TODO:: make this work with num outputs
-        samples = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: 0.0)
+        samples = LyrebirdUGen.zeroedSamples
         self.graph = LyrebirdGraph.currentBuildingGraph
         self.rate = rate
         self.graph?.addChild(self)
