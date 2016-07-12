@@ -30,6 +30,10 @@ public class LyrebirdRandomNumberGenerator {
     public func next() -> LyrebirdFloat {
         return erand48(&seedGen)
     }
+    
+    public func bipolarNext() -> LyrebirdFloat {
+        return (erand48(&seedGen) * 2.0) - 1.0
+    }
 }
 
 public class RandWhite {

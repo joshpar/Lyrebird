@@ -6,8 +6,6 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
 enum OscSinState: Int {
     case UGenUGen, UGenFloat, FloatUGen, FloatFloat
 }

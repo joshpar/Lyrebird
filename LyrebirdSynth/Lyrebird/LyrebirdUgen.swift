@@ -63,6 +63,11 @@ enum LyrebirdUGenInputType {
     case InitializedScaler
 }
 
+enum LyrebirdUGenOutputRange {
+    case Bipolar
+    case Unipolar
+}
+
 public protocol LyrebirdValidUGenInput {
     func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]]
     func floatValue(graph: LyrebirdGraph?) -> LyrebirdFloat
@@ -88,7 +93,6 @@ extension LyrebirdValidUGenInput {
  */
 
 public class LyrebirdUGen {
-    
     private (set) public var rate: LyrebirdUGenRate
     static let zeroedSamples : [LyrebirdFloat] = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: 0.0)
     final var samples: [LyrebirdFloat]
@@ -98,6 +102,9 @@ public class LyrebirdUGen {
     
     var graph: LyrebirdGraph?
     var sampleOffset: LyrebirdInt = 0
+    
+    // default to Bipolar
+    var outputRange: LyrebirdUGenOutputRange = .Bipolar
     
     public required init(rate: LyrebirdUGenRate){
         // TODO:: make this work with num outputs

@@ -11,49 +11,12 @@ public typealias LyrebirdFloat = Double
 public typealias LyrebirdKey = String
 public typealias LyrebirdFloatClosureBody = (graph: LyrebirdGraph?, currentPoint: LyrebirdFloat?) -> LyrebirdFloat
 
-/**
- LyrebirdPollable is a class that keeps track of how values can change over time
- Timekeeping is internal to its methods and accessible from currentTime(). The first time currentTime() or every time start() is called, its timekeeping begins
- */
-
-public class LyrebirdPollable {
-    var startTime: LyrebirdFloat = -1.0
-    var currentValue: LyrebirdFloat
-    
-    public required init(currentValue: LyrebirdFloat = 0.0){
-        self.currentValue = currentValue
-        super.init()
-    }
-    
-    public convenience init(){
-        self.init(0.0)
-    }
-    
-    public func currentTime() -> LyrebirdFloat {
-        if startTime < 0.0 {
-            start()
-            return 0.0
-        }
-        let currentTime = NSDate.timeIntervalSinceReferenceDate()
-        return currentTime - startTime
-    }
-    
-    public func start() {
-        startTime = NSDate.timeIntervalSinceReferenceDate()
-    }
-}
-
-
-protocol LyrebirdFloatUGenValue {
-    
-}
 
 public protocol LyrebirdNumber {
     func numberValue(graph: LyrebirdGraph?) -> LyrebirdFloat
     func numberValue() -> LyrebirdFloat
     func valueAtPoint(graph: LyrebirdGraph?, point: LyrebirdNumber) -> LyrebirdFloat
     func valueAtPoint(point: LyrebirdNumber) -> LyrebirdFloat
-
 }
 
 extension LyrebirdNumber {
@@ -61,14 +24,18 @@ extension LyrebirdNumber {
         var currentPoint = point.numberValue(graph)
         return self.numberValue(graph)
     }
-
+    
     public func valueAtPoint(point: LyrebirdNumber) -> LyrebirdFloat {
         return self.valueAtPoint(nil, point: point)
     }
-
+    
     public func numberValue() -> LyrebirdFloat {
         return self.numberValue(nil)
     }
+}
+
+protocol LyrebirdFloatUGenValue {
+    
 }
 
 public struct LyrebirdFloatClosure {
@@ -205,6 +172,49 @@ extension LyrebirdKey : LyrebirdFloatUGenValue {
 extension LyrebirdKey : LyrebirdNumber {
     public func numberValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
         return self.floatValue(graph)
+    }
+}
+
+
+/**
+ LyrebirdPollable is a class that keeps track of how values can change over time
+ Timekeeping is internal to its methods and accessible from currentTime(). With the first time currentTime() or every time start() is called (if allowsRestart is true), the timekeeping begins
+ */
+
+public class LyrebirdPollable {
+    var startTime: LyrebirdFloat = -1.0
+    var currentValue: LyrebirdFloat
+    public var allowsRestart: Bool = false
+    private var hasStarted: Bool = false
+    
+    public required init(currentValue: LyrebirdFloat = 0.0){
+        self.currentValue = currentValue
+    }
+    
+    public convenience init(){
+        self.init(currentValue: 0.0)
+    }
+    
+    public func currentTime() -> LyrebirdFloat {
+        if startTime < 0.0 {
+            start()
+            return 0.0
+        }
+        let currentTime = NSDate.timeIntervalSinceReferenceDate()
+        return currentTime - startTime
+    }
+    
+    public func start() {
+        if !hasStarted || allowsRestart {
+            hasStarted = true
+            startTime = NSDate.timeIntervalSinceReferenceDate()
+        }
+    }
+}
+
+extension LyrebirdPollable : LyrebirdNumber {
+    public func numberValue(graph: LyrebirdGraph?) -> LyrebirdFloat {
+        return currentValue
     }
 }
 

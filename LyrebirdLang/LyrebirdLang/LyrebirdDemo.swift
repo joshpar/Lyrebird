@@ -28,6 +28,13 @@ class LyrebirdDemo: NSObject {
         let impulse = graphs.graphs["impulse"]
         var impulseNote : LyrebirdNote? = LyrebirdNote(graph: impulse)
         impulseNote?.updateParameter("Freq", value: 1.0)
+        impulseNote?.updateParameter("Output", value: 0)
+        
+        let noiseLine = graphs.graphs["noiseLine"]
+        var noiseLineNote: LyrebirdNote? = LyrebirdNote(graph: noiseLine)
+        noiseLineNote?.updateParameter("Output", value: 1)
+        
+        
         
         self.timer = LyrebirdTimer()
         if let timer = self.timer {
@@ -37,6 +44,7 @@ class LyrebirdDemo: NSObject {
             lyrebird.addNodeToHead(fmNote!)
             */
             lyrebird.addNodeToHead(impulseNote!)
+            lyrebird.addNodeToHead(noiseLineNote!)
             
             let block: LyrebirdTimerBlock = {(curTime: LyrebirdFloat, inc: LyrebirdInt) in
                 counter = counter + 1
@@ -52,6 +60,8 @@ class LyrebirdDemo: NSObject {
  */
                     impulseNote?.free()
                     impulseNote = nil
+                    noiseLineNote?.free()
+                    noiseLineNote = nil
                 }
                 if counter < 20 {
                     return 0.4

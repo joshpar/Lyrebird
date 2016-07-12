@@ -6,8 +6,6 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
-
 /**
  The basic UGen used for binary math operations on other UGens. Since math on UGens needs to operate on the samples in a wire, special UGens for accessing the samples or interpolating for changing values across control periods is needed
  */

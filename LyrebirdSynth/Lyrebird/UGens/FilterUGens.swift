@@ -6,7 +6,6 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-import Foundation
 
 // out(i) = (a0 * in(i)) + (a1 * in(i-1)) + (b1 * out(i-1))
 

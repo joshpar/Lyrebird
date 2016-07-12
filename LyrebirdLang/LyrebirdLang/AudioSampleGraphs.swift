@@ -52,13 +52,23 @@ struct LyrebirdTestGraphs {
             })
             let sin: OscSin = OscSin(rate: .Audio, freq: freq, phase: 0.0)
             
-            _ = Output(rate: .Audio, index: 0, output: sin * db_linamp(-24.0))
-            _ = Output(rate: .Audio, index: 1, output: sin * db_linamp(-24.0))
-
+            _ = Output(rate: .Audio, index: "Output", output: sin * db_linamp(-24.0))
         }
         impulseGraph.parameters["Output"] = 0
         impulseGraph.parameters["Freq"] = 4
         graphs["impulse"] = impulseGraph
+        
+        let noiseLineGraph = LyrebirdGraph()
+        
+        noiseLineGraph.build { 
+            let freq = NoiseLFLine(rate: .Audio, freq: 1)
+            let freqRange = freq * 440.0 + 440.0
+            let sin = OscSin(rate: .Audio, freq: freqRange, phase: 0.0)
+            _ = Output(rate: .Audio, index: "Output", output: sin * db_linamp(-24.0))
+        }
+        noiseLineGraph.parameters["Output"] = 0
+        
+        graphs["noiseLine"] = noiseLineGraph
     }
 }
 
