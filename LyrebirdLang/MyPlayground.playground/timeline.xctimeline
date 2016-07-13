@@ -3,7 +3,12 @@
    version = "3.0">
    <TimelineItems>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/josh/src/Lyrebird/LyrebirdLang/MyPlayground.playground#CharacterRangeLen=22&amp;CharacterRangeLoc=2332&amp;EndingLineNumber=142&amp;StartingLineNumber=142&amp;Timestamp=489079667.443208"
+         documentLocation = "file:///Users/josh/src/Lyrebird/LyrebirdLang/MyPlayground.playground#CharacterRangeLen=22&amp;CharacterRangeLoc=2030&amp;EndingLineNumber=123&amp;StartingLineNumber=123&amp;Timestamp=490076468.564284"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/josh/src/Lyrebird/LyrebirdLang/MyPlayground.playground#CharacterRangeLen=0&amp;CharacterRangeLoc=2723&amp;EndingLineNumber=160&amp;StartingLineNumber=160&amp;Timestamp=490077096.384766"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>

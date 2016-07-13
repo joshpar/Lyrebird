@@ -4,26 +4,6 @@ import Cocoa
 import Lyrebird
 
 
-var str = "Hello, playground"
-
-var test: Int8 = 10
-test = 127
-
-
-var param: [String:Float?] = ["test": 1.0]
-param["missing"]
-param["missing"] = 10
-param["missing"] = nil
-param.count
-param["missing"] = 10
-param["missing"]
-param.count
-
-
-var testFloat: LyrebirdFloat = pow(2, 610)
-
-var result: Float = 0.0
-
 
 let a = LyrebirdInt(80)
 80.floatValue(nil)
@@ -138,11 +118,12 @@ testMe3.array
 
 
 var testUGen = NoiseWhite(rate: LyrebirdUGenRate.Audio)
-let start  = NSDate.timeIntervalSinceReferenceDate()
+var start  = NSDate.timeIntervalSinceReferenceDate()
+
 for _ in 0 ..< 1000 {
     testUGen.next(64)
 }
-let end = NSDate.timeIntervalSinceReferenceDate()
+var end = NSDate.timeIntervalSinceReferenceDate()
 
 end-start
 
@@ -154,3 +135,37 @@ white.next()
 white.next()
 white.next()
 white.next()
+
+let segment = Segment(start: 0.0, end: 1.0, curve: 0.0, duration: 1)
+start  = NSDate.timeIntervalSinceReferenceDate()
+
+for _ in 0 ..< 1000 {
+    segment.pollAtTime(0.5)
+}
+end = NSDate.timeIntervalSinceReferenceDate()
+
+end-start
+
+start  = NSDate.timeIntervalSinceReferenceDate()
+let env = Envelope(levels: [2.0, 0.0, 4.0], durations: [1.0, 2.0, 20.0], curve: 0.0)
+env.pollAtTime(2)
+
+for _ in 0 ..< 1000 {
+    env.pollAtTime(20.5)
+}
+end = NSDate.timeIntervalSinceReferenceDate()
+
+end-start
+
+
+
+
+let seg = Segment(start: 2.0, end: 4.0, curve: 0.0, duration: 1.0)
+seg.pollAtTime(1.5)
+
+for idx in 1 ... 10 {
+    if idx > 5 {
+        break
+    }
+    print("\(idx)")
+}

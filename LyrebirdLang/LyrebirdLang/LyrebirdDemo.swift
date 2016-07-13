@@ -34,8 +34,6 @@ class LyrebirdDemo: NSObject {
         var noiseLineNote: LyrebirdNote? = LyrebirdNote(graph: noiseLine)
         noiseLineNote?.updateParameter("Output", value: 1)
         
-        
-        
         self.timer = LyrebirdTimer()
         if let timer = self.timer {
             var counter: LyrebirdInt = 0
