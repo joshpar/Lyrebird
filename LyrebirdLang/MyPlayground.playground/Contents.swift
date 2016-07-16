@@ -163,9 +163,9 @@ end-start
 let seg = Segment(start: 2.0, end: 4.0, curve: 0.0, duration: 1.0)
 seg.pollAtTime(1.5)
 
-for idx in 1 ... 10 {
+for (index, idx) in (1 ... 10).enumerate() {
     if idx > 5 {
         break
     }
-    print("\(idx)")
+    print("\(index, idx)")
 }

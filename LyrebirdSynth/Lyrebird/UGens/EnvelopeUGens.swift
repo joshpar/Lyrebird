@@ -6,140 +6,73 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-
-class EnvelopeUGens {
-
-    
+public enum EnvelopeGenDoneAction: Int {
+    case Nothing, FreeNode, Loop
 }
 
-
-public struct Segment {
-    let start: LyrebirdFloat
-    let end: LyrebirdFloat
-    let curve: LyrebirdFloat
-    let duration: LyrebirdFloat
+public class EnvelopeGen : LyrebirdUGen {
+    let envelope: Envelope
+    var gate: Bool = false
+    var doneAction: EnvelopeGenDoneAction
+    let releaseSegment: LyrebirdInt
+    let levelScale: LyrebirdFloat
+    let levelBias: LyrebirdFloat
+    let timeScale: LyrebirdFloat
+    let totalDur: LyrebirdFloat
+    private var timeKeeper: LyrebirdFloat = 0.0
+    private let timeInc: LyrebirdFloat
+    private let gateTime: LyrebirdFloat
     
-    // inverse of duration to avoid the divide later!
-    private let iDuration: LyrebirdFloat
-    private let isLine: Bool
-    
-    public init(start: LyrebirdFloat, end: LyrebirdFloat, curve: LyrebirdFloat, duration: LyrebirdFloat = 0.0){
-        self.start = start
-        self.end = end
-        self.curve = curve
-        self.duration = duration
-        if(duration >= 0.0){
-            iDuration = 1.0 / duration
-        } else {
-            iDuration = 1.0
-        }
-        isLine = self.curve == 0.0        
-    }
-    
-    public func pollAtTime(time: LyrebirdFloat) -> LyrebirdFloat {
-        if duration <= 0 || time <= 0.0 {
-            return start
-        }
-        if time >= duration {
-            return end
-        }
-        let timeRatio: LyrebirdFloat = (time * iDuration)
-        if isLine {
-            return ((end - start) * timeRatio) + start
-        }
-        let denom: LyrebirdFloat = 1.0 - exp(curve)
-        let numer: LyrebirdFloat = 1.0 - exp(timeRatio * curve)
-        let level: LyrebirdFloat = start + ((end - start) * (numer/denom))
-        return level
-    }
-}
-
-public struct Envelope {
-    let segments: [Segment]
-    private let segmentStarts: [LyrebirdFloat]
-    private let segmentEnds: [LyrebirdFloat]
-    
-    public init (segments: [Segment]){
-        self.segments = segments
-        var localStarts: [LyrebirdFloat] = []
-        var localEnds: [LyrebirdFloat] = []
-        var curTime = 0.0
-        for segment in self.segments {
-            localStarts.append(curTime)
-            curTime = curTime + segment.duration
-            localEnds.append(curTime)
-        }
-        segmentStarts = localStarts
-        segmentEnds = localEnds
-    }
-    
-    public init (levels: [LyrebirdFloat], durations: [LyrebirdFloat], curves: [LyrebirdFloat]){
-        // levels should have one more value than durations and curves
-        var localSegments: [Segment] = []
-        let levelsCount = levels.count
-        let durAndCurvesNeededSize = levelsCount - 1
-        let durationCount = durations.count
-        let curvesCount = curves.count
-        var durationsCopy = durations
-        // first some checks ...
-        let neededDurationValues = durAndCurvesNeededSize - durationCount
-        if neededDurationValues > 0 {
-            
-            let lastValue: LyrebirdFloat = durations.last ?? 1.0
-            for _ in 0 ... neededDurationValues {
-                durationsCopy.append(lastValue)
+    public required init(rate: LyrebirdUGenRate, envelope: Envelope, levelScale: LyrebirdFloat = 1.0, levelBias: LyrebirdFloat = 0.0, timeScale: LyrebirdFloat = 1.0, releaseSegment: LyrebirdInt = -1, doneAction: EnvelopeGenDoneAction = .Nothing){
+        self.envelope = envelope
+        self.levelScale = levelScale
+        self.levelBias = levelBias
+        self.timeScale = timeScale
+        self.releaseSegment = releaseSegment
+        var timeInc = LyrebirdEngine.engine.iSampleRate
+        var gateTime = -1.0
+        if releaseSegment >= 0 {
+            gateTime = 0.0
+            for (index, segment) in envelope.segments.enumerate() {
+                if index <= releaseSegment {
+                    gateTime = gateTime + segment.duration
+                } else {
+                    break
+                }
             }
         }
-        var curvesCopy = curves
-        let neededCurvesValue = durAndCurvesNeededSize - curvesCount
-        if neededCurvesValue > 0 {
-            let lastValue: LyrebirdFloat = curves.last ?? 0.0
-            for _ in 0 ... neededCurvesValue {
-                curvesCopy.append(lastValue)
-            }
+        var totalDur: LyrebirdFloat = 0.0
+        for (index, segment) in envelope.segments.enumerate() {
+            totalDur = totalDur + segment.duration
         }
-        for endIdx in 1 ..< levels.count {
-            let idx = endIdx - 1
-            let start = levels[idx]
-            let end = levels[endIdx]
-            let duration = durationsCopy[idx]
-            let curve = curvesCopy[idx]
-            let segment = Segment(start: start, end: end, curve: curve, duration: duration)
-            localSegments.append(segment)
+        self.gateTime = gateTime
+        if timeScale != 1.0 && timeScale > 0.0 {
+            totalDur = totalDur * timeScale
+            timeInc = timeInc / timeScale
         }
-        self.init(segments: localSegments)
-    }
-
-    public init (levels: [LyrebirdFloat], duration: LyrebirdFloat, curves: [LyrebirdFloat]){
-        self.init(levels: levels, durations: [duration], curves: curves)
-    }
-
-    public init (levels: [LyrebirdFloat], durations: [LyrebirdFloat], curve: LyrebirdFloat){
-        self.init(levels: levels, durations: durations, curves: [curve])
+        self.totalDur = totalDur
+        self.doneAction = doneAction
+        self.timeInc = timeInc
+        super.init(rate: rate)
     }
     
-    public init (levels: [LyrebirdFloat], duration: LyrebirdFloat, curve: LyrebirdFloat){
-        self.init(levels: levels, durations: [duration], curves: [curve])
+    required public convenience init(rate: LyrebirdUGenRate) {
+        let dummyEnv: Envelope = Envelope(segments: [])
+        self.init(rate: rate, envelope: dummyEnv, levelScale: 1.0, levelBias: 0.0, timeScale: 1.0, releaseSegment: -1)
     }
-
-    public func pollAtTime(time: LyrebirdFloat) -> LyrebirdFloat {
-        if segments.count < 1 {
-            return 0.0
+    
+    override final public func next(numSamples: LyrebirdInt) -> Bool {
+        var success: Bool = super.next(numSamples)
+        print("Env \((envelope.pollAtTime(timeKeeper) * levelScale) + levelBias)")
+        for sampleIdx in 0 ..< numSamples {
+            samples[sampleIdx] = (envelope.pollAtTime(timeKeeper) * levelScale) + levelBias
+            timeKeeper = timeKeeper + timeInc
         }
-        var localTime = time
-        var lastSegment: Segment?
-        var lastDuration = 0.0
-        for segment in segments {
-            localTime = localTime - lastDuration
-            lastSegment = segment
-            if localTime > segment.duration {
-                lastDuration = segment.duration
-            } else {
-                break
-            }
-
+        // test release
+        if timeKeeper > totalDur {
+            self.graph?.shouldRemoveFromTree = true
         }
-        return lastSegment?.pollAtTime(localTime) ?? 0.0
-
+        return success
     }
+    
 }

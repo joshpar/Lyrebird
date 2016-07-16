@@ -29,6 +29,10 @@ public class LyrebirdGraph {
     
     public var buildClosure    : LyrebirdGraphConstructionClosure?
     
+    public var shouldRemoveFromTree: Bool = false
+    
+    public weak var note: LyrebirdNote?
+    
     public init(){
     }
     
@@ -38,6 +42,9 @@ public class LyrebirdGraph {
         }
         // set up for next run
         prepareChildren()
+        if( shouldRemoveFromTree ){
+            note?.shouldFree = true
+        }
     }
     
     private func prepareChildren() {

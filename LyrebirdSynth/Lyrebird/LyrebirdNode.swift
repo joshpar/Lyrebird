@@ -261,6 +261,7 @@ public class LyrebirdNote: LyrebirdNode {
             self.graph = LyrebirdGraph()
         }
         super.init()
+        self.graph.note = self
     }
     
     public override convenience init(){
