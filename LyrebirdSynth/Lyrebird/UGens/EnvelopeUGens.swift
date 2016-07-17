@@ -63,7 +63,7 @@ public class EnvelopeGen : LyrebirdUGen {
     
     override final public func next(numSamples: LyrebirdInt) -> Bool {
         var success: Bool = super.next(numSamples)
-        print("Env \((envelope.pollAtTime(timeKeeper) * levelScale) + levelBias)")
+//        print("Env \((envelope.pollAtTime(timeKeeper) * levelScale) + levelBias)")
         for sampleIdx in 0 ..< numSamples {
             samples[sampleIdx] = (envelope.pollAtTime(timeKeeper) * levelScale) + levelBias
             timeKeeper = timeKeeper + timeInc
