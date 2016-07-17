@@ -21,13 +21,6 @@ public final class Output : LyrebirdUGen {
         }
     }
     
-    public required convenience init(rate: LyrebirdUGenRate){
-        let defaultIndex = 0.0
-        let defaultOuput = 0.0
-        self.init(rate: rate, index: defaultIndex, output: defaultOuput)
-    }
-   
-    
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         // get the audio wire to output
         let channels: [LyrebirdAudioChannel] = LyrebirdEngine.engine.audioBlock
@@ -65,11 +58,6 @@ public final class Input : LyrebirdUGen {
         if(index.intValue(graph) < channels.count){
             channel = channels[self.index.intValue(graph)]
         }
-    }
-    
-    public required convenience init(rate: LyrebirdUGenRate){
-        let defaultIndex = 0.0
-        self.init(rate: rate, index: defaultIndex)
     }
     
     override public final func next(numSamples: LyrebirdInt) -> Bool {

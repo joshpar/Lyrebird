@@ -969,11 +969,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/IOUgens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1097,11 +1097,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/IOUgens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1113,11 +1113,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/IOUgens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1175,11 +1175,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1191,11 +1191,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1207,11 +1207,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1223,11 +1223,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1303,11 +1303,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "154"
-            endingLineNumber = "154"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1319,11 +1319,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1367,11 +1367,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1383,27 +1383,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "next(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "150"
             endingLineNumber = "150"
+            landmarkName = "next(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
+            timestampString = "490430393.324246"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1557,11 +1557,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1573,11 +1573,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/FilterUGens.swift"
-            timestampString = "489948282.311885"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1649,11 +1649,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/IOUgens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1681,11 +1681,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/OscUGens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
             landmarkName = "calcNextImpulse()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1697,11 +1697,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/OscUGens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "calcNextImpulse()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1713,11 +1713,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/OscUGens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
+            startingLineNumber = "208"
+            endingLineNumber = "208"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1729,11 +1729,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/OscUGens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "calcNextImpulse()"
             landmarkType = "5">
          </BreakpointContent>
@@ -1745,11 +1745,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/OscUGens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "225"
-            endingLineNumber = "225"
+            startingLineNumber = "214"
+            endingLineNumber = "214"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1761,11 +1761,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/OscUGens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
+            startingLineNumber = "211"
+            endingLineNumber = "211"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1777,11 +1777,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/OscUGens.swift"
-            timestampString = "489977043.743523"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1799,22 +1799,6 @@
             startingLineNumber = "51"
             endingLineNumber = "51"
             landmarkName = "setupDemoGraphs()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LyrebirdSynth/Lyrebird/UGens/EnvelopeUGens.swift"
-            timestampString = "490339508.519811"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1857,11 +1841,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/EnvelopeUGens.swift"
-            timestampString = "490339508.519811"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -1873,27 +1857,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LyrebirdSynth/Lyrebird/UGens/EnvelopeUGens.swift"
-            timestampString = "490339508.519811"
+            timestampString = "490430393.324246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "next(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LyrebirdSynth/Lyrebird/UGens/EnvelopeUGens.swift"
-            timestampString = "490339508.519811"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "next(_:)"
             landmarkType = "5">
          </BreakpointContent>

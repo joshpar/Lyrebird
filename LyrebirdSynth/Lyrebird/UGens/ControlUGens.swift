@@ -42,19 +42,6 @@ public class Control: LyrebirdUGen {
     }
     
     /**
-     init method for Control values that start at 0.0
-     
-     - parameter rate: Lyrebird UGen rate - should be control
-     - parameter currentValue: The initial value for the control's output
-     */
-    
-    public required init(rate: LyrebirdUGenRate) {
-        self.currentValue = 0.0
-        self.previousValue = 0.0
-        super.init(rate: rate)
-    }
-    
-    /**
      overridden next function for LyrebirdControlUGen
      
      - parameter numSamples: the number of samples to calculate

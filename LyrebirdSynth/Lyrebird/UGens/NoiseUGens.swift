@@ -21,12 +21,12 @@ public class NoiseGen : LyrebirdUGen {
 
 public final class NoiseWhite: NoiseGen {
 
-    public required init(rate: LyrebirdUGenRate, seed: LyrebirdInt){
+    public required init(rate: LyrebirdUGenRate, seed: LyrebirdInt?){
         super.init(rate: rate)
-        self.seed = seed
+        self.seed = seed ?? NoiseGen.dateSeed()
     }
     
-    required public convenience init(rate: LyrebirdUGenRate) {
+    public convenience override init(rate: LyrebirdUGenRate) {
         self.init(rate: rate, seed: NoiseGen.dateSeed())
     }
     
@@ -51,10 +51,6 @@ public class NoiseLFBase: NoiseGen {
     
     public convenience init(rate: LyrebirdUGenRate, freq: LyrebirdValidUGenInput) {
         self.init(rate: rate, freq: freq, seed: NoiseGen.dateSeed())
-    }
-    
-    required public convenience init(rate: LyrebirdUGenRate) {
-        self.init(rate: rate, freq: 1.0, seed: NoiseGen.dateSeed())
     }
     
     override public func next(numSamples: LyrebirdInt) -> Bool {

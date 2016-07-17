@@ -106,7 +106,7 @@ public class LyrebirdUGen {
     // default to Bipolar
     var outputRange: LyrebirdUGenOutputRange = .Bipolar
     
-    public required init(rate: LyrebirdUGenRate){
+    public init(rate: LyrebirdUGenRate){
         // TODO:: make this work with num outputs
         samples = LyrebirdUGen.zeroedSamples
         self.graph = LyrebirdGraph.currentBuildingGraph

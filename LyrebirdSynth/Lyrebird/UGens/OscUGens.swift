@@ -37,12 +37,6 @@ public final class OscSin: LyrebirdUGen {
         
     }
     
-    public required convenience init(rate: LyrebirdUGenRate){
-        let defaultFreq = 440.0
-        let defaultPhase = 0.0
-        self.init(rate: rate, freq: defaultFreq, phase: defaultPhase)
-    }
-    
     private final func checkState(){
         if freq is LyrebirdFloatUGenValue {
             if phase is LyrebirdFloat {
@@ -190,11 +184,6 @@ public final class Impulse : LyrebirdUGen {
             samplesRemain = 0
         }
         
-    }
-    
-    public required convenience init(rate: LyrebirdUGenRate){
-        // default to single shot
-        self.init(rate: rate, freq: 0.0, initPhase: 0.0)
     }
     
     private final func calcNextImpulse(){

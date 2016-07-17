@@ -31,10 +31,6 @@ public final class FirstOrderSection : LyrebirdUGen {
         self.lastB1 = self.b1.floatValue(graph)
     }
     
-    public required convenience init(rate: LyrebirdUGenRate){
-        self.init(rate: rate, input: 0.0, a0: 0.0, a1: 0.0, b1: 0.0)
-    }
-    
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         let inputSamples: [LyrebirdFloat] = input.sampleBlock(graph, previousValue: 0.0)
@@ -111,11 +107,7 @@ public final class SecondOrderSection : LyrebirdUGen {
         self.lastB1 = self.b1.floatValue(graph)
         self.lastB2 = self.b2.floatValue(graph)
     }
-    
-    public required convenience init(rate: LyrebirdUGenRate){
-        self.init(rate: rate, input: 0.0, a0: 0.0, a1: 0.0, a2: 0.0, b1: 0.0, b2: 0.0)
-    }
-    
+
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         let success: Bool = super.next(numSamples)
         let inputSamples: [LyrebirdFloat] = input.sampleBlock(graph, previousValue: 0.0)

@@ -35,9 +35,9 @@ public class BinaryOpUGen : LyrebirdUGen {
         super.init(rate: rate)
     }
     
-    public required convenience init(rate: LyrebirdUGenRate){
-        self.init(rate: rate, lhs: 0.0, rhs: 0.0)
-    }
+//    public required convenience init(rate: LyrebirdUGenRate){
+//        self.init(rate: rate, lhs: 0.0, rhs: 0.0)
+//    }
 }
 
 
@@ -229,10 +229,6 @@ public class UnaryOpUGen : LyrebirdUGen {
     public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput){
         self.input = input
         super.init(rate: rate)
-    }
-    
-    public required convenience init(rate: LyrebirdUGenRate){
-        self.init(rate: rate, input: 0.0)
     }
 }
 

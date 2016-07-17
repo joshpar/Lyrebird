@@ -52,7 +52,7 @@ struct LyrebirdTestGraphs {
             })
             let sin: OscSin = OscSin(rate: .Audio, freq: freq, phase: 0.0)
             let envelope: Envelope = Envelope(levels: [0, 1, 1, 0], duration: 1, curves: [5, 0, -5])
-            let out = sin * EnvelopeGen(rate: .Audio, envelope: envelope, levelScale: 1.0, levelBias: 0.0, timeScale: 1.0, releaseSegment: -1, doneAction: EnvelopeGenDoneAction.FreeNode) * db_linamp(-24.0)
+            let out = sin * EnvelopeGen(rate: .Audio, envelope: envelope, levelScale: db_linamp(-24.0), levelBias: 0.0, timeScale: 1.0, releaseSegment: -1, doneAction: EnvelopeGenDoneAction.FreeNode)
             _ = Output(rate: .Audio, index: "Output", output: out )
         }
         impulseGraph.parameters["Output"] = 0

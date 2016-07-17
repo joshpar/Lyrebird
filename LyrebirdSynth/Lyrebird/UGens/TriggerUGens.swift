@@ -19,10 +19,6 @@ public class TriggerUGens: LyrebirdUGen {
         super.init(rate: rate)
     }
     
-    public required convenience init(rate: LyrebirdUGenRate) {
-        self.init(rate: rate, trigger: 0.0)
-    }
-    
     internal func checkForTriggerSamples() -> [LyrebirdFloat]? {
         let triggerSampleArray = trigger.calculatedSamples(self.graph)
         guard triggerSampleArray.count > 0 else {
@@ -40,10 +36,6 @@ public class TriggerWithBlock: TriggerUGens {
         self.triggerBlock = triggerBlock
         self.currentTriggerValue = trigger.floatValue(self.graph)
     }
-    
-//    public required convenience init(rate: LyrebirdUGenRate, trigger: LyrebirdValidUGenInput) {
-//        self.init(rate: rate, trigger: trigger, triggerBlock: nil)
-//    }
     
     public required convenience init(rate: LyrebirdUGenRate, trigger: LyrebirdValidUGenInput) {
         self.init(rate: rate, trigger: trigger, triggerBlock: nil)

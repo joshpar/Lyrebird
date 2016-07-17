@@ -56,21 +56,18 @@ public class EnvelopeGen : LyrebirdUGen {
         super.init(rate: rate)
     }
     
-    required public convenience init(rate: LyrebirdUGenRate) {
-        let dummyEnv: Envelope = Envelope(segments: [])
-        self.init(rate: rate, envelope: dummyEnv, levelScale: 1.0, levelBias: 0.0, timeScale: 1.0, releaseSegment: -1)
-    }
-    
     override final public func next(numSamples: LyrebirdInt) -> Bool {
         var success: Bool = super.next(numSamples)
-//        print("Env \((envelope.pollAtTime(timeKeeper) * levelScale) + levelBias)")
         for sampleIdx in 0 ..< numSamples {
             samples[sampleIdx] = (envelope.pollAtTime(timeKeeper) * levelScale) + levelBias
             timeKeeper = timeKeeper + timeInc
+            // test release
+            if (timeKeeper > totalDur) && (doneAction == .Loop) {
+                timeKeeper = 0.0
+            }
         }
-        // test release
-        if timeKeeper > totalDur {
-            self.graph?.shouldRemoveFromTree = true
+        if (timeKeeper > totalDur) && (doneAction == .FreeNode) {
+                self.graph?.shouldRemoveFromTree = true
         }
         return success
     }

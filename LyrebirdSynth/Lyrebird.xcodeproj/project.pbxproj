@@ -26,6 +26,7 @@
 		031122CD1CE386FF00D657CB /* ControlUGens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031122CC1CE386FF00D657CB /* ControlUGens.swift */; };
 		0333C59E1D353CB600372C4B /* EnvelopeUGens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333C59D1D353CB600372C4B /* EnvelopeUGens.swift */; };
 		0333C5A01D36897500372C4B /* LyrebirdEnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333C59F1D36897500372C4B /* LyrebirdEnvelope.swift */; };
+		0333C5A21D3B5DDD00372C4B /* DelayUGens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0333C5A11D3B5DDD00372C4B /* DelayUGens.swift */; };
 		0352B36E1CEE15820014775A /* MathUGens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0352B36D1CEE15820014775A /* MathUGens.swift */; };
 		03A68E051D053A50004ED24F /* LyrebirdTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A68E041D053A50004ED24F /* LyrebirdTimer.swift */; };
 		03A68E071D07E29D004ED24F /* LyrebirdListStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A68E061D07E29D004ED24F /* LyrebirdListStream.swift */; };
@@ -56,6 +57,7 @@
 		031122CC1CE386FF00D657CB /* ControlUGens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlUGens.swift; sourceTree = "<group>"; };
 		0333C59D1D353CB600372C4B /* EnvelopeUGens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvelopeUGens.swift; sourceTree = "<group>"; };
 		0333C59F1D36897500372C4B /* LyrebirdEnvelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyrebirdEnvelope.swift; sourceTree = "<group>"; };
+		0333C5A11D3B5DDD00372C4B /* DelayUGens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelayUGens.swift; sourceTree = "<group>"; };
 		0352B36D1CEE15820014775A /* MathUGens.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MathUGens.swift; sourceTree = "<group>"; };
 		03A68E041D053A50004ED24F /* LyrebirdTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyrebirdTimer.swift; sourceTree = "<group>"; };
 		03A68E061D07E29D004ED24F /* LyrebirdListStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LyrebirdListStream.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				031122BB1CE3868900D657CB /* OscUGens.swift */,
 				03CB1BF91D2420C500B996EB /* TriggerUGens.swift */,
 				0333C59D1D353CB600372C4B /* EnvelopeUGens.swift */,
+				0333C5A11D3B5DDD00372C4B /* DelayUGens.swift */,
 			);
 			path = UGens;
 			sourceTree = "<group>";
@@ -228,6 +231,7 @@
 				0307E56A1CFFF219002E5582 /* LyrebirdRandomGenerator.swift in Sources */,
 				031122C71CE3868900D657CB /* LyrebirdRawAudioChannel.swift in Sources */,
 				0333C5A01D36897500372C4B /* LyrebirdEnvelope.swift in Sources */,
+				0333C5A21D3B5DDD00372C4B /* DelayUGens.swift in Sources */,
 				031122CB1CE3868900D657CB /* OscUGens.swift in Sources */,
 				031122C21CE3868900D657CB /* LyrebirdEngine.swift in Sources */,
 				031122BF1CE3868900D657CB /* LyrebirdAudioChannel.swift in Sources */,
