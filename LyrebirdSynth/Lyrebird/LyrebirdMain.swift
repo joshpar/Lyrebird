@@ -43,13 +43,6 @@ public class Lyrebird {
     private (set) public var numberOfWires                  : LyrebirdInt
     
     /// ---
-    /// The size of the internal pre-allocated memory pool
-    ///
-    /// - Warning: keep these values as powers of 2 for efficiency reasons!
-    
-    private (set) public var internalMemoryPoolSize         : LyrebirdInt
-    
-    /// ---
     /// The size of the internal control block
     ///
     /// - Warning: keep these values as powers of 2 for efficiency reasons!
@@ -103,7 +96,6 @@ Designated initializer for the main synth environment.
                          numberOfControlChannels: LyrebirdInt,
                          sampleRate: LyrebirdFloat,
                          numberOfWires: LyrebirdInt,
-                         internalMemoryPoolSize: LyrebirdInt,
                          blockSize: LyrebirdInt
         ){
         self.numberOfAudioChannels = numberOfAudioChannels
@@ -111,14 +103,12 @@ Designated initializer for the main synth environment.
         self.numberOfOutputChannels = numberOfOutputChannels
         self.numberOfControlChannels = numberOfControlChannels
         self.numberOfWires = numberOfWires
-        self.internalMemoryPoolSize = internalMemoryPoolSize
         self.blockSize = blockSize
         self.sampleRate = sampleRate
         self.iSampleRate = 1.0 / sampleRate
         self.iBlockSize = 1.0 / LyrebirdFloat(self.blockSize)
         Lyrebird.engine.numberOfAudioChannels = self.numberOfAudioChannels
         Lyrebird.engine.numberOfControlChannels  = self.numberOfControlChannels
-        Lyrebird.engine.internalMemoryPoolSize = self.internalMemoryPoolSize
         Lyrebird.engine.blockSize = self.blockSize
         Lyrebird.engine.iBlockSize = self.iBlockSize
         startEngine()
@@ -131,7 +121,6 @@ Designated initializer for the main synth environment.
                   numberOfControlChannels: 256,
                   sampleRate: 44100.0,
                   numberOfWires: 256,
-                  internalMemoryPoolSize: 32768,
                   blockSize: 64)
     }
     

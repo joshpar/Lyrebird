@@ -22,7 +22,6 @@ class LyrebirdEngine {
     var isRunning                       : Bool = false
     var numberOfAudioChannels           : LyrebirdInt = 128
     var numberOfControlChannels         : LyrebirdInt = 2048
-    var internalMemoryPoolSize          : LyrebirdInt = 32768
     var blockSize                       : LyrebirdInt = 1024 {
         didSet {
             if(self.blockSize > 0){
@@ -89,33 +88,7 @@ class LyrebirdEngine {
     }
     
     func runTests(){
-        /*
-        let graph = LyrebirdGraph()
-        
-        /* allow subclasses of LyrebirdGraph, and use properties instead of parameter dicts??? */
-        /* instead of a key, pass a closure to evaluate? */
-        graph.build { (graph: LyrebirdGraph) in
-            graph.parameters["ControlScaler"] = 1.0
-            /*
-            let control = Control(graph: graph, rate: .Control, currentValue: "ControlScaler");
-            let controlTwo = Control(graph: graph, rate: .Control, currentValue: control);
-            */
-            let sin = OscSin(graph: graph, rate: .Audio, freq: 440.0, phase: 0.0)
-            Output(graph: graph, rate: .Audio, index: 0, output: sin)
-        }
-        let note = LyrebirdNote(graph: graph)
-        tree.defaultGroup.addNodeToHead(note)
-        
-        do {
-            try tree.processTree { (nodeTree, finished) in
-                // write to outputs
-            }
-        } catch LyrebirdTreeError.AlreadyProcessing {
-            print("Already Processing")
-        } catch _ {
-            print("Throw on some Bootsy Collins, because something funky happened.")
-        }
-*/
+
     }
     
 }
