@@ -74,7 +74,7 @@ public final class NoiseLFStep: NoiseLFBase {
                     if curFreq <= 0 {
                         samplesUntilNextValue = -1
                     } else {
-                        samplesUntilNextValue = LyrebirdInt(round(LyrebirdEngine.engine.iSampleRate / curFreq))
+                        samplesUntilNextValue = LyrebirdInt(round(Lyrebird.engine.iSampleRate / curFreq))
                         if samplesUntilNextValue < 1 {
                             samplesUntilNextValue = 1
                         }
@@ -118,7 +118,7 @@ public final class NoiseLFLine: NoiseLFBase {
                         samplesUntilNextValue = -1
                         step = 0
                     } else {
-                        samplesUntilNextValue = LyrebirdInt(round( LyrebirdEngine.engine.sampleRate / curFreq))
+                        samplesUntilNextValue = LyrebirdInt(round( Lyrebird.engine.sampleRate / curFreq))
                         if samplesUntilNextValue < 1 {
                             samplesUntilNextValue = 1
                         }

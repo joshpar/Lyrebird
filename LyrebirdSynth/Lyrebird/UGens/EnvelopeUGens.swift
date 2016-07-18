@@ -29,7 +29,7 @@ public class EnvelopeGen : LyrebirdUGen {
         self.levelBias = levelBias
         self.timeScale = timeScale
         self.releaseSegment = releaseSegment
-        var timeInc = LyrebirdEngine.engine.iSampleRate
+        var timeInc = Lyrebird.engine.iSampleRate
         var gateTime = -1.0
         if releaseSegment >= 0 {
             gateTime = 0.0

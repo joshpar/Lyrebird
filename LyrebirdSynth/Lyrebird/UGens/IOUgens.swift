@@ -15,7 +15,7 @@ public final class Output : LyrebirdUGen {
         self.index = index
         self.output = output
         super.init(rate: rate)
-        let channels: [LyrebirdAudioChannel] = LyrebirdEngine.engine.audioBlock
+        let channels: [LyrebirdAudioChannel] = Lyrebird.engine.audioBlock
         if(index.intValue(graph) < channels.count){
             channel = channels[self.index.intValue(graph)]
         }
@@ -23,7 +23,7 @@ public final class Output : LyrebirdUGen {
     
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         // get the audio wire to output
-        let channels: [LyrebirdAudioChannel] = LyrebirdEngine.engine.audioBlock
+        let channels: [LyrebirdAudioChannel] = Lyrebird.engine.audioBlock
         if(index.intValue(graph) < channels.count){
             channel = channels[self.index.intValue(graph)]
         }
@@ -34,11 +34,11 @@ public final class Output : LyrebirdUGen {
         // Wires always write their output to the first indexes of their array
         // however, when an offset if needed, Output UGens must account for this when they write
         
-        let blockSize = LyrebirdEngine.engine.blockSize
+        let blockSize = Lyrebird.engine.blockSize
         let offset = blockSize - numSamples
         if let channel = self.channel {
             channel.touched = true
-            for index in offset ..< LyrebirdEngine.engine.blockSize {
+            for index in offset ..< Lyrebird.engine.blockSize {
                 channel.currentValues[index] = channel.currentValues[index] + outputChannel[index]
             }
         }
@@ -54,7 +54,7 @@ public final class Input : LyrebirdUGen {
     public required init(rate: LyrebirdUGenRate, index: LyrebirdValidUGenInput){
         self.index = index
         super.init(rate: rate)
-        let channels: [LyrebirdAudioChannel] = LyrebirdEngine.engine.audioBlock
+        let channels: [LyrebirdAudioChannel] = Lyrebird.engine.audioBlock
         if(index.intValue(graph) < channels.count){
             channel = channels[self.index.intValue(graph)]
         }

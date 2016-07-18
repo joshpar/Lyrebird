@@ -24,7 +24,7 @@ public func cubicInterp(ym1: LyrebirdFloat, y0: LyrebirdFloat, y1: LyrebirdFloat
 }
 
 func calcSlope(startValue: LyrebirdFloat, endValue: LyrebirdFloat) -> LyrebirdFloat {
-    return (endValue - startValue) * LyrebirdEngine.engine.iBlockSize
+    return (endValue - startValue) * Lyrebird.engine.iBlockSize
 }
 
 func calcSlope(startValue: LyrebirdFloat, endValue: LyrebirdFloat, numSamples: LyrebirdFloat) -> LyrebirdFloat {
@@ -37,7 +37,7 @@ func calcSlope(startValue: LyrebirdFloat, endValue: LyrebirdFloat, numSamples: L
 
 func interpolatedSampleBlock(startValue: LyrebirdFloat, endValue: LyrebirdFloat) -> [LyrebirdFloat] {
     var start: LyrebirdFloat = startValue
-    let blockSize: LyrebirdInt = LyrebirdEngine.engine.blockSize
+    let blockSize: LyrebirdInt = Lyrebird.engine.blockSize
     if(startValue == endValue){
         let block: [LyrebirdFloat] = [LyrebirdFloat](count: blockSize, repeatedValue: startValue )
         return block

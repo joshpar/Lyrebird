@@ -214,7 +214,7 @@ public class LyrebirdGroup: LyrebirdNode {
     
     public func processChildren(){
         var node: LyrebirdNode? = nextNode
-        let blockSize = LyrebirdEngine.engine.blockSize
+        let blockSize = Lyrebird.engine.blockSize
         while node != nil {
             // get the CURRENT next node
             let tmp = node?.nextNode

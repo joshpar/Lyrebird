@@ -46,13 +46,13 @@ public class LyrebirdTestSynthesizer {
     // A semaphore to gate the number of buffers processed.
     private let audioSemaphore: dispatch_semaphore_t = dispatch_semaphore_create(kInFlightAudioBuffers)
     
-    private let lyrebird: LyrebirdMain = LyrebirdMain()
+    private let lyrebird: Lyrebird = Lyrebird()
     
     private var demo: LyrebirdDemo? = nil
     
     private var inputChannels: [[LyrebirdFloat]] = [[LyrebirdFloat](count: Int(kSamplesPerBuffer), repeatedValue: 0.0), [LyrebirdFloat](count: Int(kSamplesPerBuffer), repeatedValue: 0.0)]
 
-    // inits the CoreAudio engine, sets up LyrebirdMain and references our demo class
+    // inits the CoreAudio engine, sets up Lyrebird and references our demo class
     private init() {
         // Create a pool of audio buffers.
         
@@ -71,10 +71,7 @@ public class LyrebirdTestSynthesizer {
         
         
         engine.connect(playerNode, to: engine.outputNode, format: audioFormat)
-        
-        
-        
-        
+
         if let inputNode: AVAudioInputNode = engine.inputNode {
             inputNode.installTapOnBus(0, bufferSize: kSamplesPerBuffer, format: audioFormat, block: { (buffer: AVAudioPCMBuffer, time: AVAudioTime) in
                 
@@ -107,7 +104,7 @@ public class LyrebirdTestSynthesizer {
     
     
     public func play(){
-        let blockSize = Int(self.lyrebird.blockSize)
+        let blockSize = Int(lyrebird.blockSize)
         let numCycles = Int(kSamplesPerBuffer) / blockSize
 
         dispatch_async(audioQueue) {

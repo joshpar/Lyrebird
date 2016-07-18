@@ -11,11 +11,11 @@ import Lyrebird
 
 class LyrebirdDemo: NSObject {
     
-    let lyrebird: LyrebirdMain!
+    let lyrebird: Lyrebird!
     var timer: LyrebirdTimer? = nil
     var graphs: LyrebirdTestGraphs = LyrebirdTestGraphs()
     
-    required init(lyrebird: LyrebirdMain){
+    required init(lyrebird: Lyrebird){
         self.lyrebird = lyrebird
         super.init()
     }

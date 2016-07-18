@@ -93,8 +93,8 @@ extension LyrebirdValidUGenInput {
  */
 
 public class LyrebirdUGen {
+    static let zeroedSamples : [LyrebirdFloat] = [LyrebirdFloat](count: Lyrebird.engine.blockSize, repeatedValue: 0.0)
     private (set) public var rate: LyrebirdUGenRate
-    static let zeroedSamples : [LyrebirdFloat] = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: 0.0)
     final var samples: [LyrebirdFloat]
     private (set) public var outputIndexes: [LyrebirdInt] = []
     private var ready: Bool = false

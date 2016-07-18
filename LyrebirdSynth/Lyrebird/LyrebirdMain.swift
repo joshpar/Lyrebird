@@ -1,12 +1,12 @@
 //
-//  LyrebirdMain.swift
+//  Lyrebird.swift
 //  Lyrebird
 //
 //  Created by Joshua Parmenter on 5/1/16.
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-public class LyrebirdMain {
+public class Lyrebird {
     
     
     /// ---
@@ -79,7 +79,7 @@ public class LyrebirdMain {
     /// The processing engine
     ///
     
-    private let engine                                : LyrebirdEngine = LyrebirdEngine.engine
+    static let engine                                  : LyrebirdEngine = LyrebirdEngine.engine
     
     /**
 Designated initializer for the main synth environment.
@@ -116,11 +116,11 @@ Designated initializer for the main synth environment.
         self.sampleRate = sampleRate
         self.iSampleRate = 1.0 / sampleRate
         self.iBlockSize = 1.0 / LyrebirdFloat(self.blockSize)
-        engine.numberOfAudioChannels = self.numberOfAudioChannels
-        engine.numberOfControlChannels  = self.numberOfControlChannels
-        engine.internalMemoryPoolSize = self.internalMemoryPoolSize
-        engine.blockSize = self.blockSize
-        engine.iBlockSize = self.iBlockSize
+        Lyrebird.engine.numberOfAudioChannels = self.numberOfAudioChannels
+        Lyrebird.engine.numberOfControlChannels  = self.numberOfControlChannels
+        Lyrebird.engine.internalMemoryPoolSize = self.internalMemoryPoolSize
+        Lyrebird.engine.blockSize = self.blockSize
+        Lyrebird.engine.iBlockSize = self.iBlockSize
         startEngine()
     }
     
@@ -136,57 +136,57 @@ Designated initializer for the main synth environment.
     }
     
     public func startEngine(){
-        self.engine.delegate = self
-        self.engine.start()
+        Lyrebird.engine.delegate = self
+        Lyrebird.engine.start()
     }
     
     public func stopEngine(){
-        self.engine.delegate = self
-        self.engine.stop()
+        Lyrebird.engine.delegate = self
+        Lyrebird.engine.stop()
     }
     
     public func runTests(){
-        self.engine.runTests()
+        Lyrebird.engine.runTests()
     }
     
     public func processBlock(){
         // dummy for now
-        engine.processWithInputChannels([])
+        Lyrebird.engine.processWithInputChannels([])
     }
     
     public func addNodeToHead(node: LyrebirdNode){
-        engine.tree.defaultGroup.addNodeToHead(node)
+        Lyrebird.engine.tree.defaultGroup.addNodeToHead(node)
     }
     
     public func addNodeToTail(node: LyrebirdNode){
-        engine.tree.defaultGroup.addNodeToTail(node)
+        Lyrebird.engine.tree.defaultGroup.addNodeToTail(node)
     }
     
     public func createParallelGroup() -> LyrebirdParallelGroup {
         let group = LyrebirdParallelGroup()
-        engine.tree.addParallelGroup(group)
+        Lyrebird.engine.tree.addParallelGroup(group)
         return group
     }
     
     public func removeParallelGroup(parallelGroup: LyrebirdParallelGroup){
-        engine.tree.removeParallelGroup(parallelGroup)
+        Lyrebird.engine.tree.removeParallelGroup(parallelGroup)
     }
     
     public func freeAll(){
-        engine.tree.freeAll()
+        Lyrebird.engine.tree.freeAll()
     }
     
     public func processWithInputChannels(inputChannels: [LyrebirdAudioChannel]){
-        engine.processWithInputChannels(inputChannels)
+        Lyrebird.engine.processWithInputChannels(inputChannels)
     }
     
     public func audioBlocks() -> [LyrebirdAudioChannel] {
-        return engine.audioBlock
+        return Lyrebird.engine.audioBlock
     }
 
 }
 
-extension LyrebirdMain: LyrebirdEngineDelegate {
+extension Lyrebird: LyrebirdEngineDelegate {
     func synthEngineHasStarted(engine: LyrebirdEngine) {
         
         print("Engine started!")

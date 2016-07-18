@@ -33,7 +33,7 @@ public final class OscSin: LyrebirdUGen {
         let initialFreq = freq.floatValue(graph)
         self.lastFreq = initialFreq
         self.lastPhase = internalPhase
-        self.samplingIncrement = self.lastFreq * LyrebirdFloat(table.count) * LyrebirdEngine.engine.iSampleRate
+        self.samplingIncrement = self.lastFreq * LyrebirdFloat(table.count) * Lyrebird.engine.iSampleRate
         
     }
     
@@ -93,7 +93,7 @@ public final class OscSin: LyrebirdUGen {
         var f_freq: LyrebirdFloat = 0.0
         let phaseSamples: [LyrebirdFloat] = u_phase.sampleBlock(graph, previousValue: 0.0)
         var f_phase: LyrebirdFloat = 0.0
-        let incrementScaler = LyrebirdFloat(table.count) * LyrebirdEngine.engine.iSampleRate
+        let incrementScaler = LyrebirdFloat(table.count) * Lyrebird.engine.iSampleRate
         let tableCountTimesTwoPI = M_1_TWOPI * tableCount
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             f_freq = freqSamples[sampleIdx]
@@ -115,7 +115,7 @@ public final class OscSin: LyrebirdUGen {
         }
         let phaseSamples: [LyrebirdFloat] = u_phase.sampleBlock(graph, previousValue: 0.0)
         var f_phase: LyrebirdFloat = 0.0
-        let incrementScaler = LyrebirdFloat(table.count) * LyrebirdEngine.engine.iSampleRate
+        let incrementScaler = LyrebirdFloat(table.count) * Lyrebird.engine.iSampleRate
         let tableCountTimesTwoPI = M_1_TWOPI * tableCount
         var phaseOffsetDiff = 0.0
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
@@ -139,7 +139,7 @@ public final class OscSin: LyrebirdUGen {
             phaseSlope = calcSlope(lastPhase, endValue: f_phase)
             phaseSlope = phaseSlope * tableCountTimesTwoPI
         }
-        let incrementScaler = LyrebirdFloat(table.count) * LyrebirdEngine.engine.iSampleRate
+        let incrementScaler = LyrebirdFloat(table.count) * Lyrebird.engine.iSampleRate
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             f_freq = freqSamples[sampleIdx]
             samplingIncrement = (f_freq * incrementScaler) + phaseSlope
@@ -152,9 +152,9 @@ public final class OscSin: LyrebirdUGen {
     private final func next(numSamples: LyrebirdInt, f_freq: LyrebirdFloat, f_phase: LyrebirdFloat) -> Bool {
         var sampleIncSlope: LyrebirdFloat = 0.0
         if lastFreq != f_freq || lastPhase != f_phase {
-            samplingIncrement = f_freq * LyrebirdFloat(table.count) * LyrebirdEngine.engine.iSampleRate
+            samplingIncrement = f_freq * LyrebirdFloat(table.count) * Lyrebird.engine.iSampleRate
             let phaseOffsetDiff = (f_phase - lastPhase) * M_1_TWOPI * tableCount
-            let nextSamplingIncrement = (f_freq * LyrebirdFloat(table.count) * LyrebirdEngine.engine.iSampleRate) + phaseOffsetDiff
+            let nextSamplingIncrement = (f_freq * LyrebirdFloat(table.count) * Lyrebird.engine.iSampleRate) + phaseOffsetDiff
             sampleIncSlope = calcSlope(samplingIncrement, endValue: nextSamplingIncrement)
         }
         let phaseSlope = lastPhase != f_phase ? calcSlope(lastPhase, endValue: f_phase) : 0.0
@@ -189,7 +189,7 @@ public final class Impulse : LyrebirdUGen {
     private final func calcNextImpulse(){
         let f_freq = self.freq.floatValue(self.graph)
         if(f_freq > 0.0){
-            samplesRemain = LyrebirdInt(round(LyrebirdEngine.engine.sampleRate / f_freq))
+            samplesRemain = LyrebirdInt(round(Lyrebird.engine.sampleRate / f_freq))
             if samplesRemain < 1 {
                 samplesRemain = 1
             }

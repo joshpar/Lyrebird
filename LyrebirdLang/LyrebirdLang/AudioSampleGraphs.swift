@@ -76,8 +76,8 @@ struct LyrebirdTestGraphs {
         noiseLineGraphDelay.build {
             let freq = NoiseLFLine(rate: .Audio, freq: 1)
             let freqRange = freq * 440.0 + 440.0
-            let sin = OscSin(rate: .Audio, freq: 440.0, phase: 0.0)
-            let delTime = OscSin(rate: .Audio, freq: 1.0, phase: 0.0) * 0.02 + 0.75
+            let sin = OscSin(rate: .Audio, freq: freqRange, phase: 0.0)
+            let delTime = 0.75 + (0.02 * OscSin(rate: .Audio, freq: 1.0, phase: 0.0))
             let delay = DelayLine(rate: .Audio, input: sin, delayTime: delTime, maxDelayTime: 1.0, interpolation: .Cubic)
             _ = Output(rate: .Audio, index: "Output", output: sin * db_linamp(-24.0))
             _ = Output(rate: .Audio, index: "OutputTwo", output: delay * db_linamp(-24.0))

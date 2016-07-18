@@ -50,7 +50,7 @@ extension LyrebirdFloatClosure : LyrebirdValidUGenInput {
     
     public func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]] {
         let float = closure?(graph: graph, currentPoint: nil) ?? 0.0
-        let returnValues = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: LyrebirdFloat(float))
+        let returnValues = [LyrebirdFloat](count: Lyrebird.engine.blockSize, repeatedValue: LyrebirdFloat(float))
         return [returnValues]
     }
     
@@ -83,7 +83,7 @@ extension LyrebirdFloatClosure : LyrebirdNumber {
 extension LyrebirdInt : LyrebirdValidUGenInput {
     
     public func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]] {
-        let returnValues = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: LyrebirdFloat(self))
+        let returnValues = [LyrebirdFloat](count: Lyrebird.engine.blockSize, repeatedValue: LyrebirdFloat(self))
         return [returnValues]
     }
     
@@ -111,7 +111,7 @@ extension LyrebirdInt : LyrebirdFloatUGenValue {
 extension LyrebirdFloat : LyrebirdValidUGenInput {
     
     public func calculatedSamples(graph: LyrebirdGraph?) -> [[LyrebirdFloat]] {
-        let returnValues = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: self)
+        let returnValues = [LyrebirdFloat](count: Lyrebird.engine.blockSize, repeatedValue: self)
         return [returnValues]
     }
     
@@ -142,7 +142,7 @@ extension LyrebirdKey : LyrebirdValidUGenInput {
                 return parameter.calculatedSamples(graph)
             }
         }
-        let returnValues = [LyrebirdFloat](count: LyrebirdEngine.engine.blockSize, repeatedValue: LyrebirdFloat(0.0))
+        let returnValues = [LyrebirdFloat](count: Lyrebird.engine.blockSize, repeatedValue: LyrebirdFloat(0.0))
         return [returnValues]
     }
     
