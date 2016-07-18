@@ -21,7 +21,7 @@ public protocol LyrebirdNumber {
 
 extension LyrebirdNumber {
     public func valueAtPoint(graph: LyrebirdGraph?, point: LyrebirdNumber) -> LyrebirdFloat {
-        var currentPoint = point.numberValue(graph)
+        //var currentPoint = point.numberValue(graph)
         return self.numberValue(graph)
     }
     

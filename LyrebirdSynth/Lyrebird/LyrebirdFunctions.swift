@@ -12,6 +12,17 @@ func linearInterp(x1: LyrebirdFloat, x2: LyrebirdFloat, pct: LyrebirdFloat) -> L
     return x1 + ((x2 - x1) * pct)
 }
 
+// returns a value for a point between y0 and y1
+
+public func cubicInterp(ym1: LyrebirdFloat, y0: LyrebirdFloat, y1: LyrebirdFloat, y2: LyrebirdFloat, pct: LyrebirdFloat) -> LyrebirdFloat
+{
+    let c0 = y0;
+    let c1 = (0.5 * (y1 - ym1));
+    let c2 = ym1 - (2.5 * y0) + (2.0 * y1) - (0.5 * y2);
+    let c3 = (0.5 * (y2 - ym1)) + (1.5 * (y0 - y1));
+    return (((((c3 * pct) + c2) * pct) + c1) * pct) + c0;
+}
+
 func calcSlope(startValue: LyrebirdFloat, endValue: LyrebirdFloat) -> LyrebirdFloat {
     return (endValue - startValue) * LyrebirdEngine.engine.iBlockSize
 }
@@ -79,6 +90,17 @@ public func ratio_midi(ratio: LyrebirdFloat) -> LyrebirdFloat {
 
 public func reciprocal(value: LyrebirdFloat) -> LyrebirdFloat {
     return 1.0 / value
+}
+
+public func isPowerOfTwo(value: LyrebirdInt) -> Bool {
+    let nextPowTwo = nextPowerOfTwo(value)
+    return value == nextPowTwo
+}
+
+public func nextPowerOfTwo(value: LyrebirdInt) -> LyrebirdInt {
+    let n = LyrebirdFloat(value)
+    let nextPowTwo = pow(2, ceil(log2(n)))
+    return LyrebirdInt(nextPowTwo)
 }
 
 // MARK: functions to work on audio values and signals (retain sign for negative values)

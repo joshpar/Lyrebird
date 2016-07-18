@@ -70,7 +70,7 @@ public final class NoiseLFStep: NoiseLFBase {
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
                 samplesUntilNextValue = samplesUntilNextValue - 1
                 if(samplesUntilNextValue == 0){
-                    var curFreq =  freq.floatValue(graph)
+                    let curFreq =  freq.floatValue(graph)
                     if curFreq <= 0 {
                         samplesUntilNextValue = -1
                     } else {
@@ -113,7 +113,7 @@ public final class NoiseLFLine: NoiseLFBase {
                     currentValue = currentValue + step
                     samples[sampleIdx] = currentValue
                 } else {
-                    var curFreq =  freq.floatValue(graph)
+                    let curFreq =  freq.floatValue(graph)
                     if curFreq <= 0 {
                         samplesUntilNextValue = -1
                         step = 0

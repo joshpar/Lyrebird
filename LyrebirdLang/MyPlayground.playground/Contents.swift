@@ -4,6 +4,11 @@ import Cocoa
 import Lyrebird
 
 
+isPowerOfTwo(127)
+
+nextPowerOfTwo(128)
+
+cubicInterp(0.0, y0: 2.0, y1: 0.0, y2: 1.0, pct: 0.0)
 
 let a = LyrebirdInt(80)
 80.floatValue(nil)

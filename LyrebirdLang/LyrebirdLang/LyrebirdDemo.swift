@@ -33,9 +33,12 @@ class LyrebirdDemo: NSObject {
             print("DONE!!!!")
             }
         
-        let noiseLine = graphs.graphs["noiseLine"]
+        let noiseLine = graphs.graphs["noiseLineDelay"]
         var noiseLineNote: LyrebirdNote? = LyrebirdNote(graph: noiseLine)
-        noiseLineNote?.updateParameter("Output", value: 1)
+        noiseLineNote?.updateParameter("Output", value: 0)
+        noiseLineNote?.updateParameter("OutputTwo", value: 1)
+        
+        
         
         self.timer = LyrebirdTimer()
         if let timer = self.timer {
@@ -44,7 +47,7 @@ class LyrebirdDemo: NSObject {
             self.lyrebird.addNodeToHead(noiseNote!)
             lyrebird.addNodeToHead(fmNote!)
             */
-            lyrebird.addNodeToHead(impulseNote)
+            //lyrebird.addNodeToHead(impulseNote)
             lyrebird.addNodeToHead(noiseLineNote!)
             
             let block: LyrebirdTimerBlock = {(curTime: LyrebirdFloat, inc: LyrebirdInt) in
