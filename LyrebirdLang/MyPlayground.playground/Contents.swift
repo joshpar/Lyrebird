@@ -4,6 +4,9 @@ import Cocoa
 import Lyrebird
 
 
+exp((log( 0.001 ) * 0.2) / 1.0)
+
+
 isPowerOfTwo(127)
 
 nextPowerOfTwo(128)
@@ -155,9 +158,12 @@ start  = NSDate.timeIntervalSinceReferenceDate()
 let env = Envelope(levels: [2.0, 0.0, 4.0], durations: [1.0, 2.0, 20.0], curve: 0.0)
 env.pollAtTime(2)
 
+
 for _ in 0 ..< 1000 {
-    env.pollAtTime(20.5)
+    feedbackCoef(0.1, decayTime: 10.0, targetAmp: 0.001)
+    feedbackCoef(0.1, decayTime: 10.0, targetDB: -60.0)
 }
+
 end = NSDate.timeIntervalSinceReferenceDate()
 
 end-start

@@ -62,8 +62,6 @@ func sineLookup(sampleIdx: LyrebirdFloat, mask: LyrebirdInt, table: [LyrebirdFlo
     return returnVal
 }
 
-
-
 public func db_linamp(db: LyrebirdFloat) -> LyrebirdFloat {
     return pow(10.0, db * 0.05)
 }
@@ -112,3 +110,20 @@ public func sig_sqrt(value: LyrebirdFloat) -> LyrebirdFloat {
         return -sqrt(-value)
     }
 }
+
+
+
+public func feedbackCoef(delayTime: LyrebirdFloat, decayTime: LyrebirdFloat, targetDB: LyrebirdFloat = -60.0) -> LyrebirdFloat {
+    let targetAmp = db_linamp(targetDB)
+    return feedbackCoef(delayTime, decayTime: decayTime, targetAmp: targetAmp)
+}
+
+public func feedbackCoef(delayTime: LyrebirdFloat, decayTime: LyrebirdFloat, targetAmp: LyrebirdFloat = 0.001) -> LyrebirdFloat {
+    if decayTime == 0.0 {
+        return 0.0
+    }
+    return exp((log(targetAmp) * delayTime) / decayTime)
+}
+
+
+

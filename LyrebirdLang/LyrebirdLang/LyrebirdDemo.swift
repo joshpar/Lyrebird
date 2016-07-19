@@ -38,7 +38,18 @@ class LyrebirdDemo: NSObject {
         noiseLineNote?.updateParameter("Output", value: 0)
         noiseLineNote?.updateParameter("OutputTwo", value: 1)
         
+        /* // some sample benchmark code for testing
+        let start  = NSDate.timeIntervalSinceReferenceDate()
         
+        let white = LyrebirdRandomNumberGenerator()
+        for _ in 0 ..< 10000 {
+            feedbackCoef(0.1, decayTime: 10.0, targetAmp: white.next())
+        }
+        
+        let end = NSDate.timeIntervalSinceReferenceDate()
+        
+        print("time to run: \(end-start)")
+        */
         
         self.timer = LyrebirdTimer()
         if let timer = self.timer {
