@@ -122,12 +122,11 @@ public final class SecondOrderSection : LyrebirdUGen {
         let newB2 = b2.floatValue(graph)
         // try to avoid the interpolation
         
-        if newA0 == lastA0 &&
-            newA1 == lastA1 &&
-            newA2 == lastA2 &&
-            newB1 == lastB1 &&
-            newB2 == lastB2 {
-            
+        if (newA0 == lastA0) &&
+            (newA1 == lastA1) &&
+            (newA2 == lastA2) &&
+            (newB1 == lastB1) &&
+            (newB2 == lastB2) {
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
                 currentIn = inputSamples[sampleIdx] +
                     (newB1 * input1) +
@@ -163,5 +162,82 @@ public final class SecondOrderSection : LyrebirdUGen {
         self.input1 = input1
         self.input2 = input2
         return success
+    }
+}
+
+
+
+
+/**
+ Bristow-Johnson SOS Cookbook
+ */
+
+public final class FilterRBJBandPass : LyrebirdUGen {
+    
+    private var input: LyrebirdValidUGenInput
+    private var freq: LyrebirdValidUGenInput
+    private var bandwidth: LyrebirdValidUGenInput
+    private var lastFreq: LyrebirdFloat = 0.0
+    private var lastBandwidth: LyrebirdFloat = 0.0
+    private var sos: SecondOrderSection?
+    private var a0: LyrebirdValidUGenInput = 0.0
+    private var a1: LyrebirdValidUGenInput = 0.0
+    private var a2: LyrebirdValidUGenInput = 0.0
+    private var b1: LyrebirdValidUGenInput = 0.0
+    private var b2: LyrebirdValidUGenInput = 0.0
+
+    public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput, freq: LyrebirdValidUGenInput, bandwidth: LyrebirdValidUGenInput) {
+        self.freq = freq
+        self.bandwidth = bandwidth
+        self.input = input
+        super.init(rate: rate)
+        calculateCoefs()
+        self.sos = SecondOrderSection(rate: rate, input: self.input, a0: self.a0, a1: self.a1, a2: self.a2, b1: self.b1, b2: self.b2)
+        self.lastFreq = freq.floatValue(graph)
+        self.lastBandwidth = bandwidth.floatValue(graph)
+        
+    }
+    
+    override public final func next(numSamples: LyrebirdInt) -> Bool {
+        let success: Bool = super.next(numSamples)
+        calculateCoefs()
+  //      self.sos?.next(numSamples)
+        if let sos = self.sos {
+            self.samples = sos.samples
+        }
+        return success
+    }
+    
+    private func calculateCoefs(){
+        let sampleRate  = Lyrebird.engine.sampleRate
+        let sampleDur = Lyrebird.engine.iSampleRate
+        let curFreq = freq.floatValue(graph)
+        let curBandwidth = bandwidth.floatValue(graph)
+        if curFreq != 0.0 {
+            if (curFreq != lastFreq) ||
+                (curBandwidth != lastBandwidth) {
+                let w0 = M_TWOPI * freq.floatValue(graph) * sampleDur
+                let sin_w0 =  sin(w0)
+
+                let alpha = sin_w0 * sinh(((0.34657359027997 * bandwidth.floatValue(graph) * w0)) / sin_w0);
+                let b0rz = 1.0 / (1.0 + alpha)
+                if let sos = sos {
+                    sos.a0 = alpha * b0rz;
+                    sos.b1 = cos(w0) * 2.0 * b0rz;
+                    sos.b2 = (1.0 - alpha) * (b0rz * -1.0);
+                    sos.a1 = 0.0
+                    sos.a2 = a0 * -1.0
+                }
+                lastFreq = curFreq
+                lastBandwidth = curBandwidth
+            }
+        } else {
+            lastFreq = curFreq
+            a0 = 0.0
+            b1 = 0.0
+            b2 = 0.0
+            a1 = 0.0
+            a2 = 0.0
+        }
     }
 }

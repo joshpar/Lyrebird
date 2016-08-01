@@ -74,7 +74,7 @@ struct LyrebirdTestGraphs {
         let noiseLineGraphDelay = LyrebirdGraph()
         
         noiseLineGraphDelay.build {
-            let freq = NoiseLFLine(rate: .Audio, freq: 1)
+            let freq = NoiseLFLine(rate: .Audio, freq: 1, seed: 123)
             let freqRange = freq * 440.0 + 440.0
             let sin = OscSin(rate: .Audio, freq: freqRange, phase: 0.0)
             let delTime = 0.2
@@ -86,6 +86,21 @@ struct LyrebirdTestGraphs {
         noiseLineGraphDelay.parameters["OutputTwo"] = 1
         
         graphs["noiseLineDelay"] = noiseLineGraphDelay
+        
+        let filterTests = LyrebirdGraph()
+        
+        filterTests.build { 
+            let noise: NoiseWhite = NoiseWhite(rate: .Audio)
+            let out = noise // * 0.2
+            let freq = NoiseLFLine(rate: .Audio, freq: 1, seed: 123)
+            let freqRange = freq * 220.0 + 1440.0
+            let bandpass = FilterRBJBandPass(rate: .Audio, input: out, freq: freqRange, bandwidth: 0.01)
+            _ = Output(rate: .Audio, index: "Output", output: bandpass)
+        }
+        
+        filterTests.parameters["Output"] = 0
+        graphs["filterTests"] = filterTests
+
     }
 }
 

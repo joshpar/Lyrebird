@@ -143,12 +143,16 @@ Designated initializer for the main synth environment.
         Lyrebird.engine.processWithInputChannels([])
     }
     
-    public func addNodeToHead(node: LyrebirdNode){
-        Lyrebird.engine.tree.defaultGroup.addNodeToHead(node)
+    public func addNodeToHead(node: LyrebirdNode?){
+        if let node = node {
+            Lyrebird.engine.tree.defaultGroup.addNodeToHead(node)
+        }
     }
     
-    public func addNodeToTail(node: LyrebirdNode){
-        Lyrebird.engine.tree.defaultGroup.addNodeToTail(node)
+    public func addNodeToTail(node: LyrebirdNode?){
+        if let node = node {
+            Lyrebird.engine.tree.defaultGroup.addNodeToTail(node)
+        }
     }
     
     public func createParallelGroup() -> LyrebirdParallelGroup {

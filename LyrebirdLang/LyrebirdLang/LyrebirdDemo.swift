@@ -38,6 +38,11 @@ class LyrebirdDemo: NSObject {
         noiseLineNote?.updateParameter("Output", value: 0)
         noiseLineNote?.updateParameter("OutputTwo", value: 1)
         
+        let filter = graphs.graphs["filterTests"]
+        var filterNote: LyrebirdNote? = LyrebirdNote(graph: filter)
+        filterNote?.updateParameter("Output", value: 0)
+        
+        
         /* // some sample benchmark code for testing
         let start  = NSDate.timeIntervalSinceReferenceDate()
         
@@ -59,7 +64,9 @@ class LyrebirdDemo: NSObject {
             lyrebird.addNodeToHead(fmNote!)
             */
             //lyrebird.addNodeToHead(impulseNote)
-            lyrebird.addNodeToHead(noiseLineNote!)
+            lyrebird.addNodeToHead(filterNote)
+            
+            
             
             let block: LyrebirdTimerBlock = {(curTime: LyrebirdFloat, inc: LyrebirdInt) in
                 counter = counter + 1
@@ -75,8 +82,10 @@ class LyrebirdDemo: NSObject {
  */
 //                    impulseNote?.free()
 //                    impulseNote = nil
-                    noiseLineNote?.free()
-                    noiseLineNote = nil
+//                    noiseLineNote?.free()
+//                    noiseLineNote = nil
+                    filterNote?.free()
+                    filterNote = nil
                 }
                 if counter < 20 {
                     return 0.4
