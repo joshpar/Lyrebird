@@ -473,3 +473,78 @@ public class Cubed : UnaryOpUGen {
         return success
     }
 }
+
+
+public class Range : LyrebirdUGen {
+    let input: LyrebirdValidUGenInput
+    
+    var low: LyrebirdValidUGenInput
+    private var lastLow: LyrebirdFloat = 0.0
+    
+    var high: LyrebirdValidUGenInput
+    private var lastHigh: LyrebirdFloat = 0.0
+    
+    public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput, low: LyrebirdValidUGenInput, high: LyrebirdValidUGenInput){
+        self.input = input
+        self.low = low
+        self.high = high
+        super.init(rate: rate)
+        self.lastLow = low.floatValue(self.graph)
+        self.lastHigh = high.floatValue(self.graph)
+    }
+    
+    public override func next(numSamples: LyrebirdInt) -> Bool {
+        let success: Bool = super.next(numSamples)
+        if(success){
+//            let newHigh = high.floatValue(graph)
+//            let newLow = low.floatValue(graph)
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            let highSamples = high.calculatedSamples(graph)[0]
+            let lowSamples = low.calculatedSamples(graph)[0]
+            for index in 0 ..< numSamples {
+                let val = inputSamples[index]
+                let newHigh = highSamples[index]
+                let newLow = lowSamples[index]
+                let scaler = (newHigh - newLow) * 0.5 // TODO:: assuming bipolar
+                let offset = newLow;
+                samples[index] = (val * scaler) + offset
+            }
+//            lastLow = newLow
+//            lastHigh = newHigh
+        }
+        return success
+    }
+}
+
+public class MulAdd : LyrebirdUGen {
+    let input: LyrebirdValidUGenInput
+    
+    var mul: LyrebirdValidUGenInput
+//    private var lastLow: LyrebirdFloat = 0.0
+    
+    var add: LyrebirdValidUGenInput
+//    private var lastHigh: LyrebirdFloat = 0.0
+    
+    public required init(rate: LyrebirdUGenRate, input: LyrebirdValidUGenInput, mul: LyrebirdValidUGenInput, add: LyrebirdValidUGenInput){
+        self.input = input
+        self.mul = mul
+        self.add = add
+        super.init(rate: rate)
+    }
+    
+    public override func next(numSamples: LyrebirdInt) -> Bool {
+        let success: Bool = super.next(numSamples)
+        if(success){
+            let inputSamples: [LyrebirdFloat] = input.calculatedSamples(self.graph)[0]
+            let mulSamples = mul.calculatedSamples(graph)[0]
+            let addSamples = add.calculatedSamples(graph)[0]
+            for index in 0 ..< numSamples {
+                let val = inputSamples[index]
+                let scaler = mulSamples[index]
+                let offset = addSamples[index]
+                samples[index] = (val * scaler) + offset
+            }
+        }
+        return success
+    }
+}

@@ -112,8 +112,6 @@ public class LyrebirdUGen {
         self.graph = LyrebirdGraph.currentBuildingGraph
         self.rate = rate
         self.graph?.addChild(self)
-        // TOOD: my initial assumption is that once a graph is initialized, the same
-        // wires will be used. Make sure this is actually the case!
         let numOutputs = self.numberOfOutputs()
         ready = true
     }
@@ -206,23 +204,5 @@ extension LyrebirdUGen : LyrebirdValidUGenInput {
     
     public func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat] {
         return self.calculatedSamples(graph)[0]
-    }
-}
-
-public protocol UGenStruct {    
-    mutating func next(inout buffer: [LyrebirdFloat])
-}
-
-public struct TestUGenStruct {
-    public var ranGen: LyrebirdRandomNumberGenerator = LyrebirdRandomNumberGenerator()
-    public init(){
-    }
-}
-
-extension TestUGenStruct : UGenStruct {
-    public mutating func next(inout buffer: [LyrebirdFloat]){
-        for idx in 0 ..< buffer.count {
-            buffer[idx] = (ranGen.next() * 2.0) - 1.0
-        }
     }
 }
