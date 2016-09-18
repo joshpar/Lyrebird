@@ -177,6 +177,7 @@
 				TargetAttributes = {
 					03C77EC41CD6F50D003A753B = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 					};
 					03C77ED81CD6F50D003A753B = {
 						CreatedOnToolsVersion = 7.3;
@@ -359,6 +360,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.op133studios.LyrebirdLang;
 				PRODUCT_NAME = LyrebirdSynthLang;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -374,6 +376,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.op133studios.LyrebirdLang;
 				PRODUCT_NAME = LyrebirdSynthLang;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -21,71 +21,74 @@ private let kInFlightAudioBuffers: Int = 2
 // samples.
 private let kSamplesPerBuffer: AVAudioFrameCount = 1024
 
-public class LyrebirdTestSynthesizer {
+open class LyrebirdTestSynthesizer {
     
-    public static let sharedSynth: LyrebirdTestSynthesizer = LyrebirdTestSynthesizer()
+    open static let sharedSynth: LyrebirdTestSynthesizer = LyrebirdTestSynthesizer()
     
     // The audio engine manages the sound system.
-    private let engine: AVAudioEngine = AVAudioEngine()
+    fileprivate let engine: AVAudioEngine = AVAudioEngine()
     
     // The player node schedules the playback of the audio buffers.
-    private let playerNode: AVAudioPlayerNode = AVAudioPlayerNode()
+    fileprivate let playerNode: AVAudioPlayerNode = AVAudioPlayerNode()
     
     // Use standard non-interleaved PCM audio.
     var audioFormat : AVAudioFormat = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)
     
     // A circular queue of audio buffers.
-    private var audioBuffers: [AVAudioPCMBuffer] = [AVAudioPCMBuffer]()
+    fileprivate var audioBuffers: [AVAudioPCMBuffer] = [AVAudioPCMBuffer]()
     
     // The index of the next buffer to fill.
-    private var bufferIndex: Int = 0
+    fileprivate var bufferIndex: Int = 0
     
     // The dispatch queue to render audio samples.
-    private let audioQueue: dispatch_queue_t = dispatch_queue_create("LyrebirdQueue", DISPATCH_QUEUE_SERIAL)
+    fileprivate let audioQueue: DispatchQueue = DispatchQueue(label: "LyrebirdQueue", attributes: [])
     
     // A semaphore to gate the number of buffers processed.
-    private let audioSemaphore: dispatch_semaphore_t = dispatch_semaphore_create(kInFlightAudioBuffers)
+    fileprivate let audioSemaphore: DispatchSemaphore = DispatchSemaphore(value: kInFlightAudioBuffers)
     
-    private let lyrebird: Lyrebird = Lyrebird()
+    fileprivate let lyrebird: Lyrebird = Lyrebird()
     
-    private var demo: LyrebirdDemo? = nil
+    fileprivate var demo: LyrebirdDemo? = nil
     
-    private var inputChannels: [[LyrebirdFloat]] = [[LyrebirdFloat](count: Int(kSamplesPerBuffer), repeatedValue: 0.0), [LyrebirdFloat](count: Int(kSamplesPerBuffer), repeatedValue: 0.0)]
-
+    fileprivate var inputChannels: [[LyrebirdFloat]] = [[LyrebirdFloat](repeating: 0.0, count: Int(kSamplesPerBuffer)), [LyrebirdFloat](repeating: 0.0, count: Int(kSamplesPerBuffer))]
+    
     // inits the CoreAudio engine, sets up Lyrebird and references our demo class
-    private init() {
+    fileprivate init() {
         // Create a pool of audio buffers.
         
-        audioFormat = engine.inputNode!.outputFormatForBus(0)
+        audioFormat = engine.inputNode!.outputFormat(forBus: 0)
         
         for _ in 0 ..< kInFlightAudioBuffers  {
-            let audioBuffer = AVAudioPCMBuffer(PCMFormat: audioFormat, frameCapacity: kSamplesPerBuffer)
+            let audioBuffer = AVAudioPCMBuffer(pcmFormat: audioFormat, frameCapacity: kSamplesPerBuffer)
             audioBuffers.append(audioBuffer)
         }
         
         // Attach and connect the player node.
-        engine.attachNode(playerNode)
-
+        engine.attach(playerNode)
         
-      //  engine.connect(engine.inputNode!, to: playerNode, format: audioFormat)
+        
+        //  engine.connect(engine.inputNode!, to: playerNode, format: audioFormat)
         
         
         engine.connect(playerNode, to: engine.outputNode, format: audioFormat)
-
+        
         if let inputNode: AVAudioInputNode = engine.inputNode {
-            inputNode.installTapOnBus(0, bufferSize: kSamplesPerBuffer, format: audioFormat, block: { (buffer: AVAudioPCMBuffer, time: AVAudioTime) in
+            inputNode.installTap(onBus: 0, bufferSize: kSamplesPerBuffer, format: audioFormat, block: { (buffer: AVAudioPCMBuffer, time: AVAudioTime) in
                 
-              //  print("buffer channel \(buffer.format.settings)")
-                let leftChannelData = buffer.floatChannelData[0]
-                let rightChannelData = buffer.floatChannelData[1]
-
-                for idx: Int in 0 ..< Int(kSamplesPerBuffer) {
-                    self.inputChannels[0][idx] = LyrebirdFloat(leftChannelData[idx])
-                    self.inputChannels[1][idx] = LyrebirdFloat(rightChannelData[idx])
+                //  print("buffer channel \(buffer.format.settings)")
+                if let leftChannelData = buffer.floatChannelData?[0] {
+                    if let rightChannelData = buffer.floatChannelData?[1] {
+                        
+                        for idx: Int in 0 ..< Int(kSamplesPerBuffer) {
+                            self.inputChannels[0][idx] = LyrebirdFloat(leftChannelData[idx])
+                            self.inputChannels[1][idx] = LyrebirdFloat(rightChannelData[idx])
+                        }
+                    }
                 }
             })
+            
         }
-
+        
         
         do {
             try engine.start()
@@ -94,8 +97,8 @@ public class LyrebirdTestSynthesizer {
         }
         
         playerNode.play()
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LyrebirdTestSynthesizer.audioEngineConfigurationChange(_:)), name: AVAudioEngineConfigurationChangeNotification, object: engine)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(LyrebirdTestSynthesizer.audioEngineConfigurationChange(_:)), name: NSNotification.Name.AVAudioEngineConfigurationChange, object: engine)
         
         demo = LyrebirdDemo(lyrebird: lyrebird)
         demo?.runDemo()
@@ -103,50 +106,50 @@ public class LyrebirdTestSynthesizer {
     }
     
     
-    public func play(){
+    open func play(){
         let blockSize = Int(lyrebird.blockSize)
         let numCycles = Int(kSamplesPerBuffer) / blockSize
-
-        dispatch_async(audioQueue) {
+        
+        audioQueue.async {
             while true {
                 // Wait for a buffer to become available.
-                dispatch_semaphore_wait(self.audioSemaphore, DISPATCH_TIME_FOREVER)
+                self.audioSemaphore.wait(timeout: DispatchTime.distantFuture)
                 
                 // Fill the buffer with new samples.
                 let audioBuffer = self.audioBuffers[self.bufferIndex]
-                let leftChannel = audioBuffer.floatChannelData[0]
-                let rightChannel = audioBuffer.floatChannelData[1]
+                let leftChannel = audioBuffer.floatChannelData?[0]
+                let rightChannel = audioBuffer.floatChannelData?[1]
                 
                 var leftInAudio = self.inputChannels[0]
                 var rightInAudio = self.inputChannels[1]
-
+                
                 for cycle in 0 ..< numCycles {
                     let offset = Int(cycle) * blockSize
                     let audioBlocks = self.lyrebird.audioBlocks()
                     let leftInput = audioBlocks[2]
                     let rightInput = audioBlocks[3]
-                   for idx: Int in 0 ..< blockSize {
+                    for idx: Int in 0 ..< blockSize {
                         leftInput.currentValues[idx] = LyrebirdFloat(leftInAudio[(blockSize * cycle) + idx])
                         rightInput.currentValues[idx] = LyrebirdFloat(rightInAudio[(blockSize * cycle) + idx])
                     }
-                    self.lyrebird.processWithInputChannels([])
+                    self.lyrebird.processWithInputChannels(inputChannels: [])
                     let left = audioBlocks[0]
                     let right = audioBlocks[1]
                     let outputLeft = left.currentValues.map({Float($0)})
                     let outputRight = right.currentValues.map({Float($0)})
                     for idx in 0 ..< blockSize {
-                        leftChannel[offset + idx] = outputLeft[idx]
-                        rightChannel[offset + idx] = outputRight[idx]
+                        leftChannel![offset + idx] = outputLeft[idx]
+                        rightChannel![offset + idx] = outputRight[idx]
                     }
                 }
                 audioBuffer.frameLength = kSamplesPerBuffer
-
+                
                 self.bufferIndex = (self.bufferIndex + 1) % self.audioBuffers.count
-
+                
                 // Schedule the buffer for playback and release it for reuse after
                 // playback has finished.
                 self.playerNode.scheduleBuffer(audioBuffer) {
-                    dispatch_semaphore_signal(self.audioSemaphore)
+                    self.audioSemaphore.signal()
                     return
                 }
                 
@@ -155,7 +158,7 @@ public class LyrebirdTestSynthesizer {
         
     }
     
-    @objc func audioEngineConfigurationChange(notification: NSNotification) -> Void {
+    @objc func audioEngineConfigurationChange(_ notification: Notification) -> Void {
         NSLog("Audio engine configuration change: \(notification)")
     }
     

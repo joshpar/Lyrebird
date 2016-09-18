@@ -39,11 +39,11 @@ func interpolatedSampleBlock(startValue: LyrebirdFloat, endValue: LyrebirdFloat)
     var start: LyrebirdFloat = startValue
     let blockSize: LyrebirdInt = Lyrebird.engine.blockSize
     if(startValue == endValue){
-        let block: [LyrebirdFloat] = [LyrebirdFloat](count: blockSize, repeatedValue: startValue )
+        let block: [LyrebirdFloat] = [LyrebirdFloat](repeating: startValue, count: blockSize )
         return block
     }
-    var block: [LyrebirdFloat] = [LyrebirdFloat](count: blockSize, repeatedValue: 0.0 )
-    let slope = calcSlope(startValue, endValue: endValue)
+    var block: [LyrebirdFloat] = [LyrebirdFloat](repeating: 0.0, count: blockSize )
+    let slope = calcSlope(startValue: startValue, endValue: endValue)
     for idx in 0 ..< blockSize {
         start = start + slope
         block[idx] = start
@@ -58,7 +58,7 @@ func sineLookup(sampleIdx: LyrebirdFloat, mask: LyrebirdInt, table: [LyrebirdFlo
     let pct: LyrebirdFloat = sampleIdx - floorIdx
     let valOne = table[iIndexOne]
     let valTwo = table[iIndexTwo]
-    let returnVal = linearInterp(valOne, x2: valTwo, pct: pct)
+    let returnVal = linearInterp(x1: valOne, x2: valTwo, pct: pct)
     return returnVal
 }
 
@@ -91,7 +91,7 @@ public func reciprocal(value: LyrebirdFloat) -> LyrebirdFloat {
 }
 
 public func isPowerOfTwo(value: LyrebirdInt) -> Bool {
-    let nextPowTwo = nextPowerOfTwo(value)
+    let nextPowTwo = nextPowerOfTwo(value: value)
     return value == nextPowTwo
 }
 
@@ -114,8 +114,8 @@ public func sig_sqrt(value: LyrebirdFloat) -> LyrebirdFloat {
 
 
 public func feedbackCoef(delayTime: LyrebirdFloat, decayTime: LyrebirdFloat, targetDB: LyrebirdFloat = -60.0) -> LyrebirdFloat {
-    let targetAmp = db_linamp(targetDB)
-    return feedbackCoef(delayTime, decayTime: decayTime, targetAmp: targetAmp)
+    let targetAmp = db_linamp(db: targetDB)
+    return feedbackCoef(delayTime: delayTime, decayTime: decayTime, targetAmp: targetAmp)
 }
 
 public func feedbackCoef(delayTime: LyrebirdFloat, decayTime: LyrebirdFloat, targetAmp: LyrebirdFloat = 0.001) -> LyrebirdFloat {

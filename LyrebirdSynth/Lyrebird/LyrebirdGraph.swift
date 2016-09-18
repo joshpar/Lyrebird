@@ -14,7 +14,7 @@ public typealias LyrebirdGraphConstructionClosure = () -> Void
  Represents a single model for a synthesis graph. Create LyrebirdNotes to play an instance of a graph
  */
 
-public class LyrebirdGraph {
+open class LyrebirdGraph {
     static var currentBuildingGraph: LyrebirdGraph? = nil
     
     /// ---
@@ -22,23 +22,23 @@ public class LyrebirdGraph {
     ///
     /// graphs will iterate over their children in order to calculate samples
     
-    public var children        : [LyrebirdUGen] = []
+    open var children        : [LyrebirdUGen] = []
     // parameters act as args in a SynthDef
-    public var parameters       : [String: LyrebirdValidUGenInput] = [:]
+    open var parameters       : [String: LyrebirdValidUGenInput] = [:]
 //    public var mappedParameters :
     
-    public var buildClosure    : LyrebirdGraphConstructionClosure?
+    open var buildClosure    : LyrebirdGraphConstructionClosure?
     
-    public var shouldRemoveFromTree: Bool = false
+    open var shouldRemoveFromTree: Bool = false
     
-    public weak var note: LyrebirdNote?
+    open weak var note: LyrebirdNote?
     
     public init(){
     }
     
     func next(numSamples: LyrebirdInt){
         for ugen: LyrebirdUGen in children {
-            ugen.next(numSamples)
+            ugen.next(numSamples: numSamples)
         }
         // set up for next run
         prepareChildren()
@@ -47,7 +47,7 @@ public class LyrebirdGraph {
         }
     }
     
-    private func prepareChildren() {
+    fileprivate func prepareChildren() {
         for child: LyrebirdUGen in children {
             child.needsCalc = true
         }
@@ -60,17 +60,17 @@ public class LyrebirdGraph {
     
     // closure should refer to the graph, assign children and refer to args
     // TODO:: but a lock on currentGraphBuilding
-    public func build (closure: LyrebirdGraphConstructionClosure) {
+    open func build (closure: @escaping LyrebirdGraphConstructionClosure) {
         buildClosure = closure
         LyrebirdGraph.currentBuildingGraph = self
         closure()
         LyrebirdGraph.currentBuildingGraph = nil
     }
     
-    public func copyGraph() -> LyrebirdGraph {
+    open func copyGraph() -> LyrebirdGraph {
         let copy: LyrebirdGraph = LyrebirdGraph()
         if let buildClosure: LyrebirdGraphConstructionClosure = buildClosure {
-            copy.build(buildClosure)
+            copy.build(closure: buildClosure)
         }
         return copy
     }

@@ -13,8 +13,8 @@ public struct Segment {
     let duration: LyrebirdFloat
     
     // inverse of duration to avoid the divide later!
-    private let iDuration: LyrebirdFloat
-    private let isLine: Bool
+    fileprivate let iDuration: LyrebirdFloat
+    fileprivate let isLine: Bool
     
     public init(start: LyrebirdFloat, end: LyrebirdFloat, curve: LyrebirdFloat, duration: LyrebirdFloat = 0.0){
         self.start = start
@@ -29,7 +29,7 @@ public struct Segment {
         isLine = self.curve == 0.0
     }
     
-    public func pollAtTime(time: LyrebirdFloat) -> LyrebirdFloat {
+    public func poll(atTime time: LyrebirdFloat) -> LyrebirdFloat {
         if duration <= 0 || time <= 0.0 {
             return start
         }
@@ -49,8 +49,8 @@ public struct Segment {
 
 public struct Envelope {
     let segments: [Segment]
-    private let segmentStarts: [LyrebirdFloat]
-    private let segmentEnds: [LyrebirdFloat]
+    fileprivate let segmentStarts: [LyrebirdFloat]
+    fileprivate let segmentEnds: [LyrebirdFloat]
     
     public init (segments: [Segment]){
         self.segments = segments
@@ -115,7 +115,7 @@ public struct Envelope {
         self.init(levels: levels, durations: [duration], curves: [curve])
     }
     
-    public func pollAtTime(time: LyrebirdFloat) -> LyrebirdFloat {
+    public func poll(atTime time: LyrebirdFloat) -> LyrebirdFloat {
         if segments.count < 1 {
             return 0.0
         }
@@ -132,6 +132,6 @@ public struct Envelope {
             }
             
         }
-        return lastSegment?.pollAtTime(localTime) ?? 0.0
+        return lastSegment?.poll(atTime: localTime) ?? 0.0
     }
 }

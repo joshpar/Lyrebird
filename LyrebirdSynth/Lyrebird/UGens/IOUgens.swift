@@ -9,25 +9,25 @@
 public final class Output : LyrebirdUGen {
     var index: LyrebirdValidUGenInput
     var output: LyrebirdValidUGenInput
-    private var channel: LyrebirdAudioChannel? = nil
+    fileprivate var channel: LyrebirdAudioChannel? = nil
     
     public required init(rate: LyrebirdUGenRate, index: LyrebirdValidUGenInput, output: LyrebirdValidUGenInput){
         self.index = index
         self.output = output
         super.init(rate: rate)
         let channels: [LyrebirdAudioChannel] = Lyrebird.engine.audioBlock
-        if(index.intValue(graph) < channels.count){
-            channel = channels[self.index.intValue(graph)]
+        if(index.intValue(graph: graph) < channels.count){
+            channel = channels[index.intValue(graph: graph)]
         }
     }
     
     override public final func next(numSamples: LyrebirdInt) -> Bool {
         // get the audio wire to output
         let channels: [LyrebirdAudioChannel] = Lyrebird.engine.audioBlock
-        if(index.intValue(graph) < channels.count){
-            channel = channels[self.index.intValue(graph)]
+        if(index.intValue(graph: graph) < channels.count){
+            channel = channels[index.intValue(graph: graph)]
         }
-        let sampleChannels: [[LyrebirdFloat]] = output.calculatedSamples(graph)
+        let sampleChannels: [[LyrebirdFloat]] = output.calculatedSamples(graph: graph)
         // assume mono for now
         let outputChannel: [LyrebirdFloat] = sampleChannels[0]
         
@@ -49,14 +49,14 @@ public final class Output : LyrebirdUGen {
 
 public final class Input : LyrebirdUGen {
     var index: LyrebirdValidUGenInput
-    private var channel: LyrebirdAudioChannel? = nil
+    fileprivate var channel: LyrebirdAudioChannel? = nil
     
     public required init(rate: LyrebirdUGenRate, index: LyrebirdValidUGenInput){
         self.index = index
         super.init(rate: rate)
         let channels: [LyrebirdAudioChannel] = Lyrebird.engine.audioBlock
-        if(index.intValue(graph) < channels.count){
-            channel = channels[self.index.intValue(graph)]
+        if(index.intValue(graph: graph) < channels.count){
+            channel = channels[self.index.intValue(graph: graph)]
         }
     }
     

@@ -26,7 +26,7 @@ class LyrebirdUGenInterface {
     /// ---
     /// the table holding a single cycle of a sine wave
     
-    static var sineTable: [LyrebirdFloat] = [LyrebirdFloat](count: sineTableSize, repeatedValue: 0.0)
+    static var sineTable: [LyrebirdFloat] = [LyrebirdFloat](repeating: 0.0, count: sineTableSize)
     
     /**
      Initializes all memory for the Interface
@@ -51,21 +51,21 @@ class LyrebirdUGenInterface {
  */
 
 public enum LyrebirdUGenRate {
-    case Audio
-    case Control
-    case Spectral
-    case Demand
+    case audio
+    case control
+    case spectral
+    case demand
 }
 
 enum LyrebirdUGenInputType {
-    case UGen
-    case ControlScaler
-    case InitializedScaler
+    case ugen
+    case controlScaler
+    case initializedScaler
 }
 
 enum LyrebirdUGenOutputRange {
-    case Bipolar
-    case Unipolar
+    case bipolar
+    case unipolar
 }
 
 public protocol LyrebirdValidUGenInput {
@@ -82,8 +82,8 @@ extension LyrebirdValidUGenInput {
     }
     
     public func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat] {
-        let newValue = self.floatValue(graph)
-        return interpolatedSampleBlock(previousValue, endValue: newValue)
+        let newValue = self.floatValue(graph: graph)
+        return interpolatedSampleBlock(startValue: previousValue, endValue: newValue)
     }
 }
 
@@ -92,32 +92,32 @@ extension LyrebirdValidUGenInput {
  The base class for all UGens
  */
 
-public class LyrebirdUGen {
-    static let zeroedSamples : [LyrebirdFloat] = [LyrebirdFloat](count: Lyrebird.engine.blockSize, repeatedValue: 0.0)
-    private (set) public var rate: LyrebirdUGenRate
+open class LyrebirdUGen {
+    static let zeroedSamples : [LyrebirdFloat] = [LyrebirdFloat](repeating: 0.0, count: Lyrebird.engine.blockSize)
+    fileprivate (set) open var rate: LyrebirdUGenRate
     final var samples: [LyrebirdFloat]
-    private (set) public var outputIndexes: [LyrebirdInt] = []
-    private var ready: Bool = false
+    fileprivate (set) open var outputIndexes: [LyrebirdInt] = []
+    fileprivate var ready: Bool = false
     var needsCalc: Bool = true
     
     var graph: LyrebirdGraph?
     var sampleOffset: LyrebirdInt = 0
     
     // default to Bipolar
-    var outputRange: LyrebirdUGenOutputRange = .Bipolar
+    var outputRange: LyrebirdUGenOutputRange = .bipolar
     
     public init(rate: LyrebirdUGenRate){
         // TODO:: make this work with num outputs
         samples = LyrebirdUGen.zeroedSamples
         self.graph = LyrebirdGraph.currentBuildingGraph
         self.rate = rate
-        self.graph?.addChild(self)
+        self.graph?.addChild(child: self)
         let numOutputs = self.numberOfOutputs()
         ready = true
     }
     
     public convenience init(){
-        self.init(rate: LyrebirdUGenRate.Control)
+        self.init(rate: LyrebirdUGenRate.control)
     }
     
     /**
@@ -148,7 +148,7 @@ public class LyrebirdUGen {
      all subclassed next functions should begin with:
      
      public override func next(numSamples: LyrebirdInt) -> Bool {
-        let run: Bool = super.next(numSamples)
+        let run: Bool = super.next(numSamples: numSamples)
         guard run else {
             return run
         }
@@ -157,7 +157,7 @@ public class LyrebirdUGen {
      and return true if successful
      */
     
-    public func next(numSamples: LyrebirdInt) -> Bool {
+    open func next(numSamples: LyrebirdInt) -> Bool {
         guard ready else {
             return false
         }
@@ -203,6 +203,6 @@ extension LyrebirdUGen : LyrebirdValidUGenInput {
     }
     
     public func sampleBlock(graph: LyrebirdGraph?, previousValue: LyrebirdFloat) -> [LyrebirdFloat] {
-        return self.calculatedSamples(graph)[0]
+        return self.calculatedSamples(graph: graph)[0]
     }
 }

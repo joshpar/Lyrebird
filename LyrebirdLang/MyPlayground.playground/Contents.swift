@@ -7,26 +7,26 @@ import Lyrebird
 exp((log( 0.001 ) * 0.2) / 1.0)
 
 
-isPowerOfTwo(127)
+isPowerOfTwo(value: 127)
 
-nextPowerOfTwo(128)
+nextPowerOfTwo(value: 128)
 
-cubicInterp(0.0, y0: 2.0, y1: 0.0, y2: 1.0, pct: 0.0)
+cubicInterp(ym1: 10.0, y0: 2.0, y1: 0.0, y2: 1.0, pct: 0.0)
 
 let a = LyrebirdInt(80)
-80.floatValue(nil)
-keynum_hz(69.1)
-hz_keynum(440)
+80.floatValue(graph: nil)
+keynum_hz(keynum: 69.1)
+hz_keynum(hz: 440)
 
-db_linamp(0)
-linamp_db(2.0)
+db_linamp(db: 0)
+linamp_db(linamp: 2.0)
 
-db_linamp(-12.0)
+db_linamp(db: -12.0)
 
-midi_ratio(12.0)
-ratio_midi(0.5)
+midi_ratio(midi: 12.0)
+ratio_midi(ratio: 0.5)
 
-sig_sqrt(-4.0)
+sig_sqrt(value: -4.0)
 
 
 var array = [1, 2, 3]
@@ -57,7 +57,7 @@ list.next()
 
 var arrayToShuffle = [1, 2, 3, 4, 5, 6];
 
-for (index, value) in arrayToShuffle.enumerate() {
+for (index, value) in arrayToShuffle.enumerated() {
     print("\(value)")
 }
 
@@ -75,14 +75,14 @@ let event = LyrebirdScheduledEvent(startTime: 2.0) { (curTime, iteration) -> Lyr
     return nil
 }
 
-scheduler.addEventToQueue(event)
+scheduler.addEventToQueue(event: event)
 //scheduler.queue
 
-scheduler.updateCurTime(1.0)
-scheduler.updateCurTime(2.001)
-scheduler.updateCurTime(3.001)
-scheduler.updateCurTime(3.001)
-scheduler.updateCurTime(3.001)
+scheduler.updateCurTime(newCurTime: 1.0)
+scheduler.updateCurTime(newCurTime: 2.001)
+scheduler.updateCurTime(newCurTime: 3.001)
+scheduler.updateCurTime(newCurTime: 3.001)
+scheduler.updateCurTime(newCurTime: 3.001)
 
 event.iteration
 
@@ -125,13 +125,13 @@ testMe2.array
 testMe3.array
 
 
-var testUGen = NoiseWhite(rate: LyrebirdUGenRate.Audio)
-var start  = NSDate.timeIntervalSinceReferenceDate()
+var testUGen = NoiseWhite(rate: LyrebirdUGenRate.audio)
+var start  = Date.timeIntervalSinceReferenceDate
 
 for _ in 0 ..< 1000 {
-    testUGen.next(64)
+    testUGen.next(numSamples: 64)
 }
-var end = NSDate.timeIntervalSinceReferenceDate()
+var end = Date.timeIntervalSinceReferenceDate
 
 end-start
 
@@ -145,26 +145,26 @@ white.next()
 white.next()
 
 let segment = Segment(start: 0.0, end: 1.0, curve: 0.0, duration: 1)
-start  = NSDate.timeIntervalSinceReferenceDate()
+start  = NSDate.timeIntervalSinceReferenceDate
 
 for _ in 0 ..< 1000 {
-    segment.pollAtTime(0.5)
+    segment.poll(atTime: 0.5)
 }
-end = NSDate.timeIntervalSinceReferenceDate()
+end = NSDate.timeIntervalSinceReferenceDate
 
 end-start
 
-start  = NSDate.timeIntervalSinceReferenceDate()
+start  = NSDate.timeIntervalSinceReferenceDate
 let env = Envelope(levels: [2.0, 0.0, 4.0], durations: [1.0, 2.0, 20.0], curve: 0.0)
-env.pollAtTime(2)
+env.poll(atTime: 2)
 
 
 for _ in 0 ..< 1000 {
-    feedbackCoef(0.1, decayTime: 10.0, targetAmp: 0.001)
-    feedbackCoef(0.1, decayTime: 10.0, targetDB: -60.0)
+    feedbackCoef(delayTime: 0.1, decayTime: 10.0, targetAmp: 0.001)
+    feedbackCoef(delayTime: 0.1, decayTime: 10.0, targetDB: -60.0)
 }
 
-end = NSDate.timeIntervalSinceReferenceDate()
+end = NSDate.timeIntervalSinceReferenceDate
 
 end-start
 
@@ -172,9 +172,9 @@ end-start
 
 
 let seg = Segment(start: 2.0, end: 4.0, curve: 0.0, duration: 1.0)
-seg.pollAtTime(1.5)
+seg.poll(atTime: 1.5)
 
-for (index, idx) in (1 ... 10).enumerate() {
+for (index, idx) in (1 ... 10).enumerated() {
     if idx > 5 {
         break
     }

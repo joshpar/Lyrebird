@@ -6,10 +6,10 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-public class LyrebirdControlChannel {
-    private (set) public var index: LyrebirdInt = 0
-    private var iBlockSize: LyrebirdFloat = 0.0
-    private (set) public var currentValues: LyrebirdFloat = 0.0
+open class LyrebirdControlChannel {
+    fileprivate (set) open var index: LyrebirdInt = 0
+    fileprivate var iBlockSize: LyrebirdFloat = 0.0
+    fileprivate (set) open var currentValues: LyrebirdFloat = 0.0
     
     // use inverse of block size to make interpolation internally easier later
     public required init(index: LyrebirdInt, iBlockSize: LyrebirdFloat){

@@ -6,16 +6,16 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-public class NoiseGen : LyrebirdUGen {
-    private var ranGen: LyrebirdRandomNumberGenerator = LyrebirdRandomNumberGenerator(initSeed: 0)
-    public var seed: LyrebirdInt = 0 {
+open class NoiseGen : LyrebirdUGen {
+    fileprivate var ranGen: LyrebirdRandomNumberGenerator = LyrebirdRandomNumberGenerator(initSeed: 0)
+    open var seed: LyrebirdInt = 0 {
         didSet {
             ranGen.seed = UInt32(seed)
         }
     }
     
     static func dateSeed() -> LyrebirdInt {
-        return LyrebirdInt(NSDate.timeIntervalSinceReferenceDate())
+        return LyrebirdInt(Date.timeIntervalSinceReferenceDate)
     }
 }
 
@@ -38,7 +38,7 @@ public final class NoiseWhite: NoiseGen {
     }
 }
 
-public class NoiseLFBase: NoiseGen {
+open class NoiseLFBase: NoiseGen {
     var freq: LyrebirdValidUGenInput
     internal var currentOutput: LyrebirdFloat = 0.0
     internal var samplesUntilNextValue: LyrebirdInt = 0
@@ -53,7 +53,7 @@ public class NoiseLFBase: NoiseGen {
         self.init(rate: rate, freq: freq, seed: NoiseGen.dateSeed())
     }
     
-    override public func next(numSamples: LyrebirdInt) -> Bool {
+    override open func next(numSamples: LyrebirdInt) -> Bool {
         assert(false, "NoiseLFBase should not be used in a SynthGraph, or have its next function called")
         return true
     }
@@ -70,7 +70,7 @@ public final class NoiseLFStep: NoiseLFBase {
             for sampleIdx: LyrebirdInt in 0 ..< numSamples {
                 samplesUntilNextValue = samplesUntilNextValue - 1
                 if(samplesUntilNextValue == 0){
-                    let curFreq =  freq.floatValue(graph)
+                    let curFreq =  freq.floatValue(graph: graph)
                     if curFreq <= 0 {
                         samplesUntilNextValue = -1
                     } else {
@@ -90,7 +90,7 @@ public final class NoiseLFStep: NoiseLFBase {
 
 public final class NoiseLFLine: NoiseLFBase {
     internal var prevOutputValue: LyrebirdFloat = 0.0
-    private var step: LyrebirdFloat = 0.0
+    fileprivate var step: LyrebirdFloat = 0.0
     
     public required init(rate: LyrebirdUGenRate, freq: LyrebirdValidUGenInput, seed: LyrebirdInt){
         super.init(rate: rate, freq: freq, seed: seed)
@@ -113,7 +113,7 @@ public final class NoiseLFLine: NoiseLFBase {
                     currentValue = currentValue + step
                     samples[sampleIdx] = currentValue
                 } else {
-                    let curFreq =  freq.floatValue(graph)
+                    let curFreq =  freq.floatValue(graph: graph)
                     if curFreq <= 0 {
                         samplesUntilNextValue = -1
                         step = 0
@@ -123,7 +123,7 @@ public final class NoiseLFLine: NoiseLFBase {
                             samplesUntilNextValue = 1
                         }
                         let nextValue: LyrebirdFloat = ranGen.bipolarNext()
-                        step = calcSlope(prevOutputValue, endValue: nextValue, numSamples: LyrebirdFloat(samplesUntilNextValue))
+                        step = calcSlope(startValue: prevOutputValue, endValue: nextValue, numSamples: LyrebirdFloat(samplesUntilNextValue))
                         currentValue = prevOutputValue
                         prevOutputValue = nextValue
                     }

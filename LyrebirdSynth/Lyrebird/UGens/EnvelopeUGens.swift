@@ -7,10 +7,10 @@
 //
 
 public enum EnvelopeGenDoneAction: Int {
-    case Nothing, FreeNode, Loop
+    case nothing, freeNode, loop
 }
 
-public class EnvelopeGen : LyrebirdUGen {
+open class EnvelopeGen : LyrebirdUGen {
     let envelope: Envelope
     var gate: Bool = false
     var doneAction: EnvelopeGenDoneAction
@@ -19,11 +19,11 @@ public class EnvelopeGen : LyrebirdUGen {
     let levelBias: LyrebirdFloat
     let timeScale: LyrebirdFloat
     let totalDur: LyrebirdFloat
-    private var timeKeeper: LyrebirdFloat = 0.0
-    private let timeInc: LyrebirdFloat
-    private let gateTime: LyrebirdFloat
+    fileprivate var timeKeeper: LyrebirdFloat = 0.0
+    fileprivate let timeInc: LyrebirdFloat
+    fileprivate let gateTime: LyrebirdFloat
     
-    public required init(rate: LyrebirdUGenRate, envelope: Envelope, levelScale: LyrebirdFloat = 1.0, levelBias: LyrebirdFloat = 0.0, timeScale: LyrebirdFloat = 1.0, releaseSegment: LyrebirdInt = -1, doneAction: EnvelopeGenDoneAction = .Nothing){
+    public required init(rate: LyrebirdUGenRate, envelope: Envelope, levelScale: LyrebirdFloat = 1.0, levelBias: LyrebirdFloat = 0.0, timeScale: LyrebirdFloat = 1.0, releaseSegment: LyrebirdInt = -1, doneAction: EnvelopeGenDoneAction = .nothing){
         self.envelope = envelope
         self.levelScale = levelScale
         self.levelBias = levelBias
@@ -33,7 +33,7 @@ public class EnvelopeGen : LyrebirdUGen {
         var gateTime = -1.0
         if releaseSegment >= 0 {
             gateTime = 0.0
-            for (index, segment) in envelope.segments.enumerate() {
+            for (index, segment) in envelope.segments.enumerated() {
                 if index <= releaseSegment {
                     gateTime = gateTime + segment.duration
                 } else {
@@ -42,7 +42,7 @@ public class EnvelopeGen : LyrebirdUGen {
             }
         }
         var totalDur: LyrebirdFloat = 0.0
-        for (index, segment) in envelope.segments.enumerate() {
+        for (index, segment) in envelope.segments.enumerated() {
             totalDur = totalDur + segment.duration
         }
         self.gateTime = gateTime
@@ -57,16 +57,16 @@ public class EnvelopeGen : LyrebirdUGen {
     }
     
     override final public func next(numSamples: LyrebirdInt) -> Bool {
-        var success: Bool = super.next(numSamples)
+        var success: Bool = super.next(numSamples: numSamples)
         for sampleIdx in 0 ..< numSamples {
-            samples[sampleIdx] = (envelope.pollAtTime(timeKeeper) * levelScale) + levelBias
+            samples[sampleIdx] = (envelope.poll(atTime: timeKeeper) * levelScale) + levelBias
             timeKeeper = timeKeeper + timeInc
             // test release
-            if (timeKeeper > totalDur) && (doneAction == .Loop) {
+            if (timeKeeper > totalDur) && (doneAction == .loop) {
                 timeKeeper = 0.0
             }
         }
-        if (timeKeeper > totalDur) && (doneAction == .FreeNode) {
+        if (timeKeeper > totalDur) && (doneAction == .freeNode) {
                 self.graph?.shouldRemoveFromTree = true
         }
         return success

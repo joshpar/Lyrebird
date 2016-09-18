@@ -13,7 +13,7 @@
  for UGens that only need a single value, the currentValue property can also be used
  */
 
-public class Control: LyrebirdUGen {
+open class Control: LyrebirdUGen {
     /// ---
     /// The current value of the control
     ///
@@ -26,7 +26,7 @@ public class Control: LyrebirdUGen {
     ///
     /// only updated AFTER a control period interpolating to the currentValue has been run
     
-    private var previousValue: LyrebirdFloat = 0.0
+    fileprivate var previousValue: LyrebirdFloat = 0.0
     
     /**
      init method for Control values that aren't 0.0
@@ -38,7 +38,7 @@ public class Control: LyrebirdUGen {
     public required init(rate: LyrebirdUGenRate, currentValue: LyrebirdValidUGenInput){
         super.init(rate: rate)
         self.currentValue = currentValue
-        self.previousValue = currentValue.floatValue(graph)
+        self.previousValue = currentValue.floatValue(graph: graph)
     }
     
     /**
@@ -50,18 +50,18 @@ public class Control: LyrebirdUGen {
      if these are the same, an output buffer of the same value is returned
      */
     
-    public override func next(numSamples: LyrebirdInt) -> Bool {
-        let run: Bool = super.next(numSamples)
+    open override func next(numSamples: LyrebirdInt) -> Bool {
+        let run: Bool = super.next(numSamples: numSamples)
         guard run else {
             return run
         }
-        let valueIn: LyrebirdFloat = currentValue.floatValue(graph)
+        let valueIn: LyrebirdFloat = currentValue.floatValue(graph: graph)
         
-        let success: Bool = self.next(numSamples, currentValueIn: valueIn)
+        let success: Bool = self.next(numSamples: numSamples, currentValueIn: valueIn)
         return success
     }
     
-    private func next(numSamples: LyrebirdInt, currentValueIn: LyrebirdFloat) -> Bool {
+    fileprivate func next(numSamples: LyrebirdInt, currentValueIn: LyrebirdFloat) -> Bool {
             // optimization - avoid addition in the loop, fill in a control
             // period of this value ...
             if previousValue == currentValueIn {
@@ -69,7 +69,7 @@ public class Control: LyrebirdUGen {
                     samples[sampleIdx] = currentValueIn
                 }
             } else {
-                let step: LyrebirdFloat = calcSlope(previousValue, endValue: currentValueIn)
+                let step: LyrebirdFloat = calcSlope(startValue: previousValue, endValue: currentValueIn)
                 var curSample: LyrebirdFloat = previousValue
                 // end at currentValue - last block lands at lastValue, step on from there
                 for sampleIdx: LyrebirdInt in 0 ..< numSamples {
@@ -86,7 +86,7 @@ public class Control: LyrebirdUGen {
 /*
  
  public override func next(numSamples: LyrebirdInt) -> Bool {
- let run: Bool = super.next(numSamples)
+ let run: Bool = super.next(numSamples: numSamples)
  guard run else {
  return run
  }
@@ -113,7 +113,7 @@ public class Control: LyrebirdUGen {
  // for multi out UGen
  
  public override func next(numSamples: LyrebirdInt) -> Bool {
- let run: Bool = super.next(numSamples)
+ let run: Bool = super.next(numSamples: numSamples)
  guard run else {
  return run
  }

@@ -23,8 +23,8 @@ public struct LyrebirdScheduler {
         if queue.count > 0 {
             for index in 0 ..< queue.count {
                 var event = queue[index]
-                if curTime > event.startTime {
-                    event.run(curTime)
+                if curTime > event.startTime! {
+                    event.run(curTime: curTime)
                     if let nextTime = event.nextTime {
                         event.startTime = curTime + nextTime
                     } else {
@@ -33,7 +33,7 @@ public struct LyrebirdScheduler {
                 }
             }
             for index in indiciesToRemove {
-                queue.removeAtIndex(index)
+                queue.remove(at: index)
             }
         }
         //print("\(queue)")
@@ -45,7 +45,7 @@ public struct LyrebirdScheduler {
 }
 
 
-public typealias LyrebirdEventBlock = (curTime: LyrebirdFloat, iteration: LyrebirdInt) -> LyrebirdFloat?
+public typealias LyrebirdEventBlock = (_ curTime: LyrebirdFloat, _ iteration: LyrebirdInt) -> LyrebirdFloat?
 
 public struct LyrebirdScheduledEvent {
     public var startTime: LyrebirdFloat?
@@ -53,14 +53,14 @@ public struct LyrebirdScheduledEvent {
     var eventBlock: LyrebirdEventBlock
     public var iteration: LyrebirdInt
     
-    public init(startTime: LyrebirdFloat, eventBlock: LyrebirdEventBlock){
+    public init(startTime: LyrebirdFloat, eventBlock: @escaping LyrebirdEventBlock){
         iteration = 0
         self.startTime = startTime
         self.eventBlock = eventBlock
     }
     
     mutating func run(curTime: LyrebirdFloat){
-        nextTime = eventBlock(curTime: curTime, iteration: iteration)
+        nextTime = eventBlock(curTime, iteration)
         iteration = iteration + 1
     }
 }

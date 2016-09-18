@@ -6,7 +6,7 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-public class Lyrebird {
+open class Lyrebird {
     
     
     /// ---
@@ -14,33 +14,33 @@ public class Lyrebird {
     ///
     /// - Warning: keep these values as powers of 2 for efficiency reasons!
     
-    private (set) public var numberOfAudioChannels          : LyrebirdInt
+    fileprivate (set) open var numberOfAudioChannels          : LyrebirdInt
     
     /// ---
     /// number of physical input channels to account for
     ///
     
-    private (set) public var numberOfInputChannels          : LyrebirdInt
+    fileprivate (set) open var numberOfInputChannels          : LyrebirdInt
     
     /// ---
     /// number of physical output channels to account for
     ///
     
-    private (set) public var numberOfOutputChannels         : LyrebirdInt
+    fileprivate (set) open var numberOfOutputChannels         : LyrebirdInt
     
     /// ---
     /// The number of control channels to support
     ///
     /// - Warning: keep these values as powers of 2 for efficiency reasons!
     
-    private (set) public var numberOfControlChannels        : LyrebirdInt
+    fileprivate (set) open var numberOfControlChannels        : LyrebirdInt
     
     /// ---
     /// The number of wires for Graph audio communication
     ///
     /// - Warning: keep these values as powers of 2 for efficiency reasons!
     
-    private (set) public var numberOfWires                  : LyrebirdInt
+    fileprivate (set) open var numberOfWires                  : LyrebirdInt
     
     /// ---
     /// The size of the internal control block
@@ -48,7 +48,7 @@ public class Lyrebird {
     /// - Warning: keep these values as powers of 2 for efficiency reasons!
     /// - Warning: this is NOT the size of the system callback size. This is internal only
     
-    private (set) public var blockSize               : LyrebirdInt {
+    fileprivate (set) open var blockSize               : LyrebirdInt {
         didSet {
             self.iBlockSize = 1.0 / LyrebirdFloat(blockSize)
         }
@@ -58,15 +58,15 @@ public class Lyrebird {
     /// A scaler for calculating steps for interpolation across control periods
     ///
     
-    private var iBlockSize              : LyrebirdFloat = 1.0
+    fileprivate var iBlockSize              : LyrebirdFloat = 1.0
     
     /// ---
     /// The audio sample rate, in HZ, the system is running at shuld be used for internal calculations
     ///
     
-    private (set) public var sampleRate              : LyrebirdFloat = 44100.0
+    fileprivate (set) open var sampleRate              : LyrebirdFloat = 44100.0
     
-    private (set) public var iSampleRate              : LyrebirdFloat = 0.000022676
+    fileprivate (set) open var iSampleRate              : LyrebirdFloat = 0.000022676
     
     /// ---
     /// The processing engine
@@ -124,56 +124,56 @@ Designated initializer for the main synth environment.
                   blockSize: 64)
     }
     
-    public func startEngine(){
+    open func startEngine(){
         Lyrebird.engine.delegate = self
         Lyrebird.engine.start()
     }
     
-    public func stopEngine(){
+    open func stopEngine(){
         Lyrebird.engine.delegate = self
         Lyrebird.engine.stop()
     }
     
-    public func runTests(){
+    open func runTests(){
         Lyrebird.engine.runTests()
     }
     
-    public func processBlock(){
+    open func processBlock(){
         // dummy for now
-        Lyrebird.engine.processWithInputChannels([])
+        Lyrebird.engine.processWithInputChannels(inputChannels: [])
     }
     
-    public func addNodeToHead(node: LyrebirdNode?){
+    open func addNodeToHead(node: LyrebirdNode?){
         if let node = node {
-            Lyrebird.engine.tree.defaultGroup.addNodeToHead(node)
+            Lyrebird.engine.tree.defaultGroup.addNodeToHead(node: node)
         }
     }
     
-    public func addNodeToTail(node: LyrebirdNode?){
+    open func addNodeToTail(node: LyrebirdNode?){
         if let node = node {
-            Lyrebird.engine.tree.defaultGroup.addNodeToTail(node)
+            Lyrebird.engine.tree.defaultGroup.addNodeToTail(node: node)
         }
     }
     
-    public func createParallelGroup() -> LyrebirdParallelGroup {
+    open func createParallelGroup() -> LyrebirdParallelGroup {
         let group = LyrebirdParallelGroup()
-        Lyrebird.engine.tree.addParallelGroup(group)
+        Lyrebird.engine.tree.addParallelGroup(parallelGroup: group)
         return group
     }
     
-    public func removeParallelGroup(parallelGroup: LyrebirdParallelGroup){
-        Lyrebird.engine.tree.removeParallelGroup(parallelGroup)
+    open func removeParallelGroup(parallelGroup: LyrebirdParallelGroup){
+        Lyrebird.engine.tree.removeParallelGroup(parallelGroup: parallelGroup)
     }
     
-    public func freeAll(){
+    open func freeAll(){
         Lyrebird.engine.tree.freeAll()
     }
     
-    public func processWithInputChannels(inputChannels: [LyrebirdAudioChannel]){
-        Lyrebird.engine.processWithInputChannels(inputChannels)
+    open func processWithInputChannels(inputChannels: [LyrebirdAudioChannel]){
+        Lyrebird.engine.processWithInputChannels(inputChannels: inputChannels)
     }
     
-    public func audioBlocks() -> [LyrebirdAudioChannel] {
+    open func audioBlocks() -> [LyrebirdAudioChannel] {
         return Lyrebird.engine.audioBlock
     }
 

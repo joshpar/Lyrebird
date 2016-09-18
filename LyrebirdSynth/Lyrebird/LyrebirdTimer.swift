@@ -17,14 +17,10 @@
 
  */
 
-func delay(delay: Double, queue: dispatch_queue_t, closure: ()->()) {
-    dispatch_after(
-        dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(delay * Double(NSEC_PER_SEC))
-        ),
-        queue,
-        closure
+func delay(delay: Double, queue: DispatchQueue, closure: @escaping ()->()) {
+    queue.asyncAfter(
+        deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC),
+        execute: closure
     )
 }
 
@@ -37,7 +33,7 @@ func delay(delay: Double, queue: dispatch_queue_t, closure: ()->()) {
  - Returns: Optional LyrebirdFloat in seconds. If the block returns a value greater than 0.0, execution of the block is scheduled for repeition
  */
 
-public typealias LyrebirdTimerBlock = (curTime: LyrebirdFloat, inc: LyrebirdInt) -> LyrebirdFloat?
+public typealias LyrebirdTimerBlock = (_ curTime: LyrebirdFloat, _ inc: LyrebirdInt) -> LyrebirdFloat?
 
 /**
  The block structure used for LyrebirdTimer's finalizer function. This block is fired once and only once as the LyrebirdTimerBlock either returns nil or <= 0.0 for repeptiion, or when the block is removed
@@ -47,7 +43,7 @@ public typealias LyrebirdTimerBlock = (curTime: LyrebirdFloat, inc: LyrebirdInt)
  - Returns: Nothing
  */
 
-public typealias LyrebirdTimerFinalizerBlock = (curTime: LyrebirdFloat) -> Void
+public typealias LyrebirdTimerFinalizerBlock = (_ curTime: LyrebirdFloat) -> Void
 
 /**
  The base class for handling timed and repeated execution of a block
@@ -74,29 +70,29 @@ public final class LyrebirdTimer {
     /// ---
     /// The internal start time for the execution of the first iteration of the block
     ///
-    private var startTime: LyrebirdFloat = -1.0
+    fileprivate var startTime: LyrebirdFloat = -1.0
     
     /// ---
     /// The name of this instance's thread that is visible in stack traces and debugging
     ///
-    private var idString: String = "LyrebirdTimer"
+    fileprivate var idString: String = "LyrebirdTimer"
 
     /// ---
     /// The queue for this thread.
     ///
     /// Note: LyrebirdTimer threads are concurrent.
-    private var queue: dispatch_queue_t
+    fileprivate var queue: DispatchQueue
     
     /// ---
     /// Internal keeper for the number of iterations of the block that have been performed.
     ///
     /// Note: The incrementer is zero based
-    private var inc: LyrebirdInt = 0
+    fileprivate var inc: LyrebirdInt = 0
     
     /// ---
     /// A time stamp to compare to actual execution time. Differences between this and actual time will be removed during scheduling of the next repeition
     ///
-    private var nextExpectedTime: LyrebirdFloat = 0.0
+    fileprivate var nextExpectedTime: LyrebirdFloat = 0.0
     
     /**
      Convenience init that uses a 0.0 delay time and a default idString
@@ -120,9 +116,9 @@ public final class LyrebirdTimer {
     public required init(delayStartTime: LyrebirdFloat, idString: String){
         self.idString = idString
         self.delayStartTime = delayStartTime
-        queue = dispatch_queue_create(self.idString, DISPATCH_QUEUE_CONCURRENT)
-        let q: dispatch_queue_t = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)
-        dispatch_set_target_queue(queue, q)
+        queue = DispatchQueue(label: self.idString, attributes: DispatchQueue.Attributes.concurrent)
+        let q: DispatchQueue = DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.low)
+        //queue.setTarget(queue: q)
     }
     
     /**
@@ -133,9 +129,9 @@ public final class LyrebirdTimer {
 
     
     public final func run() {
-        delay(self.delayStartTime, queue: queue) { 
+        delay(delay: self.delayStartTime, queue: queue) { 
             if (self.startTime < 0.0) {
-                self.startTime = NSDate.timeIntervalSinceReferenceDate()
+                self.startTime = Date.timeIntervalSinceReferenceDate
                 self.nextExpectedTime = 0.0
             }
             self.next()
@@ -148,22 +144,22 @@ public final class LyrebirdTimer {
      - parameter none:
      */
 
-    private final func next() {
-        let curTime = NSDate.timeIntervalSinceReferenceDate() - self.startTime
+    fileprivate final func next() {
+        let curTime = Date.timeIntervalSinceReferenceDate - self.startTime
         let error = self.nextExpectedTime - curTime
         if let block = block {
-            let nextTime: LyrebirdFloat? = block(curTime: curTime, inc: self.inc)
+            let nextTime: LyrebirdFloat? = block(curTime, self.inc)
             if let nextTime = nextTime {
                 self.inc = self.inc + 1
                 self.nextExpectedTime = self.nextExpectedTime + nextTime
-                let now = NSDate.timeIntervalSinceReferenceDate() - self.startTime
+                let now = Date.timeIntervalSinceReferenceDate - self.startTime
                 let delayTime = (nextTime - (now - curTime)) + error
-                delay(delayTime, queue: queue, closure: { self.next() })
+                delay(delay: delayTime, queue: queue, closure: { self.next() })
             } else {
-                finalizerBlock?(curTime: curTime)
+                finalizerBlock?(curTime)
             }
         } else {
-            finalizerBlock?(curTime: 0.0)
+            finalizerBlock?(0.0)
         }
     }
 }

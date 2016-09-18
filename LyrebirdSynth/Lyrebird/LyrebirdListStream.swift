@@ -7,22 +7,22 @@
 //
 
 
-public class LyrebirdStream {
+open class LyrebirdStream {
     var finished: Bool = false
     
-    public func reset() {
+    open func reset() {
         finished = false
     }
 }
 
 
-public class LyrebirdListStream : LyrebirdStream {
+open class LyrebirdListStream : LyrebirdStream {
     let list: [LyrebirdNumber]
-    private (set) public var offset: LyrebirdInt
-    private let listSize: LyrebirdInt
-    private let initialOffset: LyrebirdInt
+    fileprivate (set) open var offset: LyrebirdInt
+    fileprivate let listSize: LyrebirdInt
+    fileprivate let initialOffset: LyrebirdInt
     
-    public override func reset(){
+    open override func reset(){
         super.reset()
         offset = initialOffset
     }
@@ -39,7 +39,7 @@ public class LyrebirdListStream : LyrebirdStream {
         self.init(list: [], offset: 0)
     }
     */
-    public func next() -> LyrebirdNumber? {
+    open func next() -> LyrebirdNumber? {
         if offset >= listSize {
             finished = true
             return nil
@@ -50,25 +50,25 @@ public class LyrebirdListStream : LyrebirdStream {
     }
 }
 
-public class Sequence : LyrebirdListStream {
+open class Sequence : LyrebirdListStream {
     
 }
 
-public class LyrebirdRepeatableListStream : LyrebirdListStream {
+open class LyrebirdRepeatableListStream : LyrebirdListStream {
     let repeats: LyrebirdInt
-    private var repetition: LyrebirdInt = 0
+    fileprivate var repetition: LyrebirdInt = 0
     
     public init(list: [LyrebirdNumber] = [], repeats: LyrebirdInt = 0, offset: LyrebirdInt = 0){
         self.repeats = repeats
         super.init(list: list, offset: offset)
     }
     
-    public override func reset(){
+    open override func reset(){
         super.reset()
         repetition = 0
     }
     
-    public override func next() -> LyrebirdNumber? {
+    open override func next() -> LyrebirdNumber? {
         guard !finished else {
             return nil
         }
@@ -85,6 +85,6 @@ public class LyrebirdRepeatableListStream : LyrebirdListStream {
     }
 }
 
-public class LoopingSequence : LyrebirdRepeatableListStream {
+open class LoopingSequence : LyrebirdRepeatableListStream {
     
 }

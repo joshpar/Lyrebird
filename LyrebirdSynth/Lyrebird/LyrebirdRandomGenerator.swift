@@ -6,15 +6,15 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-public class LyrebirdRandomNumberGenerator {
-    public var seed: UInt32 = 0 {
+open class LyrebirdRandomNumberGenerator {
+    open var seed: UInt32 = 0 {
         didSet {
             updateSeedGen()
         }
     }
-    private var seedGen: [UInt16] = [0, 0, 0]
+    fileprivate var seedGen: [UInt16] = [0, 0, 0]
     
-    private func updateSeedGen(){
+    fileprivate func updateSeedGen(){
         var seedArr: [UInt16] = [0, 0, 0]
         for idx in 0...1 {
             seedArr[2 - idx] = UInt16(0x000FFF & seed >> UInt32(idx * 8))
@@ -23,21 +23,21 @@ public class LyrebirdRandomNumberGenerator {
     }
     
     public init(initSeed: UInt32? = nil){
-        seed = initSeed ?? UInt32(NSDate.timeIntervalSinceReferenceDate())
+        seed = initSeed ?? UInt32(Date.timeIntervalSinceReferenceDate)
         updateSeedGen()
     }
     
-    public func next() -> LyrebirdFloat {
+    open func next() -> LyrebirdFloat {
         return erand48(&seedGen)
     }
     
-    public func bipolarNext() -> LyrebirdFloat {
+    open func bipolarNext() -> LyrebirdFloat {
         return (erand48(&seedGen) * 2.0) - 1.0
     }
 }
 
-public class RandWhite {
-    private var randGen: LyrebirdRandomNumberGenerator
+open class RandWhite {
+    fileprivate var randGen: LyrebirdRandomNumberGenerator
     var lower: LyrebirdNumber
     var upper: LyrebirdNumber
     var difference: LyrebirdFloat
@@ -49,7 +49,7 @@ public class RandWhite {
         self.difference = (upper.numberValue() - lower.numberValue())
     }
     
-    public func next() -> LyrebirdNumber {
+    open func next() -> LyrebirdNumber {
         return (randGen.next() * difference) + lower.numberValue()
     }
 }

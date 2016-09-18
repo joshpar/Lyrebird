@@ -11,7 +11,7 @@ protocol LyrebirdEngineDelegate {
     func synthEngineHasStopped(engine: LyrebirdEngine)
 }
 
-typealias LyrebirdResultOutputBlock = (finished: Bool) -> Void
+typealias LyrebirdResultOutputBlock = (_ finished: Bool) -> Void
 
 class LyrebirdEngine {
     // initial default engine. This should act as a singleton however! Every init of LyrebirdEngine will overwrite this instance.
@@ -56,14 +56,14 @@ class LyrebirdEngine {
             }
             LyrebirdUGenInterface.initInterface()
             isRunning = true
-            self.delegate?.synthEngineHasStarted(self)
+            self.delegate?.synthEngineHasStarted(engine: self)
         }
     }
     
     func stop(){
         if(isRunning){
             isRunning = false
-            self.delegate?.synthEngineHasStopped(self)
+            self.delegate?.synthEngineHasStopped(engine: self)
         }
     }
     
@@ -80,7 +80,7 @@ class LyrebirdEngine {
             try tree.processTree { (nodeTree, finished) in
                 // write to outputs
             }
-        } catch LyrebirdTreeError.AlreadyProcessing {
+        } catch LyrebirdTreeError.alreadyProcessing {
             print("Already Processing")
         } catch _ {
             print("Throw on some Bootsy Collins, because something funky happened.")

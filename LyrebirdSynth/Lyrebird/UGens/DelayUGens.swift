@@ -7,47 +7,47 @@
 //
 
 public enum DelayInterpolationType {
-    case None, Linear, Cubic
+    case none, linear, cubic
 }
 
-public class DelayLine: LyrebirdUGen {
-    private final var buffer: [LyrebirdFloat]
-    private final let bufferSize: LyrebirdInt // should be a power of 2
-    private final let mask: LyrebirdInt
-    private final var readHead: LyrebirdFloat = 0.0
-    private final var writeHead: LyrebirdInt = 0
+open class DelayLine: LyrebirdUGen {
+    fileprivate final var buffer: [LyrebirdFloat]
+    fileprivate final let bufferSize: LyrebirdInt // should be a power of 2
+    fileprivate final let mask: LyrebirdInt
+    fileprivate final var readHead: LyrebirdFloat = 0.0
+    fileprivate final var writeHead: LyrebirdInt = 0
     public final var interpolation: DelayInterpolationType
     public final var delayTime: LyrebirdValidUGenInput
-    private final var lastDelayTime: LyrebirdFloat = 0.0
+    fileprivate final var lastDelayTime: LyrebirdFloat = 0.0
     public final var input: LyrebirdValidUGenInput
     
     
-    public required init(rate: LyrebirdUGenRate,  input: LyrebirdValidUGenInput, delayTime: LyrebirdValidUGenInput, maxDelayTime: LyrebirdFloat = 1.0, interpolation: DelayInterpolationType = .None) {
+    public required init(rate: LyrebirdUGenRate,  input: LyrebirdValidUGenInput, delayTime: LyrebirdValidUGenInput, maxDelayTime: LyrebirdFloat = 1.0, interpolation: DelayInterpolationType = .none) {
         self.input = input
         self.delayTime = delayTime
         self.interpolation = interpolation
-        self.bufferSize = LyrebirdInt(nextPowerOfTwo(LyrebirdInt(ceil(Lyrebird.engine.sampleRate * maxDelayTime))))
+        self.bufferSize = LyrebirdInt(nextPowerOfTwo(value: LyrebirdInt(ceil(Lyrebird.engine.sampleRate * maxDelayTime))))
         self.mask = bufferSize - 1
-        self.buffer = [LyrebirdFloat](count: bufferSize, repeatedValue: 0.0)
+        self.buffer = [LyrebirdFloat](repeating: 0.0, count: bufferSize)
         super.init(rate: rate)
-        self.writeHead = LyrebirdInt(Lyrebird.engine.sampleRate * delayTime.floatValue(graph))
-        self.lastDelayTime = self.delayTime.floatValue(graph)
+        self.writeHead = LyrebirdInt(Lyrebird.engine.sampleRate * delayTime.floatValue(graph: graph))
+        self.lastDelayTime = self.delayTime.floatValue(graph: graph)
     }
     
     public override final func next(numSamples: LyrebirdInt) -> Bool {
-        var success = super.next(numSamples)
+        var success = super.next(numSamples: numSamples)
         if(success){
             switch self.interpolation {
-            case .Linear:
-                success = nextLinear(numSamples)
+            case .linear:
+                success = nextLinear(numSamples: numSamples)
                 break
                 
-            case .None:
-                success = nextNone(numSamples)
+            case .none:
+                success = nextNone(numSamples: numSamples)
                 break
                 
-            case .Cubic:
-                success = nextCubic(numSamples)
+            case .cubic:
+                success = nextCubic(numSamples: numSamples)
                 break
             }
             while readHead > LyrebirdFloat(mask) {
@@ -60,9 +60,9 @@ public class DelayLine: LyrebirdUGen {
         return success
     }
     
-    private final func nextNone(numSamples: LyrebirdInt) -> Bool{
-        let inputSamples = self.input.calculatedSamples(graph)[0]
-        let delayTimes = self.delayTime.calculatedSamples(graph)[0]
+    fileprivate final func nextNone(numSamples: LyrebirdInt) -> Bool{
+        let inputSamples = self.input.calculatedSamples(graph: graph)[0]
+        let delayTimes = self.delayTime.calculatedSamples(graph: graph)[0]
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             let thisDelayTime = delayTimes[sampleIdx]
             let delayDiff = thisDelayTime - lastDelayTime
@@ -78,9 +78,9 @@ public class DelayLine: LyrebirdUGen {
         return true
     }
     
-    private final func nextLinear(numSamples: LyrebirdInt) -> Bool {
-        let inputSamples = self.input.calculatedSamples(graph)[0]
-        let delayTimes = self.delayTime.calculatedSamples(graph)[0]
+    fileprivate final func nextLinear(numSamples: LyrebirdInt) -> Bool {
+        let inputSamples = self.input.calculatedSamples(graph: graph)[0]
+        let delayTimes = self.delayTime.calculatedSamples(graph: graph)[0]
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             let thisDelayTime = delayTimes[sampleIdx]
             let delayDiff = thisDelayTime - lastDelayTime
@@ -91,7 +91,7 @@ public class DelayLine: LyrebirdUGen {
             let bufferIdxPct: LyrebirdFloat = readHead - fReadHead
             let bufferIdx: LyrebirdInt = iReadHead & mask
             let bufferIdxP1: LyrebirdInt = (iReadHead + 1) & mask
-            samples[sampleIdx] = linearInterp(buffer[bufferIdx], x2: buffer[bufferIdxP1], pct: bufferIdxPct)
+            samples[sampleIdx] = linearInterp(x1: buffer[bufferIdx], x2: buffer[bufferIdxP1], pct: bufferIdxPct)
             buffer[writeHead & mask] = inputSamples[sampleIdx]
             
             readHead = readHead + 1.0
@@ -100,9 +100,9 @@ public class DelayLine: LyrebirdUGen {
         return true
     }
     
-    private final func nextCubic(numSamples: LyrebirdInt) -> Bool {
-        let inputSamples = self.input.calculatedSamples(graph)[0]
-        let delayTimes = self.delayTime.calculatedSamples(graph)[0]
+    fileprivate final func nextCubic(numSamples: LyrebirdInt) -> Bool {
+        let inputSamples = self.input.calculatedSamples(graph: graph)[0]
+        let delayTimes = self.delayTime.calculatedSamples(graph: graph)[0]
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             let thisDelayTime = delayTimes[sampleIdx]
             let delayDiff = thisDelayTime - lastDelayTime
@@ -115,7 +115,7 @@ public class DelayLine: LyrebirdUGen {
             let bufferIdxM1: LyrebirdInt = (iReadHead - 1) & mask
             let bufferIdxP1: LyrebirdInt = (iReadHead + 1) & mask
             let bufferIdxP2: LyrebirdInt = (iReadHead + 2) & mask
-            samples[sampleIdx] = cubicInterp(buffer[bufferIdxM1], y0: buffer[bufferIdx], y1: buffer[bufferIdxP1], y2: buffer[bufferIdxP2], pct: bufferIdxPct)
+            samples[sampleIdx] = cubicInterp(ym1: buffer[bufferIdxM1], y0: buffer[bufferIdx], y1: buffer[bufferIdxP1], y2: buffer[bufferIdxP2], pct: bufferIdxPct)
             buffer[writeHead & mask] = inputSamples[sampleIdx]
             readHead = readHead + 1.0
             writeHead = writeHead + 1
@@ -126,46 +126,46 @@ public class DelayLine: LyrebirdUGen {
 
 
 
-public class DelayLineFeedback: LyrebirdUGen {
-    private final var buffer: [LyrebirdFloat]
-    private final let bufferSize: LyrebirdInt // should be a power of 2
-    private final let mask: LyrebirdInt
-    private final var readHead: LyrebirdFloat = 0.0
-    private final var writeHead: LyrebirdInt = 0
+open class DelayLineFeedback: LyrebirdUGen {
+    fileprivate final var buffer: [LyrebirdFloat]
+    fileprivate final let bufferSize: LyrebirdInt // should be a power of 2
+    fileprivate final let mask: LyrebirdInt
+    fileprivate final var readHead: LyrebirdFloat = 0.0
+    fileprivate final var writeHead: LyrebirdInt = 0
     public final var interpolation: DelayInterpolationType
     public final var delayTime: LyrebirdValidUGenInput
     public final var decayTime: LyrebirdValidUGenInput
-    private final var lastDelayTime: LyrebirdFloat = 0.0
+    fileprivate final var lastDelayTime: LyrebirdFloat = 0.0
     public final var input: LyrebirdValidUGenInput
     
     
-    public required init(rate: LyrebirdUGenRate,  input: LyrebirdValidUGenInput, delayTime: LyrebirdValidUGenInput, decayTime: LyrebirdValidUGenInput = 0.0, maxDelayTime: LyrebirdFloat = 1.0, interpolation: DelayInterpolationType = .None) {
+    public required init(rate: LyrebirdUGenRate,  input: LyrebirdValidUGenInput, delayTime: LyrebirdValidUGenInput, decayTime: LyrebirdValidUGenInput = 0.0, maxDelayTime: LyrebirdFloat = 1.0, interpolation: DelayInterpolationType = .none) {
         self.input = input
         self.delayTime = delayTime
         self.decayTime = decayTime
         self.interpolation = interpolation
-        self.bufferSize = LyrebirdInt(nextPowerOfTwo(LyrebirdInt(ceil(Lyrebird.engine.sampleRate * maxDelayTime))))
+        self.bufferSize = LyrebirdInt(nextPowerOfTwo(value: LyrebirdInt(ceil(Lyrebird.engine.sampleRate * maxDelayTime))))
         self.mask = bufferSize - 1
-        self.buffer = [LyrebirdFloat](count: bufferSize, repeatedValue: 0.0)
+        self.buffer = [LyrebirdFloat](repeating: 0.0, count: bufferSize)
         super.init(rate: rate)
-        self.writeHead = LyrebirdInt(Lyrebird.engine.sampleRate * delayTime.floatValue(graph))
-        self.lastDelayTime = self.delayTime.floatValue(graph)
+        self.writeHead = LyrebirdInt(Lyrebird.engine.sampleRate * delayTime.floatValue(graph: graph))
+        self.lastDelayTime = self.delayTime.floatValue(graph: graph)
     }
     
     public override final func next(numSamples: LyrebirdInt) -> Bool {
-        var success = super.next(numSamples)
+        var success = super.next(numSamples: numSamples)
         if(success){
             switch self.interpolation {
-            case .Linear:
-                success = nextLinear(numSamples)
+            case .linear:
+                success = nextLinear(numSamples:  numSamples)
                 break
                 
-            case .None:
-                success = nextNone(numSamples)
+            case .none:
+                success = nextNone(numSamples:  numSamples)
                 break
                 
-            case .Cubic:
-                success = nextCubic(numSamples)
+            case .cubic:
+                success = nextCubic(numSamples:  numSamples)
                 break
             }
             while readHead > LyrebirdFloat(mask) {
@@ -178,10 +178,10 @@ public class DelayLineFeedback: LyrebirdUGen {
         return success
     }
     
-    private final func nextNone(numSamples: LyrebirdInt) -> Bool{
-        let inputSamples = input.calculatedSamples(graph)[0]
-        let delayTimes = delayTime.calculatedSamples(graph)[0]
-        let decayTimes = decayTime.calculatedSamples(graph)[0]
+    fileprivate final func nextNone( numSamples: LyrebirdInt) -> Bool{
+        let inputSamples = input.calculatedSamples(graph: graph)[0]
+        let delayTimes = delayTime.calculatedSamples(graph: graph)[0]
+        let decayTimes = decayTime.calculatedSamples(graph: graph)[0]
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             let thisDelayTime = delayTimes[sampleIdx]
             let delayDiff = thisDelayTime - lastDelayTime
@@ -190,7 +190,7 @@ public class DelayLineFeedback: LyrebirdUGen {
             let fReadHead: LyrebirdFloat = floor(readHead)
             let iReadHead: LyrebirdInt = LyrebirdInt(fReadHead) & mask
             samples[sampleIdx] = buffer[iReadHead]
-            let feedbackAmt = feedbackCoef(thisDelayTime, decayTime: decayTimes[sampleIdx], targetAmp: 0.001)
+            let feedbackAmt = feedbackCoef(delayTime: thisDelayTime, decayTime: decayTimes[sampleIdx], targetAmp: 0.001)
             buffer[writeHead & mask] = inputSamples[sampleIdx] + (samples[sampleIdx] * feedbackAmt)
             readHead = readHead + 1.0
             writeHead = writeHead + 1
@@ -198,10 +198,10 @@ public class DelayLineFeedback: LyrebirdUGen {
         return true
     }
     
-    private final func nextLinear(numSamples: LyrebirdInt) -> Bool {
-        let inputSamples = input.calculatedSamples(graph)[0]
-        let delayTimes = delayTime.calculatedSamples(graph)[0]
-        let decayTimes = decayTime.calculatedSamples(graph)[0]
+    fileprivate final func nextLinear(numSamples: LyrebirdInt) -> Bool {
+        let inputSamples = input.calculatedSamples(graph: graph)[0]
+        let delayTimes = delayTime.calculatedSamples(graph: graph)[0]
+        let decayTimes = decayTime.calculatedSamples(graph: graph)[0]
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             let thisDelayTime = delayTimes[sampleIdx]
             let delayDiff = thisDelayTime - lastDelayTime
@@ -212,8 +212,8 @@ public class DelayLineFeedback: LyrebirdUGen {
             let bufferIdxPct: LyrebirdFloat = readHead - fReadHead
             let bufferIdx: LyrebirdInt = iReadHead & mask
             let bufferIdxP1: LyrebirdInt = (iReadHead + 1) & mask
-            samples[sampleIdx] = linearInterp(buffer[bufferIdx], x2: buffer[bufferIdxP1], pct: bufferIdxPct)
-            let feedbackAmt = feedbackCoef(thisDelayTime, decayTime: decayTimes[sampleIdx], targetAmp: 0.001)
+            samples[sampleIdx] = linearInterp(x1: buffer[bufferIdx], x2: buffer[bufferIdxP1], pct: bufferIdxPct)
+            let feedbackAmt = feedbackCoef(delayTime: thisDelayTime, decayTime: decayTimes[sampleIdx], targetAmp: 0.001)
             buffer[writeHead & mask] = inputSamples[sampleIdx] + (samples[sampleIdx] * feedbackAmt)
             readHead = readHead + 1.0
             writeHead = writeHead + 1
@@ -221,11 +221,11 @@ public class DelayLineFeedback: LyrebirdUGen {
         return true
     }
     
-    private final func nextCubic(numSamples: LyrebirdInt) -> Bool {
+    fileprivate final func nextCubic(numSamples: LyrebirdInt) -> Bool {
         // TODO:: optimize for non-changing values
-        let inputSamples = input.calculatedSamples(graph)[0]
-        let delayTimes = delayTime.calculatedSamples(graph)[0]
-        let decayTimes = decayTime.calculatedSamples(graph)[0]
+        let inputSamples = input.calculatedSamples(graph: graph)[0]
+        let delayTimes = delayTime.calculatedSamples(graph: graph)[0]
+        let decayTimes = decayTime.calculatedSamples(graph: graph)[0]
         for sampleIdx: LyrebirdInt in 0 ..< numSamples {
             let thisDelayTime = delayTimes[sampleIdx]
             let delayDiff = thisDelayTime - lastDelayTime
@@ -238,8 +238,8 @@ public class DelayLineFeedback: LyrebirdUGen {
             let bufferIdxM1: LyrebirdInt = (iReadHead - 1) & mask
             let bufferIdxP1: LyrebirdInt = (iReadHead + 1) & mask
             let bufferIdxP2: LyrebirdInt = (iReadHead + 2) & mask
-            samples[sampleIdx] = cubicInterp(buffer[bufferIdxM1], y0: buffer[bufferIdx], y1: buffer[bufferIdxP1], y2: buffer[bufferIdxP2], pct: bufferIdxPct)
-            let feedbackAmt = feedbackCoef(thisDelayTime, decayTime: decayTimes[sampleIdx], targetAmp: 0.001)
+            samples[sampleIdx] = cubicInterp(ym1: buffer[bufferIdxM1], y0: buffer[bufferIdx], y1: buffer[bufferIdxP1], y2: buffer[bufferIdxP2], pct: bufferIdxPct)
+            let feedbackAmt = feedbackCoef(delayTime: thisDelayTime, decayTime: decayTimes[sampleIdx], targetAmp: 0.001)
             buffer[writeHead & mask] = inputSamples[sampleIdx] + (samples[sampleIdx] * feedbackAmt)
             readHead = readHead + 1.0
             writeHead = writeHead + 1

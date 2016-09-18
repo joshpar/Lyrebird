@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     ///var audioSample: AudioSampleApp = AudioSampleApp()
 
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
    //     audioSample.runSample()
         LyrebirdTestSynthesizer.sharedSynth.play()
@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 

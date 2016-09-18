@@ -27,20 +27,20 @@ class LyrebirdDemo: NSObject {
         
         let impulse = graphs.graphs["impulse"]
         let impulseNote : LyrebirdNote = LyrebirdNote(graph: impulse)
-        impulseNote.updateParameter("Freq", value: 1.0)
-        impulseNote.updateParameter("Output", value: 0)
+        impulseNote.updateParameter(key: "Freq", value: 1.0)
+        impulseNote.updateParameter(key: "Output", value: 0)
         impulseNote.finishBlock = {(node) -> Void in
             print("DONE!!!!")
             }
         
         let noiseLine = graphs.graphs["noiseLineDelay"]
         var noiseLineNote: LyrebirdNote? = LyrebirdNote(graph: noiseLine)
-        noiseLineNote?.updateParameter("Output", value: 0)
-        noiseLineNote?.updateParameter("OutputTwo", value: 1)
+        noiseLineNote?.updateParameter(key: "Output", value: 0)
+        noiseLineNote?.updateParameter(key: "OutputTwo", value: 1)
         
         let filter = graphs.graphs["filterTests"]
         var filterNote: LyrebirdNote? = LyrebirdNote(graph: filter)
-        filterNote?.updateParameter("Output", value: 0)
+        filterNote?.updateParameter(key: "Output", value: 0)
         
         
         /* // some sample benchmark code for testing
@@ -64,7 +64,7 @@ class LyrebirdDemo: NSObject {
             lyrebird.addNodeToHead(fmNote!)
             */
             //lyrebird.addNodeToHead(impulseNote)
-            lyrebird.addNodeToHead(filterNote)
+            lyrebird.addNodeToHead(node: filterNote)
             
             
             

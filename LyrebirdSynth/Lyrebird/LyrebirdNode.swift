@@ -6,24 +6,24 @@
 //  Copyright © 2016 Op133Studios. All rights reserved.
 //
 
-public enum LyrebirdTreeError : ErrorType {
-    case AlreadyProcessing
+public enum LyrebirdTreeError : Error {
+    case alreadyProcessing
 }
 
-public typealias LyrebirdNodeTreeCompletionBlock = (nodeTree: LyrebirdNodeTree, finished: Bool) -> Void
+public typealias LyrebirdNodeTreeCompletionBlock = (_ nodeTree: LyrebirdNodeTree, _ finished: Bool) -> Void
 typealias LyrebirdParallelGroupCompletionBlock = () -> Void
 typealias LyrebirdInternalTreeCompletionBlock = () -> Void
 /**
  LyrebirdNodeTree handles the main interaction with order of execution, and signal processing
  */
-public class LyrebirdNodeTree {
+open class LyrebirdNodeTree {
     
     /// ---
     /// The single Node in the system which contains any parallel groups of nodes to be processed
     ///
     /// This node can be replaced with a new LyrebirdRootNode to completely clear all processing!
     
-    private var root: LyrebirdRootNode = LyrebirdRootNode() {
+    fileprivate var root: LyrebirdRootNode = LyrebirdRootNode() {
         didSet {
             defaultGroup = root.parallelGroups[0].rootGroup
         }
@@ -36,11 +36,11 @@ public class LyrebirdNodeTree {
     ///
     /// For many applications, adding notes to the head of the defaultGroup should do what you need. If you don't add any ParallelGroups, build your tree by adding nodes into this group
     
-    public var defaultGroup: LyrebirdGroup
+    open var defaultGroup: LyrebirdGroup
     
     /// ---
     /// prevents the tree from being processed twice at the same time
-    private var processing: Bool = false
+    fileprivate var processing: Bool = false
     
     public init(){
         defaultGroup = root.parallelGroups[0].rootGroup
@@ -52,15 +52,15 @@ public class LyrebirdNodeTree {
      - parameter completion: a block to execute when the control period has finished processing
      */
     
-    public func processTree(completion: LyrebirdNodeTreeCompletionBlock) throws {
+    open func processTree(completion: @escaping LyrebirdNodeTreeCompletionBlock) throws {
         if !processing {
             processing = true
-            root.processTree({
+            root.processTree(completion: {
                 self.processing = false
-                completion(nodeTree: self, finished: true)
+                completion(self, true)
             })
         } else {
-            throw LyrebirdTreeError.AlreadyProcessing
+            throw LyrebirdTreeError.alreadyProcessing
         }
     }
     
@@ -70,7 +70,7 @@ public class LyrebirdNodeTree {
      - Warning: Seriously - this invalidates all references to notes, groups and nodes you previously had. Use it if you mean it.
      */
     
-    public func freeAll(){
+    open func freeAll(){
         root = LyrebirdRootNode()
     }
     
@@ -80,8 +80,8 @@ public class LyrebirdNodeTree {
      - parameter parallelGroup:
      */
     
-    public func addParallelGroup(parallelGroup: LyrebirdParallelGroup){
-        root.addParallelGroup(parallelGroup)
+    open func addParallelGroup(parallelGroup: LyrebirdParallelGroup){
+        root.addParallelGroup(parallelGroup: parallelGroup)
     }
     
     /**
@@ -90,15 +90,15 @@ public class LyrebirdNodeTree {
      - parameter parallelGroup:
      */
     
-    public func removeParallelGroup(parallelGroup: LyrebirdParallelGroup){
-        root.removeParallelGroup(parallelGroup)
+    open func removeParallelGroup(parallelGroup: LyrebirdParallelGroup){
+        root.removeParallelGroup(parallelGroup: parallelGroup)
     }
     
 }
 
 class LyrebirdRootNode {
     
-    private var parallelGroups      : [LyrebirdParallelGroup] = [LyrebirdParallelGroup()]
+    fileprivate var parallelGroups      : [LyrebirdParallelGroup] = [LyrebirdParallelGroup()]
     
     func addParallelGroup(parallelGroup: LyrebirdParallelGroup){
         parallelGroups.append(parallelGroup)
@@ -111,9 +111,9 @@ class LyrebirdRootNode {
         //        }
     }
     
-    func processTree(completion: LyrebirdInternalTreeCompletionBlock ){
+    func processTree(completion: @escaping LyrebirdInternalTreeCompletionBlock ){
         for parallelGroup: LyrebirdParallelGroup in parallelGroups {
-            parallelGroup.processParallelGroup({
+            parallelGroup.processParallelGroup(completion: {
                 let allDone: Bool = self.isFinished()
                 if allDone {
                     completion()
@@ -122,7 +122,7 @@ class LyrebirdRootNode {
         }
     }
     
-    private func isFinished() -> Bool {
+    fileprivate func isFinished() -> Bool {
         var allDone: Bool = true
         for parallelGroup: LyrebirdParallelGroup in parallelGroups {
             if !parallelGroup.finished {
@@ -136,7 +136,7 @@ class LyrebirdRootNode {
 }
 
 // represents a thread independent node of values to process
-public class LyrebirdParallelGroup {
+open class LyrebirdParallelGroup {
     var finished        : Bool = true
     var rootGroup       : LyrebirdGroup = LyrebirdGroup()
     
@@ -148,15 +148,15 @@ public class LyrebirdParallelGroup {
     }
 }
 
-public typealias LyrebirdNodeFinishBlock = (node: LyrebirdNode) -> Void
+public typealias LyrebirdNodeFinishBlock = (_ node: LyrebirdNode) -> Void
 
-public class LyrebirdNode {
+open class LyrebirdNode {
     var nextNode                        : LyrebirdNode?
     var previousNode                    : LyrebirdNode?
     var parent                          : LyrebirdGroup?
-    public var finishBlock              : LyrebirdNodeFinishBlock?
+    open var finishBlock              : LyrebirdNodeFinishBlock?
     
-    public func addNodeAfter(node: LyrebirdNode?){
+    open func addNodeAfter(node: LyrebirdNode?){
         if let node = node {
             if let nextNode: LyrebirdNode = node.nextNode {
                 node.nextNode = nextNode
@@ -168,7 +168,7 @@ public class LyrebirdNode {
         }
     }
     
-    public func addNodeBefore(node: LyrebirdNode?){
+    open func addNodeBefore(node: LyrebirdNode?){
         if let node = node {
             if let previousNode: LyrebirdNode = self.previousNode {
                 node.previousNode = previousNode
@@ -180,23 +180,23 @@ public class LyrebirdNode {
         }
     }
     
-    public func next(numSamples: LyrebirdInt){
+    open func next(numSamples: LyrebirdInt){
         
     }
     
-    public func free(){
+    open func free(){
         if let previousNode = previousNode {
             previousNode.nextNode = nextNode
         } else {
             parent?.nextNode = nextNode
         }
-        finishBlock?(node: self)
+        finishBlock?(self)
     }
 }
 
-public class LyrebirdGroup: LyrebirdNode {
+open class LyrebirdGroup: LyrebirdNode {
     
-    public func addNodeToHead(node: LyrebirdNode?){
+    open func addNodeToHead(node: LyrebirdNode?){
         if let node = node {
             node.nextNode = nextNode
             nextNode?.previousNode = node
@@ -205,7 +205,7 @@ public class LyrebirdGroup: LyrebirdNode {
         }
     }
     
-    public func addNodeToTail(node: LyrebirdNode?){
+    open func addNodeToTail(node: LyrebirdNode?){
         if let node = node {
             if var finalNode: LyrebirdNode = nextNode {
                 while finalNode.nextNode != nil {
@@ -220,13 +220,13 @@ public class LyrebirdGroup: LyrebirdNode {
         }
     }
     
-    public func processChildren(){
+    open func processChildren(){
         var node: LyrebirdNode? = nextNode
         let blockSize = Lyrebird.engine.blockSize
         while node != nil {
             // get the CURRENT next node
             let tmp = node?.nextNode
-            node?.next(blockSize)
+            node?.next(numSamples: blockSize)
             node = tmp
         }
         
@@ -236,14 +236,14 @@ public class LyrebirdGroup: LyrebirdNode {
 /**
  A note represents an instance of a graph. When the node tree is traversed, the next function is called on the graph AFTER parameters are updated (if any need to be)
  */
-public class LyrebirdNote: LyrebirdNode {
+open class LyrebirdNote: LyrebirdNode {
     
     /// ---
     /// The graph representing this note
     ///
     /// - Warning: a COPY of the graph you supply is used for each note. Any values that change in the parameter for the graph will update only for that instance
     
-    public var graph                           : LyrebirdGraph
+    open var graph                           : LyrebirdGraph
     
     /// ---
     /// by default, nodes that are added to the node tree will calculate samples
@@ -252,15 +252,15 @@ public class LyrebirdNote: LyrebirdNode {
     
     var running                         : Bool = true
     
-    private var processing              : Bool = false
+    fileprivate var processing              : Bool = false
     
-    private var queuedParameterChanges  : [String: LyrebirdValidUGenInput] = [:]
+    fileprivate var queuedParameterChanges  : [String: LyrebirdValidUGenInput] = [:]
     
-    private var hasQueuedChanges        : Bool  = false
+    fileprivate var hasQueuedChanges        : Bool  = false
     
-    public var outputOffsetSamples      : LyrebirdInt = 0
+    open var outputOffsetSamples      : LyrebirdInt = 0
     
-    public var shouldFree               : Bool = false
+    open var shouldFree               : Bool = false
     
     public required init(graph: LyrebirdGraph?){
         if let graphCopy: LyrebirdGraph = graph!.copyGraph() {
@@ -276,7 +276,7 @@ public class LyrebirdNote: LyrebirdNode {
         self.init(graph: LyrebirdGraph())
     }
     
-    public func updateParameter(key: LyrebirdKey, value: LyrebirdValidUGenInput){
+    open func updateParameter(key: LyrebirdKey, value: LyrebirdValidUGenInput){
         if !processing {
             self.graph.parameters[key] = value
         } else {
@@ -285,7 +285,7 @@ public class LyrebirdNote: LyrebirdNode {
         }
     }
     
-    override public func next(numSamples: LyrebirdInt){
+    override open func next(numSamples: LyrebirdInt){
         if running {
             // prevent processing if, for some reason, it already is
             if !processing {
@@ -297,14 +297,14 @@ public class LyrebirdNote: LyrebirdNode {
                 if (outputOffsetSamples > 0){
                     let sampleCount = numSamples - outputOffsetSamples
                     outputOffsetSamples = 0
-                    self.graph.next(sampleCount)
+                    self.graph.next(numSamples: sampleCount)
                 } else {
-                    self.graph.next(numSamples)
+                    self.graph.next(numSamples: numSamples)
                 }
                 processing = false
                 if hasQueuedChanges {
                     for (key, value) in queuedParameterChanges {
-                        self.updateParameter(key, value: value)
+                        self.updateParameter(key: key, value: value)
                     }
                     hasQueuedChanges = false
                     queuedParameterChanges.removeAll()
